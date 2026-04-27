@@ -18,8 +18,6 @@ export default {
     success: "Success",
     noData: "No data",
     retry: "Retry",
-    version: "v0.1",
-    beta: "en-beta",
   },
   auth: {
     login: "Log in",
@@ -455,6 +453,8 @@ export default {
     exportDesc: "Download all your health data in JSON or CSV format",
     exportSuccess: "Export successful",
     exportError: "Export failed",
+    exportWebOnlyDesc: "Data export (JSON / CSV ZIP) is available on the web app — your browser handles the download natively.",
+    exportWebBtn: "Open in browser",
     streakFreezeTitle: "Streak freeze",
     streakFreezeDesc: "Pro feature: compensates for one missed day so your streak isn't broken. Usable once every 30 days.",
     streakFreezeBtn: "Use freeze",
@@ -478,7 +478,7 @@ export default {
     waterGoalDesc: "How many ml of water do you want to drink daily? (500 – 10,000)",
     waterGoalSaved: "Water goal saved",
     notificationsTitle: "Notifications",
-    notificationsDesc: "Configure local notifications (no server required)",
+    notificationsDesc: "Configure notifications",
     notificationsMaster: "Enable notifications",
     notificationsMasterDesc: "Turning this off stops all notifications",
     dailyReminderLabel: "Daily reminder",
@@ -686,7 +686,7 @@ export default {
     founder: "Founder",
   },
 
-  // ==================== HEALTH SYNC ====================
+  
   healthSync: {
     title: "Import Health Data",
     checking: "Checking...",
@@ -700,6 +700,8 @@ export default {
     lastSync: "Last import",
     syncNow: "Import now",
     syncing: "Importing...",
+    forceFullSync: "Full resync",
+    forceFullSyncDesc: "If the import doesn't bring in new data: this clears the last-sync timestamp and all uploaded record IDs, then re-imports the past 30 days.",
     syncDone: "Done! {count} new entries imported.",
     heartRate: "Heart rate",
     bloodPressure: "Blood pressure",
@@ -709,13 +711,13 @@ export default {
     infoText: "This imports health data stored on your phone (heart rate, blood pressure, weight, steps, workouts) into WelfareBuddy. Each entry is only imported once — no duplicates.",
   },
 
-  // ==================== NOTIFICATIONS ====================
+  
   notifications: {
-    // Sync
+    
     syncComplete: "Sync complete",
     syncCompleteBody: "{count} new health records synced.",
 
-    // Daily reminder
+    
     dailyReminder: "Daily reminder",
     dailyReminderBody: "Don't forget to log your health data today!",
     dailyReminderMessages: [
@@ -728,7 +730,7 @@ export default {
       "Weekend wellness check — how are you feeling?",
     ],
 
-    // Streak keeper (21:00)
+    
     streakReminderTitle: "Don't break the chain! 🔥",
     streakReminderMessages: [
       "Your streak is still savable — log one more value tonight!",
@@ -740,7 +742,7 @@ export default {
       "Don't throw away your weekly streak over one forgotten day.",
     ],
 
-    // „Not measured today" (20:00)
+    
     notMeasuredTitle: "Any measurement today yet?",
     notMeasuredMessages: [
       "I don't see any log for today — grab a quick measurement!",
@@ -752,7 +754,7 @@ export default {
       "Evening check: how's your health looking today?",
     ],
 
-    // Exercise reminder (18:00)
+    
     exerciseReminderTitle: "Got some movement in today? 💪",
     exerciseReminderMessages: [
       "Time to get moving — even a walk counts.",
@@ -764,7 +766,7 @@ export default {
       "Reminder: exercise boosts your heart rate and your mood.",
     ],
 
-    // Morning motivation (07:30, optional)
+    
     morningTitle: "Good morning! ☀️",
     morningMessages: [
       "A new day, a new chance for your health.",
@@ -776,29 +778,29 @@ export default {
       "Here we go! A small entry in the morning is a nice start.",
     ],
 
-    // Weekly summary (Sunday 20:00)
+    
     weeklyTitle: "Weekly summary 📊",
     weeklyBody: "Your week: {steps} steps, {exercises} workouts, {streak}-day streak. Nice work!",
 
-    // Streak record (event)
+    
     streakRecordTitle: "New streak record! 🏆",
     streakRecordBody: "You set a new record: {days} consecutive days!",
 
-    // Streak milestone (event, once per milestone)
+    
     streakMilestone: "Streak milestone! 🔥",
     streakMilestoneBody: "You have a {days}-day streak — keep it up!",
 
-    // Step goal (event)
+    
     stepGoalReachedTitle: "Daily goal reached! 🎯",
     stepGoalReachedBody: "You hit {goal} steps today. Great job!",
     stepGoalAlmostTitle: "Almost there!",
     stepGoalAlmostBody: "Just {remaining} more steps to reach today's goal. Let's go!",
 
-    // First entry (event, once per user)
+    
     firstEntryTitle: "Great start! 🌟",
     firstEntryBody: "You logged your first entry. Keep the momentum — healthy habits start here!",
 
-    // Inactivity (48h+ → 24h later reminder)
+    
     inactivityTitle: "Haven't seen you in a while…",
     inactivityMessages: [
       "We miss you! Come back and continue tracking your health.",
@@ -808,13 +810,12 @@ export default {
     ],
   },
 
-  // ==================== ONBOARDING ====================
+  
   onboarding: {
     welcomeTitle: "Welcome to WelfareBuddy!",
     welcomeDesc: "Let's take 30 seconds to set things up for you.",
     start: "Let's go!",
     heightTitle: "Your height",
-    heightDesc: "Used for BMI calculation. You can skip this.",
     displayNameTitle: "What should we call you?",
     displayNameDesc: "Your nickname will appear on the Dashboard and in notifications.",
     displayNameLabel: "Nickname",
@@ -829,18 +830,18 @@ export default {
     doneBtn: "Go to dashboard",
   },
 
-  // ==================== OFFLINE ====================
+  
   offline: {
     banner: "No internet connection — showing previously loaded data",
     wsDisconnected: "Live updates not active",
   },
 
-  // ==================== STATUS ====================
+  
   status: {
     live: "Live updates active",
   },
 
-  // ==================== LEGAL ====================
+  
   progress: {
     cardTitle: "Your journey so far",
     weightLabel: "Weight",
@@ -928,5 +929,16 @@ export default {
         "<strong>7. Governing law</strong><br>This license is governed by Hungarian law. Any disputes are subject to the jurisdiction of Hungarian courts.",
       ],
     },
+  },
+  errors: {
+    network:      "No network connection. Please check your internet.",
+    timeout:      "Request timed out. The server did not respond in time. Please try again.",
+    unauthorized: "You are not authorized for this action. Please log in again.",
+    forbidden:    "You don't have permission to do this.",
+    notFound:     "The requested data was not found.",
+    rateLimit:    "Too many requests in a row. Please wait a moment and try again.",
+    server:       "Server error. Please try again later.",
+    serverDown:   "The server is currently unavailable. Please try again later.",
+    unknown:      "An unknown error occurred.",
   },
 }

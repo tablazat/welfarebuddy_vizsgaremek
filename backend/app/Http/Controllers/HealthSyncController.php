@@ -95,10 +95,7 @@ class HealthSyncController extends Controller
             }
         });
 
-        // Streak csak akkor léphet előre, ha a batchben van a MAI napra szóló
-        // új rekord. Régi, HealthKit/Health Connect-ből visszamenőleg importált
-        // adat nem számít „aktív engagement" napnak – különben egy új user
-        // ránézésre 7–30 napos streakkel nyitna, csupán a historikus import miatt.
+        
         $today  = now()->toDateString();
         $hasTodayEntry = $this->batchHasToday($request, $today);
 
@@ -137,10 +134,7 @@ class HealthSyncController extends Controller
         return response()->json(['message' => 'ok', 'counts' => $counts], 201);
     }
 
-    /**
-     * Van-e a batchben legalább egy rekord a mai napra? Ha csak historikus
-     * adat jön (pl. első HealthKit import), a streaket nem mozgatjuk.
-     */
+    
     private function batchHasToday(Request $request, string $today): bool
     {
         $fields = ['heart_rates', 'blood_pressures', 'weights', 'steps'];

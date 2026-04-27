@@ -1,17 +1,17 @@
 const CACHE_PREFIX = "cache_"
-const DEFAULT_MAX_AGE_MS = 24 * 60 * 60 * 1000 // 24 óra
+const DEFAULT_MAX_AGE_MS = 24 * 60 * 60 * 1000 
 const HIGH_WATER_KEY = "cache_high_water_ts"
-const CLOCK_SKEW_TOLERANCE_MS = 60 * 1000 // 1 perc a kis órákülönbségre
+const CLOCK_SKEW_TOLERANCE_MS = 60 * 1000 
 
-// Monotonic guard: eltároljuk a legnagyobb látott időbélyeget. Ha Date.now()
-// kisebb ennél (visszaállított óra), minden cache-bejegyzést eldobunk.
+
+
 function advanceHighWater() {
   const now = Date.now()
   try {
     const prev = Number(localStorage.getItem(HIGH_WATER_KEY)) || 0
     if (now > prev) localStorage.setItem(HIGH_WATER_KEY, String(now))
     else if (now < prev - CLOCK_SKEW_TOLERANCE_MS) {
-      // óra visszaállt → minden cache kulcs törlése
+      
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const k = localStorage.key(i)
         if (k && k.startsWith(CACHE_PREFIX)) localStorage.removeItem(k)
@@ -39,7 +39,7 @@ export function getCachedResponse(cacheKey, maxAgeMs = DEFAULT_MAX_AGE_MS) {
   try { parsed = JSON.parse(raw) } catch { return null }
   const { data, timestamp } = parsed
   const now = advanceHighWater()
-  // Jövőbeli timestamp (óra visszaállítva az íráskor) → érvénytelen
+  
   if (timestamp > now + CLOCK_SKEW_TOLERANCE_MS) return null
   if (now - timestamp > maxAgeMs) return null
   return data
@@ -51,7 +51,7 @@ export function invalidateCacheKeys(...keys) {
   }
 }
 
-// Map WebSocket event types to the cache keys they invalidate
+
 const WS_CACHE_MAP = {
   heart_rate:       ["/heart-rates", "/average/heart-rates"],
   blood_pressure:   ["/blood-pressures", "/average/blood-pressures"],

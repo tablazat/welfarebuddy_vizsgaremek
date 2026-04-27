@@ -1,5 +1,5 @@
 export default {
-  // ==================== COMMON ====================
+
   common: {
     save: "Speichern",
     cancel: "Abbrechen",
@@ -20,11 +20,9 @@ export default {
     success: "Erfolgreich",
     noData: "Keine Daten",
     retry: "Erneut versuchen",
-    version: "v0.1",
-    beta: "en-beta",
   },
 
-  // ==================== AUTH ====================
+
   auth: {
     login: "Anmelden",
     register: "Registrieren",
@@ -73,7 +71,7 @@ export default {
     termsSuffix: ".",
   },
 
-  // ==================== NAV / SHELL ====================
+
   nav: {
     dashboard: "Dashboard",
     diary: "Tagebuch",
@@ -92,7 +90,7 @@ export default {
     appName: "WelfareBuddy",
   },
 
-  // ==================== DASHBOARD ====================
+
   dashboard: {
     goodMorning: "Guten Morgen",
     goodDay: "Guten Tag",
@@ -133,7 +131,7 @@ export default {
     loadFailedDesc: "Daten konnten nicht geladen werden. Erneut versuchen.",
   },
 
-  // ==================== DIARY ====================
+
   diary: {
     title: "Tagebuch",
     today: "Heute",
@@ -227,7 +225,7 @@ export default {
     copyYesterdayNone: "Keine Daten von gestern",
   },
 
-  // ==================== EXERCISE ====================
+
   exercise: {
     title: "Aktivität",
     subtitle: "Übungen, Schrittzahl und Aktivitätsverfolgung",
@@ -296,7 +294,7 @@ export default {
     },
   },
 
-  // ==================== STATS ====================
+
   stats: {
     title: "Statistik",
     subtitle: "Gesundheitstrends und Durchschnittswerte",
@@ -354,7 +352,7 @@ export default {
     },
   },
 
-  // ==================== SUMMARY ====================
+
   summary: {
     title: "Zusammenfassung",
     subtitle: "Verbrannte Kalorien und Aktivitätsübersicht",
@@ -394,7 +392,7 @@ export default {
     },
   },
 
-  // ==================== PROFILE ====================
+
   profile: {
     title: "Profil",
     subtitle: "Ihre Kontodaten",
@@ -437,7 +435,7 @@ export default {
     bmiObese: "Adipositas",
   },
 
-  // ==================== SETTINGS ====================
+
   settings: {
     title: "Einstellungen",
     subtitle: "Verwalten Sie Ihr Konto",
@@ -475,6 +473,8 @@ export default {
     exportDesc: "Laden Sie alle Ihre Gesundheitsdaten im JSON- oder CSV-Format herunter",
     exportSuccess: "Export erfolgreich",
     exportError: "Export fehlgeschlagen",
+    exportWebOnlyDesc: "Der Datenexport (JSON / CSV ZIP) ist in der Web-App verfügbar — der Browser übernimmt den Download nativ.",
+    exportWebBtn: "Im Browser öffnen",
     streakFreezeTitle: "Serie einfrieren",
     streakFreezeDesc: "Pro-Funktion: Gleicht einen verpassten Tag aus, damit deine Serie nicht abreißt. Alle 30 Tage nutzbar.",
     streakFreezeBtn: "Einfrieren nutzen",
@@ -525,7 +525,7 @@ export default {
     ],
   },
 
-  // ==================== UPGRADE ====================
+
   upgrade: {
     title: "Pakete",
     subtitle: "Wählen Sie das passende Paket für sich",
@@ -548,7 +548,7 @@ export default {
     demoNote: "Das Pro-Paket kann derzeit zu Demozwecken kostenlos aktiviert werden.",
   },
 
-  // ==================== ADMIN ====================
+
   admin: {
     title: "Admin-Bereich",
     subtitle: "Benutzer- und Systemverwaltung",
@@ -578,7 +578,7 @@ export default {
     },
   },
 
-  // ==================== LANDING ====================
+
   landing: {
     home: "Startseite",
     heroTagline: "Kostenlos, einfach, effektiv",
@@ -622,7 +622,7 @@ export default {
     footerRights: "Alle Rechte vorbehalten.",
   },
 
-  // ==================== COOKIE CONSENT ====================
+
   cookie: {
     title: "Cookies & Daten",
     message: "Diese Seite verwendet Cookies für die beste Benutzererfahrung. Ihre Anmeldedaten und Einstellungen werden in Ihrem Browser gespeichert. Durch Klicken auf \"Akzeptieren\" stimmen Sie der Verwendung von Cookies zu.",
@@ -630,7 +630,7 @@ export default {
     decline: "Ablehnen",
   },
 
-  // ==================== VERIFY EMAIL ====================
+
   verify: {
     title: "E-Mail bestätigen",
     description: "Bitte bestätigen Sie Ihre E-Mail-Adresse, um fortzufahren.",
@@ -659,18 +659,18 @@ export default {
     checkInbox: "Überprüfen Sie Ihren Posteingang!",
   },
 
-  // ==================== OFFLINE ====================
+
   offline: {
     banner: "Keine Internetverbindung – Offline-Modus aktiv",
     wsDisconnected: "Echtzeit-Updates nicht aktiv",
   },
 
-  // ==================== STATUS ====================
+
   status: {
     live: "Echtzeit-Updates aktiv",
   },
 
-  // ==================== HEALTH SYNC ====================
+
   healthSync: {
     title: "Gesundheits-Sync",
     subtitle: "Daten automatisch aus Apple Health importieren",
@@ -685,7 +685,7 @@ export default {
     forceSync: "Vollständige Neusynchronisierung",
   },
 
-  // ==================== NOTIFICATIONS ====================
+
   notifications: {
     syncComplete: "Synchronisierung abgeschlossen",
     syncCompleteBody: "{count} neue Gesundheitsdaten synchronisiert.",
@@ -704,13 +704,12 @@ export default {
     streakMilestoneBody: "Sie haben eine {days}-Tage-Serie – weiter so!",
   },
 
-  // ==================== ONBOARDING ====================
+
   onboarding: {
     welcomeTitle: "Willkommen bei WelfareBuddy!",
     welcomeDesc: "Nehmen wir uns 30 Sekunden für die Einrichtung.",
     start: "Los geht's!",
     heightTitle: "Ihre Größe",
-    heightDesc: "Wird für die BMI-Berechnung benötigt. Sie können dies überspringen.",
     displayNameTitle: "Wie sollen wir dich nennen?",
     displayNameDesc: "Dein Spitzname erscheint auf dem Dashboard und in Benachrichtigungen.",
     displayNameLabel: "Spitzname",
@@ -725,7 +724,7 @@ export default {
     doneBtn: "Zum Dashboard",
   },
 
-  // ==================== SKINS ====================
+
   skins: {
     activeSkin: "Aktiver Skin",
     title: "Skins",
@@ -765,7 +764,7 @@ export default {
     founder: "Gründer",
   },
 
-  // ==================== LEGAL ====================
+
   progress: {
     cardTitle: "Deine Reise bisher",
     weightLabel: "Gewicht",
@@ -853,5 +852,16 @@ export default {
         "<strong>7. Anwendbares Recht</strong><br>Es gilt ungarisches Recht. Gerichtsstand sind die ungarischen Gerichte.",
       ],
     },
+  },
+  errors: {
+    network:      "Keine Netzwerkverbindung. Bitte überprüfe deine Internetverbindung.",
+    timeout:      "Zeitüberschreitung — der Server hat nicht rechtzeitig geantwortet. Bitte versuche es erneut.",
+    unauthorized: "Du bist für diese Aktion nicht berechtigt. Bitte melde dich erneut an.",
+    forbidden:    "Du hast keine Berechtigung für diese Aktion.",
+    notFound:     "Die angeforderten Daten wurden nicht gefunden.",
+    rateLimit:    "Zu viele Anfragen hintereinander. Bitte warte einen Moment und versuche es erneut.",
+    server:       "Serverfehler. Bitte versuche es später erneut.",
+    serverDown:   "Der Server ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+    unknown:      "Ein unbekannter Fehler ist aufgetreten.",
   },
 }

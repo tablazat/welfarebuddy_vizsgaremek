@@ -38,9 +38,7 @@ class ProfileTest extends TestCase
         $this->assertNull($this->user->fresh()->height_cm);
     }
 
-    /**
-     * @see TODO.md "Steps + víz cél csak lokálisan" – PUT /me/goals DB-be ment
-     */
+    
     public function test_put_me_goals_updates_step_and_water_goal(): void
     {
         $response = $this->putJson('/me/goals', [
@@ -92,14 +90,12 @@ class ProfileTest extends TestCase
         Storage::disk('public')->assertExists($path);
     }
 
-    /**
-     * @see TODO.md Bug #34 — profile picture delete must remove file from storage
-     */
+    
     public function test_profile_picture_delete_removes_file_from_storage(): void
     {
         Storage::fake('public');
 
-        // Először upload
+        
         $file = UploadedFile::fake()->image('avatar.png');
         $this->postJson('/profile-picture', ['photo' => $file])->assertStatus(200);
 
@@ -107,7 +103,7 @@ class ProfileTest extends TestCase
         $this->assertNotNull($path);
         Storage::disk('public')->assertExists($path);
 
-        // Most delete
+        
         $this->deleteJson('/profile-picture')->assertStatus(200);
 
         $this->assertNull($this->user->fresh()->profile_picture);

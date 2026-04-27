@@ -132,7 +132,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/me/progress', [ProgressController::class, 'show']);
 
-    // Admin route-ok – csak admin felhasználóknak
+    
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/stats', [AdminController::class, 'stats']);
         Route::get('/users', [AdminController::class, 'users']);
@@ -166,7 +166,7 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request) {
 Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
 
-    // Ha küld locale-t a frontend, frissítjük a user-nél
+    
     if ($request->locale) {
         $user = User::where('email', $request->email)->first();
         if ($user) {
@@ -185,13 +185,13 @@ Route::post('/reset-password', function (Request $request) {
     $request->validate([
         'token'    => 'required',
         'email'    => 'required|email',
-        'password' => 'required|min:8|confirmed', // needs password_confirmation field
+        'password' => 'required|min:8|confirmed',
     ]);
 
     $status = Password::reset(
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function (User $user, string $password) {
-            $user->password = $password; // hashed cast handles bcrypt automatically
+            $user->password = $password;
             $user->save();
         }
     );

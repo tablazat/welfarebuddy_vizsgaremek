@@ -7,14 +7,10 @@ import { storageGet } from "@/lib/storage"
 let echoInstance = null
 let echoInitPromise = null
 
-// Csak DEV módban logolunk a konzolba – production buildben semmi WS spam.
-// Hibákat (console.error) prodban is megtartjuk.
+
 const dbg = (...args) => { if (import.meta.env.DEV) console.log(...args) }
 
-/**
- * WebSocket composable - Laravel Echo + Pusher (Reverb)
- * Key/host-ot auth után /config endpointról tölti (nincs a bundle-ben)
- */
+
 export function useEcho() {
   const connected = ref(false)
   const lastEvent = ref(null)
@@ -69,18 +65,14 @@ export function useEcho() {
     return echoInitPromise
   }
 
-  /**
-   * Feliratkozás a user privát csatornájára
-   * @param {number} userId
-   * @param {Function} onEvent - callback(type, data)
-   */
+  
   async function subscribe(userId, onEvent) {
     const echo = await getEcho()
     if (!echo) return
 
     const channelName = `user.${userId}`
 
-    // Leave existing subscription to prevent duplicate listeners on re-subscribe
+    
     try { echo.leave(channelName) } catch {}
 
     dbg(`WS: Subscribing to ${channelName}...`)
@@ -130,7 +122,7 @@ export function useEcho() {
   }
 
   onBeforeUnmount(() => {
-    // Nem disconnectelunk unmount-kor, mert az AppShell-ben marad
+    //
   })
 
   return {

@@ -1,41 +1,14 @@
-/**
- * Lokális értesítések kezelő (Capacitor).
- *
- * Szerver nélküli, APNs/FCM nem kell. A natív plugin egyedül kezeli az
- * ütemezést és megjelenítést – offline is működik.
- *
- * Sablontípusok:
- *   Időzített (naponta/hetente ismétlődő):
- *     - scheduleDailyReminder(hour)   – napi emlékeztető
- *     - scheduleStreakReminder()      – 21:00, sorozat fenntartására
- *     - scheduleNotMeasuredReminder() – 20:00, esti „ma nem mértél"
- *     - scheduleExerciseReminder()    – 18:00, mozgás emlékeztető
- *     - scheduleMorningMotivation()   – 07:30, reggeli motiváció (opcionális)
- *     - scheduleWeeklySummary()       – vasárnap 20:00, heti összefoglaló
- *
- *   Esemény-alapú (azonnali):
- *     - notifyStreakRecord(days)      – új streak rekord
- *     - notifyStreakMilestone(days)   – 7/14/30/50/100 napos mérföldkő
- *     - notifyStepGoalReached(goal)   – napi lépés cél elérve
- *     - notifyStepGoalAlmost(remaining) – napi cél 80%-a (8000+)
- *     - notifyFirstEntry()            – első bejegyzés (egyszer usernként)
- *     - scheduleInactivity(lastTs)    – 48h+ inaktivitás → 24h múlva emlékeztető
- *
- *   Egyéb:
- *     - notifySyncComplete(count)     – sync kész (batch upload után)
- *
- * Permission state: singleton ref-ek (`permissionGranted`, `permissionDenied`).
- */
+
 
 import { ref } from "vue"
 import { storageGet, storageSet } from "@/lib/storage"
 
-// ---------------- State (module-level singleton) ----------------
+
 const permissionGranted = ref(false)
 const permissionDenied  = ref(false)
 let _plugin = null
 
-// Stable IDs for scheduled (repeating) notifications
+
 const IDS = {
   DAILY:      10001,
   STREAK:     10002,
@@ -46,11 +19,11 @@ const IDS = {
   INACTIVITY: 10007,
 }
 
-// Napi limit a "random" (rotált body, fix időzítésű) emlékeztetőkre.
-// 5 toggle-ből (daily/not_measured/streak/exercise/morning) max 4 fut egy nap.
-// Prioritás: ami fontosabb, az élvez elsőbbséget overflow esetén.
-// Esemény-alapú értesítések (streak record, milestone, goal, first entry,
-// weekly summary, inactivity) kívül esnek ezen a limiten – mindig mennek.
+
+
+
+
+
 const RANDOM_DAILY_LIMIT = 4
 const RANDOM_KEYS_BY_PRIORITY = ["daily", "not_measured", "streak", "exercise", "morning"]
 const RANDOM_KEY_TO_ID = {
@@ -66,22 +39,22 @@ function _allowedRandomKeys() {
   return new Set(enabled.slice(0, RANDOM_DAILY_LIMIT))
 }
 
-// Rolling ID for one-off event notifications (20000–2100000000)
+
 let _eventId = 20000
 function _nextEventId() {
   _eventId = _eventId >= 2_100_000_000 ? 20000 : _eventId + 1
   return _eventId
 }
 
-// ---------------- Preferences ----------------
+
 const DEFAULTS = {
-  enabled:        true,   // master
+  enabled:        true,   
   daily:          true,
   daily_hour:     9,
   streak:         true,
   not_measured:   true,
   exercise:       true,
-  morning:        false,  // opt-in
+  morning:        false,  
   weekly:         true,
   step_goal:      true,
   streak_record:  true,
@@ -101,7 +74,7 @@ export function setNotifPref(key, val) {
   storageSet(`notif_${key}`, v)
 }
 
-// ---------------- Plugin bootstrap ----------------
+
 async function _load() {
   if (!window.Capacitor?.isNativePlatform?.()) return false
   if (_plugin) return true
@@ -128,7 +101,7 @@ async function _ensurePermission() {
   }
 }
 
-// Throws PERMISSION_DENIED if user blocked – callers can surface UI
+
 async function _requirePermission() {
   const ok = await _ensurePermission()
   if (!ok) {
@@ -160,7 +133,7 @@ async function _cancel(id) {
   } catch {}
 }
 
-// ---------------- Helpers ----------------
+
 function _pickRotating(messages) {
   if (!Array.isArray(messages) || !messages.length) return messages || ""
   return messages[new Date().getDay() % messages.length]
@@ -180,16 +153,16 @@ function _nextDateAt(hour, minute = 0) {
 
 function _nextSundayAt(hour, minute = 0) {
   const d = new Date()
-  const today = d.getDay() // 0 = Sunday
+  const today = d.getDay() 
   let days = today === 0 ? 7 : 7 - today
   d.setDate(d.getDate() + days)
   d.setHours(hour, minute, 0, 0)
   return d
 }
 
-// ============================================================
-// SCHEDULED NOTIFICATIONS (repeating)
-// ============================================================
+
+
+
 
 export async function scheduleDailyReminder(title, body, hour = 9) {
   await _load()
@@ -275,9 +248,9 @@ export async function scheduleWeeklySummary(title, body) {
   })
 }
 
-// ============================================================
-// EVENT-BASED NOTIFICATIONS (immediate / near-future)
-// ============================================================
+
+
+
 
 export async function notifyImmediate(title, body) {
   await _load()
@@ -286,10 +259,10 @@ export async function notifyImmediate(title, body) {
   return _schedule({ id: _nextEventId(), title, body })
 }
 
-// A body-t a hívónak kell vue-i18n placeholder-ekkel kiinterpolálnia
-// (pl. t("...streakRecordBody", { days })). Korábban manuális replace volt itt,
-// de ha a hívó nem adta át a paramétert a t()-be, vue-i18n már strip-pelte a
-// placeholdert → 3 szóköz maradt a notif body-ban.
+
+
+
+
 export async function notifyStreakRecord(title, body) {
   if (!getNotifPref("streak_record")) return
   return notifyImmediate(title, body)
@@ -326,11 +299,7 @@ export async function notifyFirstEntry(title, body) {
   return notifyImmediate(title, body)
 }
 
-/**
- * Ha 48+ órája nem volt aktivitás, ütemezzünk egy "hiányzol" notifot 24 óra múlva.
- * App indításkor mindig hívjuk – ha időközben a user visszajött, `lastActiveTs`
- * friss és nem lesz ütemezés. Ha nem, ütemezzük (meglévő korábbi ütemezést törölve).
- */
+
 export async function scheduleInactivity(title, body, lastActiveTs) {
   await _load()
   await _cancel(IDS.INACTIVITY)
@@ -348,9 +317,9 @@ export async function scheduleInactivity(title, body, lastActiveTs) {
   })
 }
 
-// ============================================================
-// SYNC COMPLETE (kept for HealthSync back-compat)
-// ============================================================
+
+
+
 
 export async function notifySyncComplete(count, t) {
   if (count <= 0) return
@@ -360,19 +329,11 @@ export async function notifySyncComplete(count, t) {
   )
 }
 
-// ============================================================
-// MASTER INIT (AppShell mount)
-// ============================================================
 
-/**
- * Ütemezi az összes aktív időzített értesítést + inaktivitás check.
- * Ne hívj _requirePermission-t kemény hibával – csak soft return, a Settings
- * jelzi ha denied.
- *
- * @param {(key: string, opts?: object) => string} t   - i18n t()
- * @param {(key: string) => string[] | string}      tm - i18n tm() (tömb üzenetek)
- * @param {object} ctx - opcionális: { weekSteps, weekExercises, streakDays }
- */
+
+
+
+
 export async function initLocalNotifications(t, tm, ctx = {}) {
   if (!await _load()) return
   if (!getNotifPref("enabled")) return
@@ -420,9 +381,9 @@ export async function initLocalNotifications(t, tm, ctx = {}) {
   storageSet("notif_last_active_ts", String(Date.now()))
 }
 
-// ============================================================
-// PUBLIC API
-// ============================================================
+
+
+
 
 export function useLocalNotifications() {
   return {
@@ -448,5 +409,5 @@ export function useLocalNotifications() {
   }
 }
 
-// Back-compat alias for old imports (Settings.vue, Admin.vue)
+
 export { permissionDenied as pushPermissionDenied }

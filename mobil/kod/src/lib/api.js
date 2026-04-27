@@ -2,6 +2,7 @@ import axios from "axios"
 import { storageGet, storageRemove } from "@/lib/storage"
 import { enqueueRequest } from "@/lib/offlineQueue"
 import { cacheResponse, getCachedResponse } from "@/lib/offlineCache"
+import i18n from "@/lib/i18n"
 
 const api = axios.create({
   baseURL: (import.meta.env.VITE_API_BASE_URL ?? "https://api.welfarebuddy.hu").replace(/\/$/, ""),
@@ -17,12 +18,14 @@ api.interceptors.request.use((config) => {
     config.headers = config.headers ?? {}
     config.headers.Authorization = `Bearer ${token}`
   }
+  config.headers = config.headers ?? {}
+  config.headers["Accept-Language"] = i18n.global.locale.value || "en"
   return config
 })
 
 api.interceptors.response.use(
   (res) => {
-    // GET válaszokat eltároljuk cache-be (blob-okat nem)
+    
     if (res.config.method === "get" && res.config.responseType !== "blob") {
       const rawParams = res.config.params || {}
       const sortedParams = Object.fromEntries(Object.keys(rawParams).sort().map(k => [k, rawParams[k]]))
@@ -32,11 +35,11 @@ api.interceptors.response.use(
     return res
   },
   (err) => {
-    // Hálózati hiba (nincs response, de volt request) = offline állapot
+    
     if (!err.response && err.request) {
       const { method, url, data } = err.config
 
-      // _skipQueue: a processQueue-ból jövő kéréseket NE queue-oljuk újra
+      
       if (["post", "put", "patch"].includes(method) && !err.config._skipQueue) {
         enqueueRequest(url, method, JSON.parse(data || "{}"))
         return Promise.resolve({ data: { queued: true }, status: 202, queued: true })

@@ -26,19 +26,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Mail::extend('mailtrap', function () {
-        //     $client = new MailtrapClient(new MailtrapConfig(config('services.mailtrap.key')));
-        //     return $client->emails();
-        // });
+        
         VerifyEmail::createUrlUsing(function ($notifiable) {
-            // Build a signed Laravel URL
+            
             $verifyUrl = URL::temporarySignedRoute(
                 'verification.verify',
                 Carbon::now()->addMinutes(60),
                 ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
             );
 
-            // Pass its params to your Vue frontend instead
+            
             $params = parse_url($verifyUrl, PHP_URL_QUERY);
             return "https://www.welfarebuddy.hu/verify-email?{$params}&id={$notifiable->getKey()}&hash=" . sha1($notifiable->getEmailForVerification());
         });

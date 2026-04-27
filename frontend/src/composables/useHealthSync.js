@@ -65,7 +65,7 @@ function promisify(plugin, method, ...args) {
   })
 }
 
-// Shared singleton state
+
 const pluginState = ref("checking")
 const isSyncing = ref(false)
 const syncError = ref(null)
@@ -110,8 +110,7 @@ export function useHealthSync() {
       return
     }
 
-    // iOS: requestAuthorization is idempotent – if already granted, it succeeds silently
-    // without showing a popup. This lets us detect existing permissions on app restart.
+    
     try {
       await promisify(_plugin, "requestAuthorization", READ_TYPES)
       pluginState.value = "ready"
@@ -175,7 +174,7 @@ export function useHealthSync() {
       const since = getSinceDate()
       const uploadedIds = getUploadedIds()
 
-      // Heart rate
+      
       currentStep.value = "heart_rate"
       const hrRecords = await safeQuery("heart_rate", since)
       dbg(`HR: ${hrRecords.length} records from plugin`)
@@ -192,7 +191,7 @@ export function useHealthSync() {
         }
       }
 
-      // Blood pressure
+      
       currentStep.value = "blood_pressure"
       const bpRecords = await safeQuery("blood_pressure", since)
       dbg(`BP: ${bpRecords.length} records from plugin`)
@@ -212,7 +211,7 @@ export function useHealthSync() {
         }
       }
 
-      // Weight
+      
       currentStep.value = "weight"
       const weightRecords = await safeQuery("weight", since)
       dbg(`WT: ${weightRecords.length} records from plugin`)
@@ -229,7 +228,7 @@ export function useHealthSync() {
         }
       }
 
-      // Steps – use queryAggregated (iOS stores steps as aggregated samples, not individual records)
+      
       currentStep.value = "steps"
       let stepsByDay = {}
       try {
@@ -247,7 +246,7 @@ export function useHealthSync() {
         }
       } catch (e) {
         dbg(`steps queryAggregated error: ${e?.message || e}`)
-        // Fallback: try regular query
+        
         const stepRecords = await safeQuery("steps", since)
         dbg(`STEPS fallback query: ${stepRecords.length} records`)
         for (const r of stepRecords) {
@@ -270,7 +269,7 @@ export function useHealthSync() {
         }
       }
 
-      // Activities
+      
       currentStep.value = "activity"
       const activitiesMap = await getActivitiesMap()
       const actRecords = await safeQuery("activity", since)
@@ -304,7 +303,7 @@ export function useHealthSync() {
   }
 
   function forceSync() {
-    // Clear all cached state to force full 30-day re-sync
+    
     localStorage.removeItem(LAST_SYNC_KEY)
     localStorage.removeItem("health_uploaded_ids")
     lastSyncTime.value = null

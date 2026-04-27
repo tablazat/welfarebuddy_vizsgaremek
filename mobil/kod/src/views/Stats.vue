@@ -21,7 +21,7 @@ const { isPro } = useAccess(authUser)
 const wsEvent        = inject("wsEvent", ref(null))
 const refreshTrigger = inject("refreshTrigger", ref(0))
 
-// Period selector
+
 const periods = computed(() => [
   { label: t("stats.period.day1"), days: 1, pro: false },
   { label: t("stats.period.week1"), days: 7, pro: false },
@@ -43,7 +43,7 @@ const sleepData = ref([])
 const avgHR = ref(null)
 const avgBP = ref({ systolic: null, diastolic: null })
 
-// Chart canvas refs
+
 const hrCanvas = ref(null)
 const bpCanvas = ref(null)
 const wCanvas = ref(null)
@@ -280,7 +280,7 @@ function buildExerciseChart() {
 function buildWaterChart() {
   if (!waterCanvas.value || !waterData.value.length) return
   if (waterChart) waterChart.destroy()
-  // Group by day (sum ml)
+  
   const byDay = new Map()
   waterData.value.forEach(d => {
     const iso = d.recorded_at || d.created_at
@@ -425,7 +425,7 @@ async function load() {
     if (avgBPRes.status === "fulfilled") avgBP.value = avgBPRes.value.data
     if (stepsRes.status === "fulfilled") stepsData.value = stepsRes.value.data
     if (exerciseRes.status === "fulfilled") {
-      // filter exercises to selected period
+      
       const startDate = new Date(start)
       exerciseData.value = exerciseRes.value.data.filter(e => new Date(e.begin) >= startDate)
     }
@@ -450,7 +450,7 @@ onBeforeUnmount(destroyCharts)
 watch(selectedPeriod, load)
 watch(refreshTrigger, (v, old) => { if (v !== old) load() })
 
-// WebSocket: ha jön új adat, újratöltjük a chartokat
+
 watch(wsEvent, (e) => {
   if (!e) return
   const entryType = e.type || e.data?.type
@@ -484,7 +484,7 @@ watch(wsEvent, (e) => {
       </div>
     </div>
 
-    <!-- Average summary cards -->
+    
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
       <Card class="rounded-2xl">
         <CardContent class="p-4 flex items-center gap-3">
@@ -543,7 +543,7 @@ watch(wsEvent, (e) => {
       </Card>
     </div>
 
-    <!-- Activity heatmap -->
+    
     <Card v-if="!loading && heatmapCells.length >= 7" class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -589,7 +589,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Heart rate chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -615,7 +615,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Blood pressure chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -641,7 +641,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Weight chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -667,7 +667,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Steps chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -693,7 +693,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Exercise chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -719,7 +719,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Calorie chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -745,7 +745,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Water chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -771,7 +771,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Sleep chart -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">

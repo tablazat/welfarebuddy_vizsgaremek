@@ -28,7 +28,7 @@ export async function processQueue() {
 }
 
 export function initNetworkListener() {
-  // Use Capacitor Network plugin if available (injected globally by Capacitor runtime)
+  
   const CapNet = window.Capacitor?.Plugins?.Network
 
   if (CapNet) {
@@ -45,7 +45,7 @@ export function initNetworkListener() {
     return () => { handle?.remove() }
   }
 
-  // Browser fallback
+  
   const onOnline = () => { isOnline.value = true; processQueue() }
   const onOffline = () => { isOnline.value = false }
   const onVisible = () => { if (document.visibilityState === "visible" && isOnline.value) processQueue() }

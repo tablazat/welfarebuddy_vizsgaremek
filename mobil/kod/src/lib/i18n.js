@@ -32,7 +32,7 @@ export function setLocale(locale) {
   i18n.global.locale.value = locale
   storageSet("app_locale", locale)
 
-  // Ha be van jelentkezve, frissítjük a backend-en is
+  
   const token = storageGet("auth_token")
   if (token) {
     import("./api").then(({ default: api }) => {

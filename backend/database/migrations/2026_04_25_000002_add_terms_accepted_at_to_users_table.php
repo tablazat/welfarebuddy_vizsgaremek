@@ -13,8 +13,7 @@ return new class extends Migration
             $table->timestamp('terms_accepted_at')->nullable()->after('email_verified_at');
         });
 
-        // Backfill: meglévő userek implicit elfogadták a regisztrációkor érvényes
-        // feltételeket, így a created_at értékét vesszük audit-nyomként.
+        // Backfill
         DB::table('users')
             ->whereNull('terms_accepted_at')
             ->update(['terms_accepted_at' => DB::raw('created_at')]);

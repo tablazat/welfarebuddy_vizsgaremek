@@ -131,7 +131,7 @@ async function load(silent = false) {
       loadError.value = true
     }
 
-    // Utolsó 7 nap szívritmus
+
     const end = tomorrow.value
     const startDate = new Date(selectedDate.value.toDate(tz))
     startDate.setDate(startDate.getDate() - 6)
@@ -150,8 +150,8 @@ watch(selectedDate, () => {
   _debounceTimer = setTimeout(() => load(), 300)
 })
 
-// WebSocket: ha jön új adat, frissítjük a dashboard-ot
-// wsEvent = { type: "heart_rate", data: {...entry...}, _ts }
+
+
 watch(wsEvent, (e) => {
   if (!e) return
   const entry = e.data
@@ -199,7 +199,7 @@ const isRecordStreak = computed(() => {
   return streak.value.days > 0 && streak.value.days >= (user.value.max_days || 0)
 })
 
-// ─── Streak rekord banner ─────────────────────────────────
+
 const showRecordBanner = ref(false)
 let recordBannerTimer = null
 watch([isRecordStreak, () => streak.value?.days], ([isRecord, days]) => {
@@ -239,7 +239,7 @@ function stepsColor(steps) {
   return "text-orange-500"
 }
 
-// Minibar chart data for last 7 days
+
 const barData = computed(() => {
   if (!weekHR.value.length) return []
   const byDay = {}
@@ -269,7 +269,7 @@ const barMax = computed(() => {
 <template>
   <div class="space-y-4">
 
-    <!-- Welcome row -->
+    
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
         <h2 class="text-xl font-semibold">
@@ -301,7 +301,7 @@ const barMax = computed(() => {
       </div>
     </div>
 
-    <!-- Load error retry banner -->
+    
     <div
       v-if="!loading && loadError"
       class="flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 dark:border-rose-800 dark:bg-rose-950/30 px-4 py-3"
@@ -317,7 +317,7 @@ const barMax = computed(() => {
       </Button>
     </div>
 
-    <!-- Streak rekord banner -->
+    
     <Transition name="streak-banner">
       <div
         v-if="showRecordBanner"
@@ -332,7 +332,7 @@ const barMax = computed(() => {
       </div>
     </Transition>
 
-    <!-- "Ma még nem mértél" banner -->
+    
     <div
       v-if="!loading && notMeasuredToday"
       class="flex items-center gap-3 rounded-2xl border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30 px-4 py-3 cursor-pointer"
@@ -345,10 +345,10 @@ const barMax = computed(() => {
       </div>
     </div>
 
-    <!-- Streak + stat cards -->
+    
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-      <!-- Streak -->
+      
       <Card role="region" :aria-label="$t('dashboard.streak')" class="rounded-2xl col-span-2 md:col-span-1">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -370,7 +370,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Heart rate -->
+      
       <Card role="region" :aria-label="$t('dashboard.heartRate')" class="rounded-2xl">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -404,7 +404,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Blood pressure -->
+      
       <Card role="region" :aria-label="$t('dashboard.bloodPressure')" class="rounded-2xl">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -439,7 +439,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Weight -->
+      
       <Card role="region" :aria-label="$t('dashboard.weight')" class="rounded-2xl">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -467,7 +467,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Steps – col-span-2 on md -->
+      
       <Card role="region" :aria-label="$t('dashboard.stepsToday')" class="rounded-2xl col-span-2 md:col-span-4">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -513,7 +513,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Water today – col-span-2 on md -->
+      
       <Card role="region" :aria-label="$t('dashboard.waterToday')" class="rounded-2xl col-span-2 md:col-span-4">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -555,7 +555,7 @@ const barMax = computed(() => {
         </CardContent>
       </Card>
 
-      <!-- Sleep last night – col-span-2 on md -->
+      
       <Card role="region" :aria-label="$t('dashboard.sleepLastNight')" class="rounded-2xl col-span-2 md:col-span-4">
         <CardHeader class="pb-1">
           <CardDescription class="flex items-center gap-1">
@@ -595,7 +595,7 @@ const barMax = computed(() => {
       </Card>
     </div>
 
-    <!-- Mini heart rate bar chart (7 nap) -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -631,7 +631,7 @@ const barMax = computed(() => {
       </CardContent>
     </Card>
 
-    <!-- Quick actions -->
+    
     <div class="grid grid-cols-2 gap-3">
       <Card class="rounded-2xl cursor-pointer hover:bg-muted/50 transition" @click="router.push('/app/diary')">
         <CardContent class="p-4 flex items-center gap-3">

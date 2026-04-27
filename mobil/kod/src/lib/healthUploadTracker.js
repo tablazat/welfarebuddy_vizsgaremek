@@ -10,10 +10,11 @@ export function markAsUploaded(ids) {
   localStorage.setItem(UPLOADED_IDS_KEY, JSON.stringify([...existing]))
 }
 
-/**
- * Egyedi kulcs generálása egy health rekordhoz.
- * Format: {dataType}_{startDate.toISOString()}
- */
+export function clearUploadedIds() {
+  localStorage.removeItem(UPLOADED_IDS_KEY)
+}
+
+
 export function makeRecordId(dataType, startDate) {
   const d = startDate instanceof Date ? startDate : new Date(startDate)
   return `${dataType}_${d.toISOString()}`

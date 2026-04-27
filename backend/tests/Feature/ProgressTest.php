@@ -10,10 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/ProgressController.php
- * @see CLAUDE.md session 19, 15. rész — Progress tracker „Az utad eddig" kártya
- */
+
 class ProgressTest extends TestCase
 {
     use RefreshDatabase;

@@ -64,15 +64,14 @@ class AdminController extends Controller
      */
     public function deleteUser(Request $request, User $user)
     {
-        // Ne lehessen saját magát törölni
         if ($user->id === $request->user()->id) {
-            return response()->json(['message' => 'Saját magadat nem törölheted.'], 422);
+            return response()->json(['message' => __('messages.admin.self_delete_blocked')], 422);
         }
 
         $user->tokens()->delete();
         $user->delete();
 
-        return response()->json(['message' => 'Felhasználó törölve.']);
+        return response()->json(['message' => __('messages.admin.user_deleted')]);
     }
 
     /**

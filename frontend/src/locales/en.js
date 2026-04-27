@@ -1,5 +1,5 @@
 export default {
-  // ==================== COMMON ====================
+
   common: {
     save: "Save",
     cancel: "Cancel",
@@ -20,11 +20,9 @@ export default {
     success: "Success",
     noData: "No data",
     retry: "Retry",
-    version: "v0.1",
-    beta: "en-beta",
   },
 
-  // ==================== AUTH ====================
+
   auth: {
     login: "Log in",
     register: "Register",
@@ -73,7 +71,7 @@ export default {
     termsSuffix: ".",
   },
 
-  // ==================== NAV / SHELL ====================
+
   nav: {
     dashboard: "Dashboard",
     diary: "Diary",
@@ -92,7 +90,7 @@ export default {
     appName: "WelfareBuddy",
   },
 
-  // ==================== DASHBOARD ====================
+
   dashboard: {
     goodMorning: "Good morning",
     goodDay: "Good afternoon",
@@ -133,7 +131,7 @@ export default {
     loadFailedDesc: "Couldn't fetch data. Try again.",
   },
 
-  // ==================== DIARY ====================
+
   diary: {
     title: "Diary",
     today: "Today",
@@ -296,7 +294,7 @@ export default {
     },
   },
 
-  // ==================== STATS ====================
+
   stats: {
     title: "Statistics",
     subtitle: "Health trends and averages",
@@ -354,7 +352,7 @@ export default {
     },
   },
 
-  // ==================== SUMMARY ====================
+
   summary: {
     title: "Summary",
     subtitle: "Calories burned and activity overview",
@@ -394,7 +392,7 @@ export default {
     },
   },
 
-  // ==================== PROFILE ====================
+
   profile: {
     title: "Profile",
     subtitle: "Your account details",
@@ -437,7 +435,7 @@ export default {
     bmiObese: "Obese",
   },
 
-  // ==================== SETTINGS ====================
+
   settings: {
     title: "Settings",
     subtitle: "Manage your account",
@@ -475,6 +473,8 @@ export default {
     exportDesc: "Download all your health data in JSON or CSV format",
     exportSuccess: "Export successful",
     exportError: "Export failed",
+    exportWebOnlyDesc: "Data export (JSON / CSV ZIP) is available on the web app — your browser handles the download natively.",
+    exportWebBtn: "Open in browser",
     streakFreezeTitle: "Streak freeze",
     streakFreezeDesc: "Pro feature: compensates for one missed day so your streak isn't broken. Usable once every 30 days.",
     streakFreezeBtn: "Use freeze",
@@ -525,7 +525,7 @@ export default {
     ],
   },
 
-  // ==================== UPGRADE ====================
+
   upgrade: {
     title: "Plans",
     subtitle: "Choose the right plan for you",
@@ -548,7 +548,7 @@ export default {
     demoNote: "The Pro plan is currently free to activate for demo purposes.",
   },
 
-  // ==================== ADMIN ====================
+
   admin: {
     title: "Admin panel",
     subtitle: "User and system management",
@@ -578,7 +578,7 @@ export default {
     },
   },
 
-  // ==================== LANDING ====================
+
   landing: {
     home: "Home",
     heroTagline: "Free, simple, effective",
@@ -622,7 +622,7 @@ export default {
     footerRights: "All rights reserved.",
   },
 
-  // ==================== COOKIE CONSENT ====================
+
   cookie: {
     title: "Cookies & Data",
     message: "This site uses cookies to ensure the best user experience. Your login data and preferences are stored in your browser. By clicking \"Accept\" you agree to the use of cookies.",
@@ -630,7 +630,7 @@ export default {
     decline: "Decline",
   },
 
-  // ==================== VERIFY EMAIL ====================
+
   verify: {
     title: "Verify your email",
     description: "Please verify your email address to continue.",
@@ -659,18 +659,18 @@ export default {
     checkInbox: "Check your inbox!",
   },
 
-  // ==================== OFFLINE ====================
+
   offline: {
     banner: "No internet connection – working offline",
     wsDisconnected: "Live updates not active",
   },
 
-  // ==================== STATUS ====================
+
   status: {
     live: "Live updates active",
   },
 
-  // ==================== HEALTH SYNC ====================
+
   healthSync: {
     title: "Health Sync",
     subtitle: "Automatically import data from Apple Health",
@@ -685,7 +685,7 @@ export default {
     forceSync: "Full re-sync",
   },
 
-  // ==================== NOTIFICATIONS ====================
+
   notifications: {
     syncComplete: "Sync complete",
     syncCompleteBody: "{count} new health records synced.",
@@ -704,13 +704,12 @@ export default {
     streakMilestoneBody: "You have a {days}-day streak – keep it up!",
   },
 
-  // ==================== ONBOARDING ====================
+
   onboarding: {
     welcomeTitle: "Welcome to WelfareBuddy!",
     welcomeDesc: "Let's take 30 seconds to set things up.",
     start: "Let's go!",
     heightTitle: "Your height",
-    heightDesc: "Needed for BMI calculation. You can skip this.",
     displayNameTitle: "What should we call you?",
     displayNameDesc: "Your nickname will appear on the Dashboard and in notifications.",
     displayNameLabel: "Nickname",
@@ -725,7 +724,7 @@ export default {
     doneBtn: "Go to dashboard",
   },
 
-  // ==================== SKINS ====================
+
   skins: {
     activeSkin: "Active skin",
     title: "Skins",
@@ -765,7 +764,7 @@ export default {
     founder: "Founder",
   },
 
-  // ==================== LEGAL ====================
+
   progress: {
     cardTitle: "Your journey so far",
     weightLabel: "Weight",
@@ -853,5 +852,16 @@ export default {
         "<strong>7. Governing law</strong><br>This license is governed by Hungarian law. Any disputes are subject to the jurisdiction of Hungarian courts.",
       ],
     },
+  },
+  errors: {
+    network:      "No network connection. Please check your internet.",
+    timeout:      "Request timed out. The server did not respond in time. Please try again.",
+    unauthorized: "You are not authorized for this action. Please log in again.",
+    forbidden:    "You don't have permission to do this.",
+    notFound:     "The requested data was not found.",
+    rateLimit:    "Too many requests in a row. Please wait a moment and try again.",
+    server:       "Server error. Please try again later.",
+    serverDown:   "The server is currently unavailable. Please try again later.",
+    unknown:      "An unknown error occurred.",
   },
 }

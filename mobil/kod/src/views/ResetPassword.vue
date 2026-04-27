@@ -79,7 +79,7 @@ function goToLogin() {
         <p class="text-muted-foreground text-sm mt-1">{{ $t("auth.resetPassword") }}</p>
       </div>
 
-      <!-- Success state -->
+      
       <Card v-if="done" class="rounded-2xl border-green-200 dark:border-green-800">
         <CardContent class="p-6 text-center space-y-4">
           <div class="h-14 w-14 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center mx-auto">
@@ -98,7 +98,7 @@ function goToLogin() {
         </CardContent>
       </Card>
 
-      <!-- Reset form -->
+      
       <Card v-else class="rounded-2xl">
         <CardHeader class="pb-2">
           <CardTitle class="text-lg flex items-center gap-2">

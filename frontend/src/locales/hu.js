@@ -1,5 +1,5 @@
 export default {
-  // ==================== COMMON ====================
+
   common: {
     save: "Mentés",
     cancel: "Mégse",
@@ -20,11 +20,9 @@ export default {
     success: "Sikeres",
     noData: "Nincs adat",
     retry: "Újrapróbálás",
-    version: "v0.1",
-    beta: "en-beta",
   },
 
-  // ==================== AUTH ====================
+
   auth: {
     login: "Bejelentkezés",
     register: "Regisztráció",
@@ -73,7 +71,7 @@ export default {
     termsSuffix: ".",
   },
 
-  // ==================== NAV / SHELL ====================
+
   nav: {
     dashboard: "Dashboard",
     diary: "Napló",
@@ -92,7 +90,7 @@ export default {
     appName: "WelfareBuddy",
   },
 
-  // ==================== DASHBOARD ====================
+
   dashboard: {
     goodMorning: "Jó reggelt",
     goodDay: "Jó napot",
@@ -133,7 +131,7 @@ export default {
     loadFailedDesc: "Nem sikerült lekérni az adatokat. Próbáld újra.",
   },
 
-  // ==================== DIARY ====================
+
   diary: {
     title: "Napló",
     today: "Ma",
@@ -227,7 +225,7 @@ export default {
     copyYesterdayNone: "Nincs tegnapi adat",
   },
 
-  // ==================== EXERCISE ====================
+
   exercise: {
     title: "Aktivitás",
     subtitle: "Edzések, lépésszám és aktivitáskövetés",
@@ -296,7 +294,7 @@ export default {
     },
   },
 
-  // ==================== STATS ====================
+
   stats: {
     title: "Statisztika",
     subtitle: "Egészségügyi trendek és átlagok",
@@ -354,7 +352,7 @@ export default {
     },
   },
 
-  // ==================== SUMMARY ====================
+
   summary: {
     title: "Összesítés",
     subtitle: "Elégetett kalóriák és aktivitás összegzése",
@@ -394,7 +392,7 @@ export default {
     },
   },
 
-  // ==================== PROFILE ====================
+
   profile: {
     title: "Profil",
     subtitle: "A fiókod adatai",
@@ -437,7 +435,7 @@ export default {
     bmiObese: "Elhízott",
   },
 
-  // ==================== SETTINGS ====================
+
   settings: {
     title: "Beállítások",
     subtitle: "Fiókod kezelése",
@@ -475,6 +473,8 @@ export default {
     exportDesc: "Töltsd le az összes egészségügyi adatodat JSON vagy CSV formátumban",
     exportSuccess: "Exportálás sikeres",
     exportError: "Exportálás sikertelen",
+    exportWebOnlyDesc: "Az adatexport (JSON / CSV ZIP) a webes felületen érhető el — a böngésző natívan kezeli a letöltést.",
+    exportWebBtn: "Megnyitás a böngészőben",
     streakFreezeTitle: "Sorozat fagyasztás",
     streakFreezeDesc: "Pro funkció: egyetlen kihagyott napot kompenzál, így a sorozatod nem szakad meg. 30 naponta egyszer használható.",
     streakFreezeBtn: "Fagyasztás használata",
@@ -525,7 +525,7 @@ export default {
     ],
   },
 
-  // ==================== UPGRADE ====================
+
   upgrade: {
     title: "Csomagok",
     subtitle: "Válaszd ki a számodra megfelelő csomagot",
@@ -548,7 +548,7 @@ export default {
     demoNote: "A Pro csomag jelenleg ingyenesen aktiválható demó célokra.",
   },
 
-  // ==================== ADMIN ====================
+
   admin: {
     title: "Admin felület",
     subtitle: "Felhasználók és rendszer kezelése",
@@ -578,7 +578,7 @@ export default {
     },
   },
 
-  // ==================== LANDING ====================
+
   landing: {
     home: "Főoldal",
     heroTagline: "Ingyenes, egyszerű, hatékony",
@@ -622,7 +622,7 @@ export default {
     footerRights: "Minden jog fenntartva.",
   },
 
-  // ==================== COOKIE CONSENT ====================
+
   cookie: {
     title: "Cookie-k és adatkezelés",
     message: "Az oldal sütik segítségével biztosítja a legjobb felhasználói élményt. A bejelentkezési adataidat és a beállításaidat tároljuk a böngésződben. Az \"Elfogadom\" gombra kattintva hozzájárulsz a sütik használatához.",
@@ -630,7 +630,7 @@ export default {
     decline: "Elutasítom",
   },
 
-  // ==================== VERIFY EMAIL ====================
+
   verify: {
     title: "Email megerősítése",
     description: "Kérjük, erősítsd meg az email címedet a folytatáshoz.",
@@ -659,18 +659,18 @@ export default {
     checkInbox: "Ellenőrizd a postaládádat!",
   },
 
-  // ==================== OFFLINE ====================
+
   offline: {
     banner: "Nincs internet-kapcsolat – offline módban dolgozol",
     wsDisconnected: "Valós idejű frissítés nem aktív",
   },
 
-  // ==================== STATUS ====================
+
   status: {
     live: "Valós idejű kapcsolat aktív",
   },
 
-  // ==================== HEALTH SYNC ====================
+
   healthSync: {
     title: "Egészségadatok átvétele",
     subtitle: "Adatok automatikus átvétele az Apple Health-ből",
@@ -701,7 +701,7 @@ export default {
     infoText: "Az átvétel során a telefonodon tárolt egészségadatokat áttöltjük a WelfareBuddy-ba. Minden adatot csak egyszer töltünk fel, duplikáció nem keletkezik.",
   },
 
-  // ==================== NOTIFICATIONS ====================
+
   notifications: {
     syncComplete: "Szinkronizálás kész",
     syncCompleteBody: "{count} új egészségügyi adat szinkronizálva.",
@@ -720,13 +720,12 @@ export default {
     streakMilestoneBody: "{days} napos sorozatod van – csak így tovább!",
   },
 
-  // ==================== ONBOARDING ====================
+
   onboarding: {
     welcomeTitle: "Üdvözlünk a WelfareBuddyban!",
     welcomeDesc: "Szánjunk 30 másodpercet a beállításokra.",
     start: "Gyerünk!",
     heightTitle: "A magasságod",
-    heightDesc: "A BMI számításhoz szükséges. Kihagyhatod.",
     displayNameTitle: "Hogy szólítsunk?",
     displayNameDesc: "A becenév jelenik meg a Dashboardon és az értesítésekben.",
     displayNameLabel: "Becenév",
@@ -741,7 +740,7 @@ export default {
     doneBtn: "Menj az irányítópultra",
   },
 
-  // ==================== SKINS ====================
+
   skins: {
     activeSkin: "Aktív skin",
     title: "Skinek",
@@ -781,7 +780,7 @@ export default {
     founder: "Alapító",
   },
 
-  // ==================== LEGAL ====================
+
   progress: {
     cardTitle: "Az utad eddig",
     weightLabel: "Súly",
@@ -869,5 +868,16 @@ export default {
         "<strong>7. Irányadó jog</strong><br>A jelen licencre a magyar jog az irányadó. Vitás kérdésekben a magyar bíróságok rendelkeznek joghatósággal.",
       ],
     },
+  },
+  errors: {
+    network:      "Nincs hálózati kapcsolat. Ellenőrizd az internetkapcsolatod.",
+    timeout:      "Időtúllépés — a szerver nem válaszolt időben. Próbáld újra.",
+    unauthorized: "Nincs jogosultságod ehhez a művelethez. Jelentkezz be újra.",
+    forbidden:    "Nincs jogosultságod ehhez a művelethez.",
+    notFound:     "A kért adat nem található.",
+    rateLimit:    "Túl sok kérés egymás után. Várj egy keveset és próbáld újra.",
+    server:       "Szerver hiba. Próbáld újra később.",
+    serverDown:   "A szerver jelenleg nem elérhető. Próbáld újra később.",
+    unknown:      "Ismeretlen hiba történt.",
   },
 }

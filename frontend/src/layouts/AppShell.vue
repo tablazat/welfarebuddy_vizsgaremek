@@ -73,7 +73,7 @@ const router = useRouter();
 const { t, locale } = useI18n();
 const dateLocale = computed(() => ({ hu: "hu-HU", en: "en-US", de: "de-DE" })[locale.value] || "en-US");
 
-// WebSocket
+
 const { subscribe, disconnect, connected: wsConnected } = useEcho();
 
 const tz = getLocalTimeZone();
@@ -132,7 +132,7 @@ const goNewEntry = () => {
 const sidebarOpen = ref(true);
 const profileOpen = ref(false);
 
-// User info
+
 const authUser = ref(JSON.parse(storageGet("auth_user") || "null"));
 const userName = computed(() => authUser.value?.display_name || authUser.value?.name || "Felhasználó");
 const userEmail = computed(() => authUser.value?.email || "");
@@ -150,15 +150,13 @@ const tierBadge = computed(() => {
   return null;
 });
 
-// Onboarding – alapból rejtett, csak backend megerősítés után aktiváljuk ha a
-// user tényleg új (height_cm üres). step_goal_daily/water_goal_ml DB defaulttal
-// megy, ezért alapján nem megbízható eldönteni hogy ki „új".
+
 const showOnboarding = ref(false)
 
-// HealthKit auto-sync
+
 const { init: healthInit, syncAll, forceSync, lastSyncTime } = useHealthSync();
 
-// Network listener cleanup
+
 let cleanupNetwork = null;
 
 onMounted(async () => {
@@ -167,8 +165,7 @@ onMounted(async () => {
     authUser.value = data.user;
     storageSet("auth_user", JSON.stringify(data.user));
 
-    // step_goal_daily/water_goal_ml DB default miatt mindig truthy,
-    // ezért csak a height_cm (nullable) a megbízható „már onboardolt" jel.
+    
     if (data.user?.height_cm) {
       storageSet("onboarding_done", "1");
       showOnboarding.value = false;
@@ -186,13 +183,11 @@ onMounted(async () => {
     }
   } catch {}
 
-  // Start network listener
+  
   cleanupNetwork = initNetworkListener();
   refreshQueueCount();
 
-  // Auto-sync HealthKit silently on app open
-  // First connect (no previous sync) → full 30-day sync
-  // Subsequent opens → incremental sync (since last sync)
+  
   healthInit().then(() => {
     if (!lastSyncTime.value) {
       forceSync().catch(() => {});
@@ -218,7 +213,7 @@ const closeOverlays = () => {
   searchOpen.value = false;
 };
 
-// ─── Offline queue badge ───────────────────────────────────
+
 const pendingQueueCount = ref(0)
 function refreshQueueCount() {
   try { pendingQueueCount.value = getQueue().length } catch { pendingQueueCount.value = 0 }
@@ -241,10 +236,10 @@ const logout = async () => {
 </script>
 
 <template>
-  <!-- Onboarding -->
+  
   <OnboardingModal v-if="showOnboarding" @done="showOnboarding = false" />
 
-  <!-- ===== MAIN LAYOUT (sidebar responsive — drawer on narrow viewports) ===== -->
+  
   <div class="h-screen w-screen bg-muted/40 p-2 sm:p-3 md:p-4">
     <div class="h-full w-full overflow-hidden rounded-2xl border bg-background shadow-sm relative">
       <!-- Skin animated background layer -->
@@ -263,7 +258,6 @@ const logout = async () => {
                   <div class="grid flex-1 text-left text-sm leading-tight">
                     <img src="@/assets/welfarebuddy_logo.svg" alt="WelfareBuddy" class="h-7 shrink-0" />
                     <span class="truncate font-semibold text-sidebar-primary">{{ $t("nav.appName") }}</span>
-                    <span class="truncate text-xs text-sidebar-foreground/60">v0.1 beta</span>
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -410,11 +404,6 @@ const logout = async () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              <div class="mt-2 px-3 text-[11px] text-muted-foreground flex items-center justify-between">
-                <span>v0.1</span>
-                <span>en-beta</span>
-              </div>
             </div>
           </SidebarFooter>
 
@@ -422,7 +411,7 @@ const logout = async () => {
         </Sidebar>
 
         <SidebarInset class="overflow-hidden flex flex-col">
-          <!-- Offline / WS banners -->
+          
           <div
             v-if="!isOnline"
             class="flex items-center gap-2 px-4 py-1.5 text-xs bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-b border-yellow-500/20"
@@ -444,7 +433,7 @@ const logout = async () => {
             <div class="flex items-center gap-2 min-w-0">
               <SidebarTrigger class="-ml-1" />
               <div class="font-medium truncate">{{ pageTitle }}</div>
-              <!-- Connection status indicator -->
+              
               <span
                 class="w-2 h-2 rounded-full shrink-0"
                 :class="!isOnline ? 'bg-red-500' : wsConnected ? 'bg-green-500' : 'bg-yellow-500 animate-pulse'"
@@ -475,7 +464,7 @@ const logout = async () => {
             </div>
           </div>
 
-          <!-- Mobile search modal -->
+          
           <div v-if="searchOpen" class="fixed inset-0 z-50">
             <div class="absolute inset-0 bg-black/40" @click="closeSearch" />
             <div

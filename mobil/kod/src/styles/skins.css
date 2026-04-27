@@ -1,8 +1,6 @@
-/* ============================================
-   SKIN EFFECTS — vizuális effektek skinekhez
-   ============================================ */
 
-/* --- Közös segéd animációk --- */
+
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -72,9 +70,7 @@
   100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
 }
 
-/* ============================================
-   OCEAN — hullám effekt + víz csillogás
-   ============================================ */
+
 .skin-ocean [data-sidebar="sidebar"] {
   overflow: hidden;
 }
@@ -97,9 +93,7 @@
   box-shadow: 0 0 15px oklch(0.6 0.12 230 / 0.08);
 }
 
-/* ============================================
-   FOREST — természetes zöld fény
-   ============================================ */
+
 .skin-forest [data-sidebar="sidebar"] {
   overflow: hidden;
 }
@@ -122,9 +116,7 @@
   box-shadow: 0 0 12px oklch(0.55 0.12 145 / 0.06);
 }
 
-/* ============================================
-   SUNSET — meleg arany fény + gradient
-   ============================================ */
+
 .skin-sunset [data-sidebar="sidebar"]::after {
   content: "";
   position: absolute;
@@ -142,9 +134,7 @@
   box-shadow: 0 0 15px oklch(0.7 0.15 50 / 0.08);
 }
 
-/* ============================================
-   EMBER — tűz effekt, lángoló szegélyek
-   ============================================ */
+
 .skin-ember [data-sidebar="sidebar"] {
   overflow: hidden;
 }
@@ -167,9 +157,7 @@
   animation: fire-dance 3s ease-in-out infinite;
 }
 
-/* ============================================
-   AMETHYST — kristály csillogás
-   ============================================ */
+
 .skin-amethyst .rounded-2xl.border {
   position: relative;
   overflow: hidden;
@@ -194,9 +182,7 @@
   box-shadow: inset -1px 0 15px oklch(0.5 0.2 290 / 0.08);
 }
 
-/* ============================================
-   GOLDEN — arany csillogás + fényes sweep
-   ============================================ */
+
 .skin-golden .rounded-2xl.border {
   position: relative;
   overflow: hidden;
@@ -233,9 +219,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   PLATINUM — fém csillanás + króm effekt
-   ============================================ */
+
 .skin-platinum .rounded-2xl.border {
   position: relative;
   overflow: hidden;
@@ -259,9 +243,7 @@
   z-index: 1;
 }
 
-/* ============================================
-   AURORA — sarki fény animáció
-   ============================================ */
+
 .skin-aurora [data-sidebar="sidebar"] {
   overflow: hidden;
 }
@@ -286,9 +268,7 @@
   box-shadow: 0 0 20px oklch(0.6 0.12 180 / 0.08);
 }
 
-/* ============================================
-   NEON — cyberpunk neon glow + villogás
-   ============================================ */
+
 .skin-neon .rounded-2xl.border {
   box-shadow: 0 0 10px oklch(0.6 0.25 310 / 0.15),
               0 0 20px oklch(0.5 0.2 310 / 0.08);
@@ -312,9 +292,7 @@
   box-shadow: 0 0 10px oklch(0.6 0.3 320 / 0.5);
 }
 
-/* ============================================
-   SAKURA — cseresznyevirág rózsaszín glow
-   ============================================ */
+
 .skin-sakura .rounded-2xl.border {
   box-shadow: 0 0 12px oklch(0.78 0.08 350 / 0.1);
   position: relative;
@@ -351,9 +329,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   ARCTIC — jég effekt, fagyos szegélyek
-   ============================================ */
+
 .skin-arctic .rounded-2xl.border {
   animation: frost-pulse 4s ease-in-out infinite;
 }
@@ -376,9 +352,7 @@
   animation: shimmer 3s ease-in-out infinite;
 }
 
-/* ============================================
-   LAVENDER — lágy lila ambient
-   ============================================ */
+
 .skin-lavender .rounded-2xl.border {
   box-shadow: 0 0 15px oklch(0.7 0.1 290 / 0.08);
 }
@@ -397,9 +371,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   MIDNIGHT — csillag effekt + arany glow
-   ============================================ */
+
 .skin-midnight .rounded-2xl.border {
   box-shadow: 0 0 10px oklch(0.75 0.12 85 / 0.08);
   position: relative;
@@ -440,9 +412,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   ROSEGOLD — rózsaarany csillogás
-   ============================================ */
+
 .skin-rosegold .rounded-2xl.border {
   position: relative;
   overflow: hidden;
@@ -466,9 +436,7 @@
   z-index: 1;
 }
 
-/* ============================================
-   CORAL — buborék effekt + tenger csillogás
-   ============================================ */
+
 .skin-coral .rounded-2xl.border {
   box-shadow: 0 0 12px oklch(0.65 0.12 180 / 0.08);
 }
@@ -488,9 +456,7 @@
   animation: shimmer 3.5s ease-in-out infinite;
 }
 
-/* ============================================
-   MOCHA — meleg kávé gőz effekt
-   ============================================ */
+
 .skin-mocha .rounded-2xl.border {
   box-shadow: 0 0 12px oklch(0.5 0.06 60 / 0.08);
 }
@@ -509,9 +475,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   OG — retro scanline effekt
-   ============================================ */
+
 .skin-og .rounded-2xl.border {
   box-shadow: 0 0 10px oklch(0.7 0.1 70 / 0.08);
 }
@@ -529,9 +493,7 @@
   pointer-events: none;
 }
 
-/* ============================================
-   VETERAN — military badge glow
-   ============================================ */
+
 .skin-veteran .rounded-2xl.border {
   box-shadow: 0 0 10px oklch(0.55 0.08 120 / 0.08);
   position: relative;
@@ -554,9 +516,7 @@
   z-index: 1;
 }
 
-/* ============================================
-   FOUNDER — királyi arany csillogás + deep glow
-   ============================================ */
+
 .skin-founder .rounded-2xl.border {
   position: relative;
   overflow: hidden;
@@ -601,12 +561,9 @@
 }
 
 
-/* ════════════════════════════════════════════════════════════════
-   SKIN-BG — animated background container with particle spans
-   Uses 20 <span> elements in .skin-bg for layered animations
-   ════════════════════════════════════════════════════════════════ */
 
-/* --- Base: hidden by default --- */
+
+
 .skin-bg {
   position: absolute;
   inset: 0;
@@ -618,11 +575,11 @@
   position: absolute;
   display: block;
   pointer-events: none;
-  animation-fill-mode: backwards; /* prevents particles sitting at top during delay */
+  animation-fill-mode: backwards; 
 }
 
 
-/* --- Foreground layer: particles floating OVER content (pro/streak/milestone only) --- */
+
 .skin-fg {
   position: absolute;
   inset: 0;
@@ -636,9 +593,7 @@
   pointer-events: none;
 }
 
-/* ═══════════════════════════════════════
-   FOREGROUND PARTICLES — ember sparks over content
-   ═══════════════════════════════════════ */
+
 .skin-ember .skin-fg span:nth-child(1),
 .skin-ember .skin-fg span:nth-child(2),
 .skin-ember .skin-fg span:nth-child(3),
@@ -651,7 +606,7 @@
 .skin-ember .skin-fg span:nth-child(3) { width:12px; height:12px; left:75%; background:oklch(0.85 0.22 50/0.5); box-shadow: 0 0 16px 6px oklch(0.80 0.25 45/0.4); animation: ember-rise 5s ease-out infinite 0s; }
 .skin-ember .skin-fg span:nth-child(4) { width:7px;  height:7px;  left:35%; background:oklch(0.78 0.26 38/0.4); box-shadow: 0 0 10px 4px oklch(0.75 0.28 35/0.3); animation: ember-sway 8s ease-out infinite 2s; }
 
-/* Arctic snowflakes floating over content */
+
 .skin-arctic .skin-fg span:nth-child(1),
 .skin-arctic .skin-fg span:nth-child(2),
 .skin-arctic .skin-fg span:nth-child(3) {
@@ -664,7 +619,7 @@
 .skin-arctic .skin-fg span:nth-child(2) { width:10px; height:10px; left:60%; animation: snowfall 11s linear infinite 3s; }
 .skin-arctic .skin-fg span:nth-child(3) { width:16px; height:16px; left:80%; animation: snowfall 7s linear infinite 5s; }
 
-/* Sakura petals floating over content */
+
 .skin-sakura .skin-fg span:nth-child(1),
 .skin-sakura .skin-fg span:nth-child(2),
 .skin-sakura .skin-fg span:nth-child(3) {
@@ -676,7 +631,7 @@
 .skin-sakura .skin-fg span:nth-child(2) { width:14px; height:16px; left:55%; background:oklch(0.82 0.12 345/0.4); animation: petal-drift 9s ease-in-out infinite 4s; }
 .skin-sakura .skin-fg span:nth-child(3) { width:20px; height:22px; left:80%; background:oklch(0.88 0.15 355/0.5); animation: petal-drift 13s ease-in-out infinite 0s; }
 
-/* Coral bubbles floating over content */
+
 .skin-coral .skin-fg span:nth-child(1),
 .skin-coral .skin-fg span:nth-child(2),
 .skin-coral .skin-fg span:nth-child(3) {
@@ -690,7 +645,7 @@
 .skin-coral .skin-fg span:nth-child(2) { width:12px; height:12px; left:55%; animation: bubble-rise 11s ease-out infinite 3s; }
 .skin-coral .skin-fg span:nth-child(3) { width:18px; height:18px; left:78%; animation: bubble-rise 8s ease-out infinite 5s; }
 
-/* Coral fish swimming over content */
+
 .skin-coral .skin-fg span:nth-child(4) {
   width:28px; height:14px; top:30%; left:0;
   border-radius: 50% 0 50% 50%;
@@ -720,7 +675,7 @@
   animation: fish-swim-back 20s linear infinite 2s;
 }
 
-/* Golden dust floating over content */
+
 .skin-golden .skin-fg span:nth-child(1),
 .skin-golden .skin-fg span:nth-child(2),
 .skin-golden .skin-fg span:nth-child(3) {
@@ -732,7 +687,7 @@
 .skin-golden .skin-fg span:nth-child(2) { width:9px; height:9px; top:50%; left:60%; animation: gold-float 5s ease-in-out infinite 2s; }
 .skin-golden .skin-fg span:nth-child(3) { width:6px; height:6px; top:70%; left:80%; animation: gold-float 7s ease-in-out infinite 1s; }
 
-/* Founder sparkles floating over content */
+
 .skin-founder .skin-fg span:nth-child(1),
 .skin-founder .skin-fg span:nth-child(2),
 .skin-founder .skin-fg span:nth-child(3),
@@ -747,7 +702,7 @@
 .skin-founder .skin-fg span:nth-child(3) { top:60%; left:20%; animation: royal-sparkle 3s ease-in-out infinite 2s; }
 .skin-founder .skin-fg span:nth-child(4) { top:30%; left:80%; animation: royal-sparkle 4.5s ease-in-out infinite 0.5s; }
 
-/* Midnight shooting stars over content */
+
 .skin-midnight .skin-fg span:nth-child(1) {
   top: 15%; left: 10%;
   height: 2px; width: 0;
@@ -757,7 +712,7 @@
   animation: shooting-star 7s ease-in infinite 3s;
 }
 
-/* Neon scan line over content */
+
 .skin-neon .skin-fg span:nth-child(1) {
   left: 0; right: 0; height: 2px; top: -5%;
   background: linear-gradient(90deg, transparent 20%, oklch(0.65 0.30 310 / 0.4) 50%, transparent 80%);
@@ -765,9 +720,7 @@
   animation: neon-scan 6s linear infinite 2s;
 }
 
-/* ═══════════════════════════════════════
-   OCEAN — realistic animated waves
-   ═══════════════════════════════════════ */
+
 @keyframes ocean-wave-1 {
   0%   { transform: translateX(0) translateY(0); }
   50%  { transform: translateX(-8%) translateY(-8px); }
@@ -788,7 +741,7 @@
   50% { opacity: 1; }
 }
 
-/* Ocean — FREE: subtle waves only, no sparkles */
+
 .skin-ocean .skin-bg span:nth-child(1) {
   bottom: -2%;
   left: -10%;
@@ -837,9 +790,7 @@
   );
 }
 
-/* ═══════════════════════════════════════
-   MIDNIGHT GOLD — starry sky + shooting stars
-   ═══════════════════════════════════════ */
+
 @keyframes star-pulse-a { 0%, 100% { opacity: 0; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 @keyframes star-pulse-b { 0%, 100% { opacity: 0; transform: scale(1); } 50% { opacity: 0.9; transform: scale(0.6); } }
 @keyframes shooting-star {
@@ -869,7 +820,7 @@
   background: oklch(0.95 0.08 85);
   box-shadow: 0 0 10px 4px oklch(0.90 0.10 85 / 0.7);
 }
-/* MIDNIGHT — PRO: MEGA starry sky */
+
 .skin-midnight .skin-bg span:nth-child(1)  { width:8px;  height:8px;  top:8%;  left:12%; animation: star-pulse-a 2.5s ease-in-out infinite 0s; }
 .skin-midnight .skin-bg span:nth-child(2)  { width:10px; height:10px; top:15%; left:35%; animation: star-pulse-b 3s ease-in-out infinite 0.5s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
 .skin-midnight .skin-bg span:nth-child(3)  { width:6px;  height:6px;  top:5%;  left:55%; animation: star-pulse-a 3s ease-in-out infinite 1s; }
@@ -886,7 +837,7 @@
 .skin-midnight .skin-bg span:nth-child(14) { width:10px; height:10px; top:60%; left:75%; animation: star-pulse-b 2s ease-in-out infinite 0.4s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
 .skin-midnight .skin-bg span:nth-child(15) { width:6px;  height:6px;  top:90%; left:30%; animation: star-pulse-a 2.8s ease-in-out infinite 1.3s; }
 .skin-midnight .skin-bg span:nth-child(16) { width:8px;  height:8px;  top:50%; left:5%;  animation: star-pulse-b 2.8s ease-in-out infinite 0.9s; }
-/* Shooting stars — MEGA */
+
 .skin-midnight .skin-bg span:nth-child(17) {
   top: 10%; left: 20%;
   height: 3px; width: 0;
@@ -904,9 +855,7 @@
   animation: shooting-star 7s ease-in infinite 4s;
 }
 
-/* ═══════════════════════════════════════
-   EMBER — rising fire particles + glow
-   ═══════════════════════════════════════ */
+
 @keyframes ember-rise {
   0% { transform: translateY(0) scale(1); opacity: 0; }
   10% { opacity: 1; }
@@ -934,7 +883,7 @@
   border-radius: 50%;
   bottom: 0;
 }
-/* EMBER — STREAK: MEGA fire particles */
+
 .skin-ember .skin-bg span:nth-child(1)  { width:16px; height:16px; left:10%; background:oklch(0.80 0.25 40); box-shadow: 0 0 20px 8px oklch(0.75 0.28 35/0.8); animation: ember-rise 3.5s ease-out infinite 0s; }
 .skin-ember .skin-bg span:nth-child(2)  { width:12px; height:12px; left:25%; background:oklch(0.75 0.28 30); box-shadow: 0 0 18px 6px oklch(0.70 0.30 28/0.7); animation: ember-sway 4s ease-out infinite 0.3s; }
 .skin-ember .skin-bg span:nth-child(3)  { width:20px; height:20px; left:40%; background:oklch(0.85 0.22 50); box-shadow: 0 0 25px 10px oklch(0.80 0.25 45/0.8); animation: ember-rise 5s ease-out infinite 0.8s; }
@@ -947,7 +896,7 @@
 .skin-ember .skin-bg span:nth-child(10) { width:12px; height:12px; left:78%; background:oklch(0.72 0.28 32); box-shadow: 0 0 18px 6px oklch(0.68 0.30 28/0.7); animation: ember-sway 4.5s ease-out infinite 3s; }
 .skin-ember .skin-bg span:nth-child(11) { width:18px; height:18px; left:35%; background:oklch(0.80 0.25 48); box-shadow: 0 0 22px 8px oklch(0.78 0.24 45/0.7); animation: ember-rise 5s ease-out infinite 2s; }
 .skin-ember .skin-bg span:nth-child(12) { width:14px; height:14px; left:92%; background:oklch(0.76 0.26 36); box-shadow: 0 0 20px 7px oklch(0.72 0.28 33/0.7); animation: ember-sway 3.5s ease-out infinite 0.8s; }
-/* Bottom fire glow — MEGA */
+
 .skin-ember .skin-bg span:nth-child(13) {
   bottom: 0; left: 0; right: 0; height: 50%;
   background: linear-gradient(0deg,
@@ -958,9 +907,7 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* ═══════════════════════════════════════
-   ARCTIC — falling snowflakes
-   ═══════════════════════════════════════ */
+
 @keyframes snowfall {
   0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.8; }
@@ -988,7 +935,7 @@
   background: oklch(0.98 0.02 220);
   box-shadow: 0 0 14px 5px oklch(0.92 0.06 220 / 0.7);
 }
-/* ARCTIC — PRO: MEGA blizzard */
+
 .skin-arctic .skin-bg span:nth-child(1)  { width:16px; height:16px; left:5%;  animation: snowfall 6s linear infinite 0s; }
 .skin-arctic .skin-bg span:nth-child(2)  { width:12px; height:12px; left:15%; animation: snowfall 8s linear infinite 0.8s; }
 .skin-arctic .skin-bg span:nth-child(3)  { width:20px; height:20px; left:25%; animation: snowfall 5.5s linear infinite 1.5s; }
@@ -1004,15 +951,13 @@
 .skin-arctic .skin-bg span:nth-child(13) { width:22px; height:22px; left:50%; animation: snowfall 5.5s linear infinite 1.2s; }
 .skin-arctic .skin-bg span:nth-child(14) { width:15px; height:15px; left:70%; animation: snowfall 8s linear infinite 2.5s; }
 .skin-arctic .skin-bg span:nth-child(15) { width:18px; height:18px; left:90%; animation: snowfall 6.5s linear infinite 1.8s; }
-/* Frosty top gradient — MEGA */
+
 .skin-arctic .skin-bg span:nth-child(16) {
   top: 0; left: 0; right: 0; height: 45%;
   background: linear-gradient(180deg, oklch(0.90 0.06 220 / 0.20), transparent);
 }
 
-/* ═══════════════════════════════════════
-   SAKURA — falling cherry blossom petals
-   ═══════════════════════════════════════ */
+
 @keyframes petal-drift {
   0% { transform: translateY(-20px) translateX(0) rotate(0deg) scale(1); opacity: 0; }
   10% { opacity: 0.9; }
@@ -1035,7 +980,7 @@
   border-radius: 50% 0 50% 50%;
   box-shadow: 0 0 12px 4px oklch(0.85 0.12 350 / 0.6);
 }
-/* SAKURA — PRO: MEGA cherry blossom storm */
+
 .skin-sakura .skin-bg span:nth-child(1)  { width:22px; height:26px; left:8%;  background:oklch(0.85 0.14 350/0.9); animation: petal-drift 8s ease-in-out infinite 0s; }
 .skin-sakura .skin-bg span:nth-child(2)  { width:18px; height:22px; left:18%; background:oklch(0.82 0.12 345/0.8); animation: petal-drift 10s ease-in-out infinite 1s; }
 .skin-sakura .skin-bg span:nth-child(3)  { width:24px; height:28px; left:30%; background:oklch(0.88 0.15 355/0.9); animation: petal-drift 7s ease-in-out infinite 2s; }
@@ -1046,15 +991,13 @@
 .skin-sakura .skin-bg span:nth-child(8)  { width:20px; height:24px; left:88%; background:oklch(0.85 0.12 348/0.8); animation: petal-drift 9.5s ease-in-out infinite 2.5s; }
 .skin-sakura .skin-bg span:nth-child(9)  { width:24px; height:28px; left:25%; background:oklch(0.86 0.13 352/0.7); animation: petal-drift 12s ease-in-out infinite 4s; }
 .skin-sakura .skin-bg span:nth-child(10) { width:18px; height:22px; left:60%; background:oklch(0.84 0.11 345/0.8); animation: petal-drift 8s ease-in-out infinite 1.5s; }
-/* Pink ambient glow — MEGA */
+
 .skin-sakura .skin-bg span:nth-child(11) {
   top: 0; left: 0; right: 0; height: 50%;
   background: radial-gradient(ellipse at 50% 0%, oklch(0.85 0.10 350 / 0.22), transparent 70%);
 }
 
-/* ═══════════════════════════════════════
-   AURORA — flowing northern lights bands
-   ═══════════════════════════════════════ */
+
 @keyframes aurora-band-1 {
   0%   { transform: translateX(-5%) skewX(-3deg) scaleY(1); opacity: 0.4; }
   33%  { transform: translateX(3%) skewX(2deg) scaleY(1.3); opacity: 0.7; }
@@ -1103,9 +1046,7 @@
   animation: aurora-band-1 18s ease-in-out infinite reverse;
 }
 
-/* ═══════════════════════════════════════
-   NEON — scan line + grid + glow
-   ═══════════════════════════════════════ */
+
 @keyframes neon-scan {
   0% { top: -5%; }
   100% { top: 105%; }
@@ -1130,9 +1071,7 @@
   box-shadow: 0 0 15px oklch(0.55 0.25 310 / 0.4);
 }
 
-/* ═══════════════════════════════════════
-   FOREST — light rays through canopy
-   ═══════════════════════════════════════ */
+
 @keyframes forest-ray {
   0%, 100% { opacity: 0.15; }
   50% { opacity: 0.4; }
@@ -1146,25 +1085,23 @@
   background: linear-gradient(180deg, oklch(0.70 0.12 145 / 0.08), transparent 80%);
   transform-origin: top center;
 }
-/* Forest — FREE: subtle light rays */
+
 .skin-forest .skin-bg span:nth-child(1) { left: 20%; width: 25px; transform: rotate(15deg); animation: forest-ray 8s ease-in-out infinite 0s; }
 .skin-forest .skin-bg span:nth-child(2) { left: 50%; width: 20px; transform: rotate(-8deg); animation: forest-ray 10s ease-in-out infinite 2s; }
 .skin-forest .skin-bg span:nth-child(3) { left: 75%; width: 22px; transform: rotate(5deg); animation: forest-ray 9s ease-in-out infinite 4s; }
-/* Ground mist */
+
 .skin-forest .skin-bg span:nth-child(4) {
   bottom: 0; left: 0; right: 0; height: 15%;
   background: linear-gradient(0deg, oklch(0.50 0.10 145 / 0.06), transparent);
 }
 
-/* ═══════════════════════════════════════
-   SUNSET — animated sun + gradient sky
-   ═══════════════════════════════════════ */
+
 @keyframes sunset-pulse {
   0%, 100% { transform: scale(1); opacity: 0.6; }
   50% { transform: scale(1.1); opacity: 0.8; }
 }
 
-/* Sunset — FREE: gentle gradient + small sun */
+
 .skin-sunset .skin-bg span:nth-child(1) {
   inset: 0;
   background: linear-gradient(180deg,
@@ -1183,9 +1120,7 @@
   animation: sunset-pulse 6s ease-in-out infinite;
 }
 
-/* ═══════════════════════════════════════
-   CORAL — rising bubbles
-   ═══════════════════════════════════════ */
+
 @keyframes bubble-rise {
   0% { transform: translateY(0) scale(0.5); opacity: 0; }
   15% { opacity: 0.5; }
@@ -1214,13 +1149,13 @@
 .skin-coral .skin-bg span:nth-child(6) { width:16px; height:16px; left:85%; animation: bubble-rise 8.5s ease-out infinite 1.5s; }
 .skin-coral .skin-bg span:nth-child(7) { width:20px; height:20px; left:35%; animation: bubble-rise 9.5s ease-out infinite 4s; }
 .skin-coral .skin-bg span:nth-child(8) { width:14px; height:14px; left:65%; animation: bubble-rise 7.5s ease-out infinite 2s; }
-/* Underwater gradient */
+
 .skin-coral .skin-bg span:nth-child(9) {
   bottom: 0; left: 0; right: 0; height: 40%;
   background: linear-gradient(0deg, oklch(0.45 0.15 180 / 0.10), transparent);
 }
 
-/* Fish swimming keyframes */
+
 @keyframes fish-swim {
   0%   { transform: translateX(-60px); opacity: 0; }
   5%   { opacity: 0.85; }
@@ -1234,9 +1169,7 @@
   100% { transform: translateX(-110vw) scaleX(-1); opacity: 0; }
 }
 
-/* ═══════════════════════════════════════
-   GOLDEN — floating gold dust particles
-   ═══════════════════════════════════════ */
+
 @keyframes gold-float {
   0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
   25% { transform: translateY(-15px) translateX(8px); opacity: 0.8; }
@@ -1265,9 +1198,7 @@
 .skin-golden .skin-bg span:nth-child(7) { width:10px; height:10px; top:40%; left:90%; animation: gold-float 4s ease-in-out infinite 2.5s; }
 .skin-golden .skin-bg span:nth-child(8) { width:7px; height:7px; top:85%; left:10%; animation: gold-float 7s ease-in-out infinite 4s; }
 
-/* ═══════════════════════════════════════
-   FOUNDER — royal sparkle cascade
-   ═══════════════════════════════════════ */
+
 @keyframes royal-sparkle {
   0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
   50% { opacity: 1; transform: scale(1) rotate(180deg); }

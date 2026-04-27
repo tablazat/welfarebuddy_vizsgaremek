@@ -21,9 +21,9 @@ const loading = ref(false)
 const activities = ref([])
 const exercises = ref([])
 const steps = ref([])
-const userWeight = ref(70) // default kg, felülírjuk ha van adat
+const userWeight = ref(70) 
 
-// Health vitals trend
+
 const hrCurrent = ref(null)
 const hrPrev = ref(null)
 const bpCurrentSys = ref(null)
@@ -31,7 +31,7 @@ const bpPrevSys = ref(null)
 const wCurrent = ref(null)
 const wPrev = ref(null)
 
-// Időszak
+
 const allPeriods = computed(() => [
   { label: t("summary.period.today"), days: 1 },
   { label: t("summary.period.week1"), days: 7 },
@@ -40,38 +40,38 @@ const allPeriods = computed(() => [
 ])
 const selectedPeriod = ref(7)
 
-// MET értékek tevékenység type alapján
-// https://sites.google.com/site/compendiumofphysicalactivities/
+
+
 const metValues = {
-  // Kardió
+  
   running: 9.8, "running.treadmill": 9.0, biking: 7.5, "biking.stationary": 6.8,
   walking: 3.5, hiking: 6.0, elliptical: 5.0, stair_climbing: 9.0,
   "stair_climbing.machine": 9.0, jump_rope: 12.3, mixed_metabolic_cardio: 6.0,
-  // Erősítés
+  
   strength_training: 6.0, "strength_training.functional": 5.0, calisthenics: 5.0,
   weightlifting: 6.0, core_training: 4.0, crossfit: 8.0, bootcamp: 7.0,
-  // Labdasportok
+  
   basketball: 6.5, "football.soccer": 7.0, "football.american": 8.0,
   "football.australian": 7.0, volleyball: 4.0, handball: 8.0, tennis: 7.3,
   table_tennis: 4.0, badminton: 5.5, baseball: 5.0, softball: 5.0,
   cricket: 5.0, rugby: 8.3, hockey: 8.0, "hockey.roller": 7.0,
   lacrosse: 8.0, squash: 7.3, racquetball: 7.0, pickleball: 6.0, water_polo: 10.0,
-  // Vízi sportok
+  
   swimming: 6.0, "swimming.pool": 5.8, "swimming.open_water": 7.0,
   surfing: 3.0, sailing: 3.0, scuba_diving: 7.0, water_fitness: 5.3,
   water_sports: 5.0, paddle_sports: 5.0,
-  // Téli sportok
+  
   skiing: 7.0, "skiing.cross_country": 9.0, "skiing.downhill": 5.3,
   snowboarding: 5.3, snowshoeing: 8.0, snow_sports: 5.0, ice_skating: 7.0, curling: 4.0,
-  // Harcművészet
+  
   boxing: 7.8, kickboxing: 7.0, martial_arts: 7.0, fencing: 6.0, wrestling: 6.0,
-  // Elme & Test
+  
   yoga: 3.0, pilates: 3.0, meditation: 1.0, tai_chi: 3.0,
   guided_breathing: 1.0, stretching: 2.3, flexibility: 2.5, barre: 3.5,
   cooldown: 2.0, preparation_and_recovery: 2.0,
-  // Tánc
+  
   dancing: 5.0, "dancing.social": 4.5, "dancing.cardio": 7.0,
-  // Egyéb
+  
   other: 4.0, play: 4.0, fishing: 2.5, hunting: 5.0, horseback_riding: 4.0,
   golf: 3.5, archery: 3.5, bowling: 3.0, gymnastics: 5.5,
   track_and_field: 6.0, paragliding: 3.5, rock_climbing: 8.0,
@@ -80,7 +80,7 @@ const metValues = {
   wheelchair: 3.0, "wheelchair.walkpace": 3.5, "wheelchair.runpace": 6.0,
 }
 
-// Lépés MET: ~3.5 (walking pace) - becslés: 0.04 kcal/lépés
+
 const STEP_KCAL = 0.04
 
 function getActivityType(activityId) {
@@ -98,7 +98,7 @@ function calcExerciseKcal(ex) {
   const met = metValues[type] || 4.0
   const durationHours = (new Date(ex.end) - new Date(ex.begin)) / 3600000
   if (durationHours <= 0) return 0
-  // kcal = MET × testsúly (kg) × idő (óra)
+  
   return met * userWeight.value * durationHours
 }
 
@@ -115,7 +115,7 @@ function formatDuration(mins) {
   return m > 0 ? `${h}h ${m}m` : `${h}h`
 }
 
-// Szűrt adatok az időszak alapján
+
 const filteredExercises = computed(() => {
   const cutoff = new Date()
   cutoff.setDate(cutoff.getDate() - selectedPeriod.value + 1)
@@ -130,7 +130,7 @@ const filteredSteps = computed(() => {
   return steps.value.filter(s => s.recorded_at >= cutoffStr)
 })
 
-// Összesítések
+
 const totalExerciseKcal = computed(() => {
   return Math.round(filteredExercises.value.reduce((sum, ex) => sum + calcExerciseKcal(ex), 0))
 })
@@ -151,7 +151,7 @@ const totalSteps = computed(() => {
 
 const exerciseCount = computed(() => filteredExercises.value.length)
 
-// Tevékenység szerinti bontás
+
 const breakdownByActivity = computed(() => {
   const map = {}
   for (const ex of filteredExercises.value) {
@@ -165,7 +165,7 @@ const breakdownByActivity = computed(() => {
   return Object.values(map).sort((a, b) => b.kcal - a.kcal)
 })
 
-// Napi bontás (utolsó 7 nap max)
+
 const dailyBreakdown = computed(() => {
   const days = Math.min(selectedPeriod.value, 30)
   const result = []
@@ -202,19 +202,19 @@ function avg(arr) {
 }
 
 const hrTrend = computed(() => {
-  if (hrCurrent.value == null || hrPrev.value == null) return null
+  if (!Number.isFinite(hrCurrent.value) || !Number.isFinite(hrPrev.value)) return null
   const diff = hrCurrent.value - hrPrev.value
   return { diff: Math.round(diff * 10) / 10, up: diff > 0.5, down: diff < -0.5 }
 })
 
 const bpTrend = computed(() => {
-  if (bpCurrentSys.value == null || bpPrevSys.value == null) return null
+  if (!Number.isFinite(bpCurrentSys.value) || !Number.isFinite(bpPrevSys.value)) return null
   const diff = bpCurrentSys.value - bpPrevSys.value
   return { diff: Math.round(diff * 10) / 10, up: diff > 0.5, down: diff < -0.5 }
 })
 
 const wTrend = computed(() => {
-  if (wCurrent.value == null || wPrev.value == null) return null
+  if (!Number.isFinite(wCurrent.value) || !Number.isFinite(wPrev.value)) return null
   const diff = wCurrent.value - wPrev.value
   return { diff: Math.round(diff * 10) / 10, up: diff > 0.05, down: diff < -0.05 }
 })
@@ -222,12 +222,12 @@ const wTrend = computed(() => {
 async function loadAll() {
   loading.value = true
   try {
-    // Current period date range
+    
     const endDate = new Date()
     endDate.setDate(endDate.getDate() + 1)
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - selectedPeriod.value + 1)
-    // Previous period
+    
     const prevEndDate = new Date(startDate)
     const prevStartDate = new Date(startDate)
     prevStartDate.setDate(prevStartDate.getDate() - selectedPeriod.value)
@@ -254,10 +254,11 @@ async function loadAll() {
     if (wRes.status === "fulfilled" && wRes.value.data?.weight) {
       userWeight.value = wRes.value.data.weight
     }
-    if (hrCurRes.status === "fulfilled") hrCurrent.value = hrCurRes.value.data
-    if (hrPrevRes.status === "fulfilled") hrPrev.value = hrPrevRes.value.data
-    if (bpCurRes.status === "fulfilled") bpCurrentSys.value = bpCurRes.value.data?.systolic ?? null
-    if (bpPrevRes.status === "fulfilled") bpPrevSys.value = bpPrevRes.value.data?.systolic ?? null
+    const num = (v) => { const n = Number(v); return Number.isFinite(n) ? n : null }
+    if (hrCurRes.status === "fulfilled") hrCurrent.value = num(hrCurRes.value.data)
+    if (hrPrevRes.status === "fulfilled") hrPrev.value = num(hrPrevRes.value.data)
+    if (bpCurRes.status === "fulfilled") bpCurrentSys.value = num(bpCurRes.value.data?.systolic)
+    if (bpPrevRes.status === "fulfilled") bpPrevSys.value = num(bpPrevRes.value.data?.systolic)
     if (wCurRes.status === "fulfilled") {
       const ws = wCurRes.value.data
       wCurrent.value = ws.length ? avg(ws.map(w => w.weight)) : null
@@ -304,7 +305,7 @@ watch(wsEvent, (e) => {
       </div>
     </div>
 
-    <!-- Big stat cards -->
+    
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
       <Card class="rounded-2xl col-span-2 sm:col-span-1">
         <CardContent class="p-4 text-center">
@@ -351,7 +352,7 @@ watch(wsEvent, (e) => {
       </Card>
     </div>
 
-    <!-- Kalória összetétel -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -365,7 +366,7 @@ watch(wsEvent, (e) => {
           <Skeleton class="h-20 w-full rounded-xl" />
         </template>
         <template v-else>
-          <!-- Stacked bar -->
+          
           <div class="h-6 rounded-full overflow-hidden flex bg-muted mb-3" v-if="totalKcal > 0">
             <div
               class="h-full bg-orange-400 transition-all"
@@ -392,7 +393,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Napi bontás bar chart -->
+    
     <Card class="rounded-2xl" v-if="selectedPeriod <= 30">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -434,7 +435,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Tevékenység szerinti bontás -->
+    
     <Card class="rounded-2xl" v-if="breakdownByActivity.length">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -460,7 +461,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Health vitals trend -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-2">
         <CardTitle class="text-base flex items-center gap-2">
@@ -476,7 +477,7 @@ watch(wsEvent, (e) => {
           <Skeleton class="h-10 w-full rounded-xl" />
         </template>
         <template v-else>
-          <!-- HR trend -->
+          
           <div class="flex items-center justify-between rounded-xl border px-3 py-2.5">
             <div class="flex items-center gap-2.5">
               <div class="h-8 w-8 rounded-lg bg-red-100 flex items-center justify-center">
@@ -484,7 +485,7 @@ watch(wsEvent, (e) => {
               </div>
               <div>
                 <div class="text-sm font-medium">{{ $t("dashboard.heartRate") }}</div>
-                <div class="text-xs text-muted-foreground">{{ hrCurrent != null ? Math.round(hrCurrent * 10) / 10 + ' BPM' : $t("summary.trendNoData") }}</div>
+                <div class="text-xs text-muted-foreground">{{ Number.isFinite(hrCurrent) ? Math.round(hrCurrent * 10) / 10 + ' BPM' : $t("summary.trendNoData") }}</div>
               </div>
             </div>
             <div v-if="hrTrend" class="flex items-center gap-1 text-sm font-semibold" :class="hrTrend.up ? 'text-red-500' : hrTrend.down ? 'text-green-600' : 'text-muted-foreground'">
@@ -493,7 +494,7 @@ watch(wsEvent, (e) => {
             </div>
             <div v-else class="text-xs text-muted-foreground">{{ $t("summary.trendNoData") }}</div>
           </div>
-          <!-- BP trend -->
+          
           <div class="flex items-center justify-between rounded-xl border px-3 py-2.5">
             <div class="flex items-center gap-2.5">
               <div class="h-8 w-8 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -501,7 +502,7 @@ watch(wsEvent, (e) => {
               </div>
               <div>
                 <div class="text-sm font-medium">{{ $t("dashboard.bloodPressure") }}</div>
-                <div class="text-xs text-muted-foreground">{{ bpCurrentSys != null ? bpCurrentSys + ' mmHg sys' : $t("summary.trendNoData") }}</div>
+                <div class="text-xs text-muted-foreground">{{ Number.isFinite(bpCurrentSys) ? bpCurrentSys + ' mmHg sys' : $t("summary.trendNoData") }}</div>
               </div>
             </div>
             <div v-if="bpTrend" class="flex items-center gap-1 text-sm font-semibold" :class="bpTrend.up ? 'text-red-500' : bpTrend.down ? 'text-green-600' : 'text-muted-foreground'">
@@ -510,7 +511,7 @@ watch(wsEvent, (e) => {
             </div>
             <div v-else class="text-xs text-muted-foreground">{{ $t("summary.trendNoData") }}</div>
           </div>
-          <!-- Weight trend -->
+          
           <div class="flex items-center justify-between rounded-xl border px-3 py-2.5">
             <div class="flex items-center gap-2.5">
               <div class="h-8 w-8 rounded-lg bg-purple-100 flex items-center justify-center">
@@ -518,7 +519,7 @@ watch(wsEvent, (e) => {
               </div>
               <div>
                 <div class="text-sm font-medium">{{ $t("dashboard.weight") }}</div>
-                <div class="text-xs text-muted-foreground">{{ wCurrent != null ? (Math.round(wCurrent * 10) / 10) + ' kg' : $t("summary.trendNoData") }}</div>
+                <div class="text-xs text-muted-foreground">{{ Number.isFinite(wCurrent) ? (Math.round(wCurrent * 10) / 10) + ' kg' : $t("summary.trendNoData") }}</div>
               </div>
             </div>
             <div v-if="wTrend" class="flex items-center gap-1 text-sm font-semibold text-muted-foreground">
@@ -531,7 +532,7 @@ watch(wsEvent, (e) => {
       </CardContent>
     </Card>
 
-    <!-- Info kártya -->
+    
     <Card class="rounded-2xl border-dashed">
       <CardContent class="p-4 text-xs text-muted-foreground space-y-1">
         <p><strong>{{ $t("summary.infoCalorie") }}</strong></p>

@@ -147,7 +147,7 @@ async function load(silent = false) {
       loadError.value = true
     }
 
-    // Utolsó 7 nap szívritmus
+
     const end = tomorrow.value
     const startDate = new Date(selectedDate.value.toDate(tz))
     startDate.setDate(startDate.getDate() - 6)
@@ -168,7 +168,7 @@ watch(selectedDate, () => {
 })
 watch(refreshTrigger, (v, old) => { if (v !== old) load(true) })
 
-// WebSocket: valós idejű frissítés
+
 watch(wsEvent, (e) => {
   if (!e) return
   const entry = e.data
@@ -192,7 +192,6 @@ watch(wsEvent, (e) => {
       load(true)
       break
     case "health_sync_complete":
-      // Batch sync kész → csendes teljes újratöltés
       load(true)
       break
     default:
@@ -214,7 +213,7 @@ const isRecordStreak = computed(() => {
   return streak.value.days > 0 && streak.value.days >= (user.value.max_days || 0)
 })
 
-// ─── Streak rekord banner ─────────────────────────────────
+
 const showRecordBanner = ref(false)
 let recordBannerTimer = null
 watch([isRecordStreak, () => streak.value?.days], ([isRecord, days]) => {
@@ -227,7 +226,7 @@ watch([isRecordStreak, () => streak.value?.days], ([isRecord, days]) => {
     hapticSuccess()
     clearTimeout(recordBannerTimer)
     recordBannerTimer = setTimeout(() => { showRecordBanner.value = false }, 5000)
-    // Lokális értesítés: új streak rekord
+    
     notifyStreakRecord(
       t("notifications.streakRecordTitle"),
       t("notifications.streakRecordBody", { days }),
@@ -235,7 +234,7 @@ watch([isRecordStreak, () => streak.value?.days], ([isRecord, days]) => {
   }
 })
 
-// Streak mérföldkő (7 / 14 / 30 / 50 / 100 / 200 / 365) – egyszer usernként/fokonként
+
 watch(() => streak.value?.days, (days) => {
   if (!days) return
   notifyStreakMilestone(
@@ -245,7 +244,7 @@ watch(() => streak.value?.days, (days) => {
   ).catch(() => {})
 })
 
-// Lépés cél: 80% (8000) és 100% (10000)
+
 watch(() => todaySteps.value?.steps, (steps, prev) => {
   if (!steps) return
   const goal = user.value?.step_goal_daily || parseInt(storageGet("step_goal") || "10000")
@@ -264,7 +263,7 @@ watch(() => todaySteps.value?.steps, (steps, prev) => {
 })
 onBeforeUnmount(() => clearTimeout(recordBannerTimer))
 
-// Minibar chart – utolsó 7 nap szívritmus átlag
+
 const barData = computed(() => {
   const byDay = {}
   weekHR.value.forEach(h => {
@@ -289,7 +288,7 @@ const barMax = computed(() => {
   return vals.length ? Math.max(...vals) : 120
 })
 
-// Lépés + víz cél – elsőbbség: user DB > localStorage > default.
+
 const STEP_GOAL = computed(() => {
   return user.value?.step_goal_daily || parseInt(storageGet("step_goal") || "10000")
 })
@@ -315,7 +314,7 @@ function formatSleepDate(iso) {
 <template>
   <div class="space-y-4">
 
-    <!-- Welcome row -->
+    
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
         <h2 class="text-xl font-semibold">
@@ -354,7 +353,7 @@ function formatSleepDate(iso) {
       </div>
     </div>
 
-    <!-- Streak rekord banner -->
+    
     <Transition name="streak-banner">
       <div
         v-if="showRecordBanner"
@@ -369,7 +368,7 @@ function formatSleepDate(iso) {
       </div>
     </Transition>
 
-    <!-- Betöltési hiba banner -->
+    
     <div
       v-if="!loading && loadError"
       class="flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 dark:border-rose-800 dark:bg-rose-950/30 px-4 py-3"
@@ -385,7 +384,7 @@ function formatSleepDate(iso) {
       </Button>
     </div>
 
-    <!-- "Ma még nem mértél" banner -->
+    
     <div
       v-if="!loading && notMeasuredToday"
       class="flex items-center gap-3 rounded-2xl border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30 px-4 py-3 cursor-pointer"
@@ -398,11 +397,11 @@ function formatSleepDate(iso) {
       </div>
     </div>
 
-    <!-- Metrika kártyák – Yasio-stílusú színes kártyák -->
+    
     <div class="grid grid-cols-2 gap-3">
 
-      <!-- Streak + Szívritmus egy sorban (col-span-1 each) -->
-      <!-- Streak -->
+      
+      
       <div role="region" :aria-label="$t('dashboard.streak')" class="rounded-2xl p-4 bg-gradient-to-br from-orange-500/15 to-amber-500/5 border border-orange-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-orange-500/80">{{ $t("dashboard.streak") }}</span>
@@ -418,7 +417,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Szívritmus -->
+      
       <div role="region" :aria-label="$t('dashboard.heartRate')" class="rounded-2xl p-4 bg-gradient-to-br from-red-500/15 to-rose-500/5 border border-red-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-red-500/80">{{ $t("dashboard.heartRate") }}</span>
@@ -445,7 +444,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Vérnyomás -->
+      
       <div role="region" :aria-label="$t('dashboard.bloodPressure')" class="rounded-2xl p-4 bg-gradient-to-br from-blue-500/15 to-indigo-500/5 border border-blue-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-blue-500/80">{{ $t("dashboard.bloodPressure") }}</span>
@@ -476,7 +475,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Testsúly -->
+      
       <div role="region" :aria-label="$t('dashboard.weight')" class="rounded-2xl p-4 bg-gradient-to-br from-violet-500/15 to-purple-500/5 border border-violet-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-violet-500/80">{{ $t("dashboard.weight") }}</span>
@@ -499,7 +498,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Lépések – teljes széles kártya, activity ring -->
+      
       <div role="region" :aria-label="$t('dashboard.stepsToday')" class="col-span-2 rounded-2xl p-4 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 border border-emerald-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-emerald-500/80">{{ $t("dashboard.stepsToday") }}</span>
@@ -541,7 +540,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Víz ma – teljes széles kártya, progress ring -->
+      
       <div role="region" :aria-label="$t('dashboard.waterToday')" class="col-span-2 rounded-2xl p-4 bg-gradient-to-br from-blue-500/15 to-sky-500/5 border border-blue-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-blue-500/80">{{ $t("dashboard.waterToday") }}</span>
@@ -579,7 +578,7 @@ function formatSleepDate(iso) {
         </template>
       </div>
 
-      <!-- Alvás tegnap éjjel – teljes széles kártya -->
+      
       <div role="region" :aria-label="$t('dashboard.sleepLastNight')" class="col-span-2 rounded-2xl p-4 bg-gradient-to-br from-indigo-500/15 to-purple-500/5 border border-indigo-500/20 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-medium text-indigo-500/80">{{ $t("dashboard.sleepLastNight") }}</span>
@@ -615,7 +614,7 @@ function formatSleepDate(iso) {
       </div>
     </div>
 
-    <!-- HR chart -->
+    
     <div class="rounded-2xl border bg-card p-4">
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -651,7 +650,7 @@ function formatSleepDate(iso) {
       </template>
     </div>
 
-    <!-- Gyors műveletek -->
+    
     <div class="grid grid-cols-2 gap-3">
       <button
         class="rounded-2xl p-4 border bg-card flex items-center gap-3 hover:bg-accent/50 active:scale-[0.97] transition-all text-left"

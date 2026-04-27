@@ -17,15 +17,15 @@ const user = inject("user", ref(null))
 const step = ref(1)
 const TOTAL_STEPS = 4
 
-// Step 2 – height
+
 const heightInput = ref("")
 const heightSaving = ref(false)
 
-// Step 3 – display name (becenév)
+
 const displayNameInput = ref("")
 const displayNameSaving = ref(false)
 
-// Step 4 – step goal
+
 const stepGoalInput = ref("10000")
 
 onMounted(() => {
@@ -77,7 +77,7 @@ function finish() {
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
     <div class="w-full max-w-sm bg-card rounded-3xl shadow-2xl border p-6 space-y-5">
 
-      <!-- Progress dots -->
+      
       <div class="flex items-center justify-center gap-1.5">
         <div
           v-for="i in TOTAL_STEPS"
@@ -87,7 +87,7 @@ function finish() {
         />
       </div>
 
-      <!-- Step 1: Welcome -->
+      
       <template v-if="step === 1">
         <div class="text-center space-y-3">
           <div class="flex justify-center">
@@ -104,7 +104,7 @@ function finish() {
         </Button>
       </template>
 
-      <!-- Step 2: Height -->
+      
       <template v-else-if="step === 2">
         <div class="space-y-4">
           <div class="flex items-center gap-3">
@@ -113,7 +113,6 @@ function finish() {
             </div>
             <div>
               <h3 class="font-semibold">{{ $t("onboarding.heightTitle") }}</h3>
-              <p class="text-xs text-muted-foreground">{{ $t("onboarding.heightDesc") }}</p>
             </div>
           </div>
           <div class="space-y-1.5">
@@ -141,7 +140,7 @@ function finish() {
         </div>
       </template>
 
-      <!-- Step 3: Display name (becenév) -->
+      
       <template v-else-if="step === 3">
         <div class="space-y-4">
           <div class="flex items-center gap-3">
@@ -174,7 +173,7 @@ function finish() {
         </div>
       </template>
 
-      <!-- Step 4: Step goal -->
+      
       <template v-else-if="step === 4">
         <div class="space-y-4">
           <div class="flex items-center gap-3">
@@ -208,7 +207,7 @@ function finish() {
         </div>
       </template>
 
-      <!-- Step 4: Done -->
+      
       <template v-else>
         <div class="text-center space-y-3">
           <div class="flex justify-center">

@@ -47,7 +47,7 @@ export function invalidateCacheKeys(...keys) {
   }
 }
 
-// Map WebSocket event types to the cache keys they invalidate
+
 const WS_CACHE_MAP = {
   heart_rate:       ["/heart-rates", "/average/heart-rates"],
   blood_pressure:   ["/blood-pressures", "/average/blood-pressures"],

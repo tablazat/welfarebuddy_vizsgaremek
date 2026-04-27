@@ -27,7 +27,7 @@ function goAuth(tab = "register") {
 <template>
   <div class="min-h-svh bg-background text-foreground">
 
-    <!-- Navbar -->
+    
     <nav class="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
@@ -71,7 +71,7 @@ function goAuth(tab = "register") {
       </div>
     </nav>
 
-    <!-- Hero -->
+    
     <section class="relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-blue-50 to-purple-50 dark:from-red-950/20 dark:via-blue-950/20 dark:to-purple-950/20" />
       <div class="absolute inset-0">
@@ -82,7 +82,7 @@ function goAuth(tab = "register") {
 
       <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <!-- Left: Text -->
+          
           <div class="text-center lg:text-left">
             <div class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-6">
               <Zap class="h-3 w-3" />
@@ -106,10 +106,10 @@ function goAuth(tab = "register") {
             </div>
           </div>
 
-          <!-- Right: Mockup Cards -->
+          
           <div class="hidden lg:block relative">
             <div class="relative w-full max-w-md mx-auto">
-              <!-- Main card -->
+              
               <div class="bg-card border rounded-2xl shadow-2xl shadow-black/5 p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <span class="text-sm font-medium text-muted-foreground">{{ $t("landing.mockupSummary") }}</span>
@@ -132,7 +132,7 @@ function goAuth(tab = "register") {
                     <div class="text-[10px] text-muted-foreground">kg</div>
                   </div>
                 </div>
-                <!-- Mini chart mockup -->
+                
                 <div class="pt-2">
                   <div class="text-xs text-muted-foreground mb-2">{{ $t("landing.mockupChart") }}</div>
                   <div class="flex items-end gap-1.5 h-16">
@@ -147,7 +147,7 @@ function goAuth(tab = "register") {
                 </div>
               </div>
 
-              <!-- Floating badge -->
+              
               <div class="absolute -top-4 -right-4 bg-card border rounded-xl shadow-lg px-3 py-2 flex items-center gap-2 animate-bounce" style="animation-duration: 3s">
                 <div class="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                   <TrendingUp class="h-4 w-4 text-green-600" />
@@ -158,7 +158,7 @@ function goAuth(tab = "register") {
                 </div>
               </div>
 
-              <!-- Floating streak badge -->
+              
               <div class="absolute -bottom-3 -left-6 bg-card border rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
                 <span class="text-xl">🔥</span>
                 <div>
@@ -172,7 +172,7 @@ function goAuth(tab = "register") {
       </div>
     </section>
 
-    <!-- Features -->
+    
     <section class="py-20 sm:py-28">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-center mb-14">
@@ -260,7 +260,7 @@ function goAuth(tab = "register") {
       </div>
     </section>
 
-    <!-- How it works -->
+    
     <section class="py-20 sm:py-28 bg-muted/40">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-center mb-14">
@@ -315,7 +315,7 @@ function goAuth(tab = "register") {
       </div>
     </section>
 
-    <!-- Final CTA -->
+    
     <section class="py-20 sm:py-28">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <img src="@/assets/welfarebuddy_logo.svg" alt="WelfareBuddy" class="h-16 mx-auto mb-6" />
@@ -332,13 +332,12 @@ function goAuth(tab = "register") {
       </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer class="border-t py-8">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2">
           <img src="@/assets/welfarebuddy_logo.svg" alt="WelfareBuddy" class="h-6 shrink-0" />
           <span class="font-semibold">WelfareBuddy</span>
-          <span class="text-xs text-muted-foreground">v0.1 beta</span>
         </div>
         <p class="text-sm text-muted-foreground">
           &copy; 2026 WelfareBuddy. {{ $t("landing.footerRights") }}

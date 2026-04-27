@@ -8,9 +8,7 @@ use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
-    /**
-     * Készít egy free usert (factory) és bejelentkezteti Sanctum tokennel.
-     */
+    
     protected function actingAsUser(array $overrides = []): User
     {
         $user = User::factory()->create($overrides);

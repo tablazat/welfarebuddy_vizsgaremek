@@ -7,11 +7,7 @@ use Carbon\Carbon;
 
 class StreakService
 {
-    /**
-     * Update user streak based on a new entry recorded_at timestamp.
-     * Handles: null streak guard, backdated entry guard, new-streak vs continue.
-     * Uses diffInDays between last streak day and new recorded day.
-     */
+    
     public static function update(User $user, $recordedAt): void
     {
         $streak = $user->streak;

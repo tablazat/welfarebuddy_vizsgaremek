@@ -9,9 +9,7 @@ class StreakController extends Controller
 {
     private const COOLDOWN_DAYS = 30;
 
-    /**
-     * Returns current streak state plus freeze availability for the Pro feature.
-     */
+    
     public function status(Request $request)
     {
         $user   = $request->user();
@@ -54,11 +52,7 @@ class StreakController extends Controller
         ]);
     }
 
-    /**
-     * Consumes a freeze to save a broken streak (exactly 1 missed day).
-     * Sets last_day to yesterday so the next entry today continues the streak.
-     * 30 day cooldown between freezes.
-     */
+    
     public function freeze(Request $request)
     {
         $user = $request->user();

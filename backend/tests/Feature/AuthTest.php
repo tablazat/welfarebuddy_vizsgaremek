@@ -50,9 +50,7 @@ class AuthTest extends TestCase
         $response->assertStatus(422)->assertJsonValidationErrors(['email']);
     }
 
-    /**
-     * @see TODO.md Bug #63 — login és register `min:8` szinkron
-     */
+    
     public function test_register_rejects_short_password(): void
     {
         $response = $this->postJson('/register', [
@@ -65,9 +63,7 @@ class AuthTest extends TestCase
         $response->assertStatus(422)->assertJsonValidationErrors(['password']);
     }
 
-    /**
-     * @see CLAUDE.md session 19, 10. rész — GDPR Art. 6(1)(a) kifejezett hozzájárulás
-     */
+    
     public function test_register_rejects_without_terms_accepted(): void
     {
         $response = $this->postJson('/register', [
@@ -119,9 +115,7 @@ class AuthTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /**
-     * @see TODO.md Bug #38 — verify e-mail flow, login engedi a tokent unverified usernek is
-     */
+    
     public function test_login_unverified_user_returns_token_but_email_not_verified(): void
     {
         $user = User::factory()->unverified()->create([
@@ -150,7 +144,7 @@ class AuthTest extends TestCase
         $forgot = $this->postJson('/forgot-password', ['email' => 'reset@example.com']);
         $forgot->assertStatus(200);
 
-        // A Password broker programmatic token-t generál — a notification mailen menne, de fake.
+        
         $token = Password::createToken($user);
 
         $reset = $this->postJson('/reset-password', [
@@ -166,9 +160,7 @@ class AuthTest extends TestCase
         $this->assertFalse(Hash::check('originalpass', $user->password), 'Old password must no longer verify');
     }
 
-    /**
-     * @see TODO.md Bug #20, #62 — verify response code mező (verified/already_verified/invalid_link)
-     */
+    
     public function test_email_verification_marks_user_verified(): void
     {
         $user = User::factory()->unverified()->create();
@@ -199,5 +191,77 @@ class AuthTest extends TestCase
 
         $user->refresh();
         $this->assertNull($user->email_verified_at);
+    }
+
+    public function test_login_failed_message_is_localized_per_accept_language(): void
+    {
+        User::factory()->create([
+            'email'    => 'loc@example.com',
+            'password' => Hash::make('password123'),
+        ]);
+
+        $cases = [
+            'hu' => 'Helytelen e-mail cím vagy jelszó.',
+            'en' => 'These credentials do not match our records.',
+            'de' => 'Ungültige E-Mail-Adresse oder Passwort.',
+        ];
+
+        foreach ($cases as $locale => $expected) {
+            $response = $this->withHeaders(['Accept-Language' => $locale])
+                ->postJson('/login', [
+                    'email'    => 'loc@example.com',
+                    'password' => 'wrongpass',
+                ]);
+
+            $response->assertStatus(401)
+                ->assertJsonPath('message', $expected);
+        }
+    }
+
+    public function test_validation_errors_are_localized_per_accept_language(): void
+    {
+        $cases = [
+            'hu' => 'jelszó',
+            'de' => 'Passwort',
+            'en' => 'password',
+        ];
+
+        foreach ($cases as $locale => $expectedAttr) {
+            $response = $this->withHeaders(['Accept-Language' => $locale])
+                ->postJson('/register', [
+                    'name'           => 'Test',
+                    'email'          => "loc-{$locale}@example.com",
+                    'password'       => 'short',
+                    'terms_accepted' => true,
+                ]);
+
+            $response->assertStatus(422);
+            $body = $response->json();
+            $this->assertNotEmpty($body['errors']['password'] ?? null);
+            $this->assertStringContainsString(
+                $expectedAttr,
+                $body['errors']['password'][0],
+                "{$locale} locale: 'password' attribute fordítása az üzenetben"
+            );
+        }
+    }
+
+    public function test_authenticated_user_locale_overrides_accept_language(): void
+    {
+        $user = User::factory()->create(['locale' => 'hu']);
+
+        \Laravel\Sanctum\Sanctum::actingAs($user, ['*']);
+        $response = $this->withHeaders(['Accept-Language' => 'de'])
+            ->putJson('/me/profile', [
+                'display_name' => str_repeat('a', 100),
+            ]);
+
+        $response->assertStatus(422);
+        $body = $response->json();
+        $this->assertStringContainsString(
+            'becenév',
+            $body['errors']['display_name'][0] ?? '',
+            'user.locale=hu felülírja az Accept-Language=de-t'
+        );
     }
 }

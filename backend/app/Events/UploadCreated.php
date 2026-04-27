@@ -47,6 +47,6 @@ class UploadCreated implements ShouldBroadcastNow
     }
     public function broadcastAs()
     {
-        return 'upload.created'; // or any simple string you like
+        return 'upload.created';
     }
 }

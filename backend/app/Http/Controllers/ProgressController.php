@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-/**
- * Progress tracker endpoint a Profile.vue „Az utad eddig" kártyához.
- * Aggregálja a user kezdő és jelenlegi értékeit (súly, BMI, streak), valamint
- * az aktivitás összegzést (napok száma, összes bejegyzés).
- */
+
 class ProgressController extends Controller
 {
     public function show(Request $request): JsonResponse

@@ -11,7 +11,7 @@ class VerifyEmailNotification extends VerifyEmail
 {
     protected function verificationUrl($notifiable): string
     {
-        // Generáljuk a signed backend URL-t
+        
         $signedUrl = URL::temporarySignedRoute(
             'verification.verify',
             Carbon::now()->addMinutes(60),
@@ -21,11 +21,11 @@ class VerifyEmailNotification extends VerifyEmail
             ]
         );
 
-        // Kiszedjük a query paramétereket (expires, signature)
+        
         $parsed = parse_url($signedUrl);
         parse_str($parsed['query'] ?? '', $query);
 
-        // Frontend URL-be rakjuk az összes paramétert
+        
         $frontendUrl = rtrim(env('FRONTEND_URL', 'https://www.welfarebuddy.hu'), '/');
 
         return $frontendUrl . '/verify-email?' . http_build_query([

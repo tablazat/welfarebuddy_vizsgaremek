@@ -1,9 +1,4 @@
-/**
- * haptics.js – Vibráció / tapintásos visszajelzés
- *
- * Capacitor native: @capacitor/haptics (ha telepítve van)
- * Fallback: navigator.vibrate() – Android Chrome-on működik, iOS Safarion nem
- */
+
 
 let _Haptics = null
 
@@ -13,14 +8,12 @@ async function getHaptics() {
     const mod = await import("@capacitor/haptics")
     _Haptics = mod.Haptics
   } catch {
-    _Haptics = false  // not available
+    _Haptics = false  
   }
   return _Haptics
 }
 
-/**
- * Könnyű tapintás – gombnyomás, elem kijelölés
- */
+
 export async function hapticLight() {
   const H = await getHaptics()
   if (H) {
@@ -30,9 +23,7 @@ export async function hapticLight() {
   }
 }
 
-/**
- * Közepesebb tapintás – sikeres mentés, confirm
- */
+
 export async function hapticMedium() {
   const H = await getHaptics()
   if (H) {
@@ -42,9 +33,7 @@ export async function hapticMedium() {
   }
 }
 
-/**
- * Erős tapintás – törlés, hiba, figyelmeztetés
- */
+
 export async function hapticHeavy() {
   const H = await getHaptics()
   if (H) {
@@ -54,9 +43,7 @@ export async function hapticHeavy() {
   }
 }
 
-/**
- * Siker – streak mérföldkő, rekord
- */
+
 export async function hapticSuccess() {
   const H = await getHaptics()
   if (H) {

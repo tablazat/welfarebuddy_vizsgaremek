@@ -127,7 +127,7 @@ async function handleRoute() {
 
 onMounted(handleRoute)
 
-// Ha a user már az oldalon van és a query params változik (pl. emailből kattint)
+
 watch(() => route.query, (newQuery, oldQuery) => {
   if (newQuery.id && newQuery.hash && newQuery.id !== oldQuery?.id) {
     error.value = ""
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
 
       <Card class="rounded-2xl">
         <CardContent class="p-6">
-          <!-- Megerősítés folyamatban -->
+          
           <div v-if="verifying" class="flex flex-col items-center text-center space-y-4">
             <div class="h-16 w-16 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
               <Loader2 class="h-8 w-8 text-blue-500 animate-spin" />
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <!-- Sikeres megerősítés -->
+          
           <div v-else-if="verified" class="flex flex-col items-center text-center space-y-4">
             <div class="h-16 w-16 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
               <CheckCircle2 class="h-8 w-8 text-green-500" />
@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <!-- Várakozás / hiba -->
+          
           <div v-else class="flex flex-col items-center text-center space-y-4">
             <div class="h-16 w-16 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
               <MailCheck class="h-8 w-8 text-blue-500" />
@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
               <AlertDescription>{{ error }}</AlertDescription>
             </Alert>
 
-            <!-- Ha be van jelentkezve -->
+            
             <div v-if="hasToken" class="flex flex-col gap-2 w-full pt-2">
               <Button class="w-full rounded-xl gap-2" :disabled="sending" @click="resendEmail">
                 <Loader2 v-if="sending" class="h-4 w-4 animate-spin" />
@@ -216,7 +216,7 @@ onBeforeUnmount(() => {
               </Button>
             </div>
 
-            <!-- Ha nincs bejelentkezve -->
+            
             <div v-else class="flex flex-col gap-2 w-full pt-2">
               <Button class="w-full rounded-xl gap-2" @click="goLogin">
                 <LogIn class="h-4 w-4" />

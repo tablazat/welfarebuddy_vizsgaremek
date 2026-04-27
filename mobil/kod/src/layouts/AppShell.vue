@@ -57,12 +57,12 @@ provide("globalQuery",   query);
 provide("selectedDate",  date);
 provide("wsEvent",       wsEvent);
 
-// ─── Pull-to-refresh ───────────────────────────────────────
-const refreshTrigger = ref(0)  // pages watch this to know when to refresh
+
+const refreshTrigger = ref(0)  
 provide("refreshTrigger", refreshTrigger)
 const isPulling    = ref(false)
-const pullProgress = ref(0)    // 0–1
-const scrollRef    = ref(null) // bind to the scroll container
+const pullProgress = ref(0)    
+const scrollRef    = ref(null) 
 const PULL_THRESHOLD = 70
 const PULL_MAX       = 100
 let _ptStartY = 0, _ptCurY = 0, _ptActive = false, _ptRefreshing = false
@@ -93,14 +93,14 @@ async function ptTouchEnd() {
     pullProgress.value = 1
     hapticMedium()
     refreshTrigger.value++
-    await new Promise(r => setTimeout(r, 600))  // min spinner time
+    await new Promise(r => setTimeout(r, 600))  
     _ptRefreshing = false
   }
   isPulling.value    = false
   pullProgress.value = 0
 }
 
-// ─── Nav definition ────────────────────────────────────────
+
 const nav = computed(() => [
   { to: "/app",            label: t("nav.dashboard"), icon: Home        },
   { to: "/app/diary",      label: t("nav.diary"),     icon: NotebookPen },
@@ -109,7 +109,7 @@ const nav = computed(() => [
   { to: "/app/skins",      label: t("nav.skins"),     icon: Paintbrush  },
 ]);
 
-// Bottom nav – 5 főbb oldal (Settings-be rakjuk a többit)
+
 const bottomNav = computed(() => [
   { to: "/app",           label: t("nav.dashboard"), icon: Home        },
   { to: "/app/diary",     label: t("nav.diary"),     icon: NotebookPen },
@@ -133,18 +133,18 @@ const pageTitle = computed(() => {
   return t("nav.appName");
 });
 
-// ─── Sidebar / profile state ───────────────────────────────
-const sidebarOpen  = ref(false); // default zárva mobilon
+
+const sidebarOpen  = ref(false); 
 const profileOpen  = ref(false);
 
-// ─── Onboarding ────────────────────────────────────────────
-// Alapból rejtett – csak akkor nyitjuk ki ha a /token-check megerősíti hogy
-// a user új (height_cm nincs beállítva) ÉS még nem zárta le az onboardingot.
-// Korábbi bug: alapból !storageGet("onboarding_done") volt → új eszközön/cache után
-// már aktív usernek is újra lefutott.
+
+
+
+
+
 const showOnboarding = ref(false)
 
-// ─── User info ─────────────────────────────────────────────
+
 const authUser     = ref(JSON.parse(storageGet("auth_user") || "null"));
 const userName     = computed(() => authUser.value?.display_name || authUser.value?.name || "Felhasználó");
 const userEmail    = computed(() => authUser.value?.email || "");
@@ -167,7 +167,7 @@ const tierBadge = computed(() => {
 
 const closeOverlays = () => { profileOpen.value = false; };
 
-// ─── Offline queue badge ───────────────────────────────────
+
 const pendingQueueCount = ref(0)
 function refreshQueueCount() {
   try { pendingQueueCount.value = getQueue().length } catch { pendingQueueCount.value = 0 }
@@ -176,7 +176,7 @@ watch(isOnline, refreshQueueCount)
 
 const onKeydown = (e) => { if (e.key === "Escape") closeOverlays(); };
 
-// ─── App lifecycle (foreground sync) ──────────────────────
+
 let _appStateListener = null;
 
 async function setupAppLifecycle() {
@@ -206,8 +206,8 @@ onMounted(async () => {
     const { data } = await api.get("/token-check");
     authUser.value = data.user;
     storageSet("auth_user", JSON.stringify(data.user));
-    // step_goal_daily/water_goal_ml DB default miatt mindig truthy,
-    // ezért csak a height_cm (nullable, onboarding-ban kerül be) a megbízható jel.
+    
+    
     if (data.user?.height_cm) {
       storageSet("onboarding_done", "1");
       showOnboarding.value = false;
@@ -225,7 +225,7 @@ onMounted(async () => {
   } catch {}
   window.addEventListener("keydown", onKeydown);
 
-  // Pull-to-refresh event listeners
+  
   if (scrollRef.value) {
     scrollRef.value.addEventListener("touchstart", ptTouchStart, { passive: true })
     scrollRef.value.addEventListener("touchmove",  ptTouchMove,  { passive: false })
@@ -255,13 +255,13 @@ const logout = async () => {
 </script>
 
 <template>
-  <!-- Onboarding -->
+  
   <OnboardingModal v-if="showOnboarding" @done="showOnboarding = false" />
 
-  <!-- Legkülső réteg: safe area top (Dynamic Island / notch) -->
+  
   <div class="flex flex-col bg-background" style="height: 100dvh; padding-top: env(safe-area-inset-top, 0px);">
 
-    <!-- Offline banner -->
+    
     <div
       v-if="!isOnline"
       class="relative z-20 flex items-center gap-2 px-4 py-1.5 text-xs bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-b border-yellow-500/20"
@@ -270,7 +270,7 @@ const logout = async () => {
       <span>{{ $t("offline.banner") }}</span>
     </div>
 
-    <!-- WS disconnected banner (csak ha online, de WS nem kapcsolódott) -->
+    
     <div
       v-else-if="!wsConnected"
       class="relative z-20 flex items-center gap-2 px-4 py-1 text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 border-b border-blue-500/20"
@@ -279,13 +279,13 @@ const logout = async () => {
       <span>{{ $t("offline.wsDisconnected") }}</span>
     </div>
 
-    <!-- Desktop wrapper: padding + rounded card -->
+    
     <div class="relative z-10 flex-1 min-h-0 md:p-3 lg:p-4 md:bg-muted/30">
       <div class="h-full w-full overflow-hidden md:rounded-2xl md:border md:shadow-sm bg-background relative">
 
         <SidebarProvider v-model:open="sidebarOpen" class="!min-h-0 h-full">
 
-          <!-- ─── Sidebar (desktop + drawer op mobile) ── -->
+          
           <Sidebar>
             <SidebarHeader>
               <SidebarMenu>
@@ -294,7 +294,6 @@ const logout = async () => {
                     <div class="grid flex-1 text-left text-sm leading-tight">
                       <img src="@/assets/welfarebuddy_logo.svg" alt="WelfareBuddy" class="h-7 shrink-0" />
                       <span class="truncate font-semibold text-sidebar-primary">{{ $t("nav.appName") }}</span>
-                      <span class="truncate text-xs text-sidebar-foreground/50">v0.1 beta</span>
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -433,10 +432,10 @@ const logout = async () => {
             <SidebarRail />
           </Sidebar>
 
-          <!-- ─── Main content ─────────────────────────── -->
+          
           <SidebarInset class="overflow-hidden flex flex-col relative">
 
-            <!-- Skin animated layers (inside content area so they render above bg-background) -->
+            
             <div class="skin-bg pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
               <span v-for="i in 20" :key="i" />
             </div>
@@ -444,13 +443,13 @@ const logout = async () => {
               <span v-for="i in 10" :key="'fg'+i" />
             </div>
 
-            <!-- Header -->
+            
             <header class="relative z-20 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3 sm:px-4 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div class="flex items-center gap-2 min-w-0">
-                <!-- Sidebar trigger csak desktopra -->
+                
                 <SidebarTrigger class="-ml-1 hidden md:flex" />
                 <div class="font-semibold text-base truncate">{{ pageTitle }}</div>
-                <!-- Connection status indicator -->
+                
                 <span
                   class="w-2 h-2 rounded-full shrink-0"
                   :class="!isOnline ? 'bg-red-500' : wsConnected ? 'bg-green-500' : 'bg-yellow-500 animate-pulse'"
@@ -458,7 +457,7 @@ const logout = async () => {
                   :aria-label="!isOnline ? $t('offline.banner') : wsConnected ? $t('status.live') : $t('offline.wsDisconnected')"
                 />
               </div>
-              <!-- Avatar gomb mobilon a jobb sarokban -->
+              
               <button
                 type="button"
                 class="md:hidden flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-accent transition"
@@ -469,7 +468,7 @@ const logout = async () => {
                   <AvatarFallback class="text-xs">{{ userInitials }}</AvatarFallback>
                 </Avatar>
               </button>
-              <!-- Dátum desktopra -->
+              
               <div class="hidden md:flex items-center gap-2">
                 <div class="flex items-center gap-1.5 text-sm text-muted-foreground px-3 py-1.5 rounded-xl border bg-background/60">
                   <CalendarIcon class="h-3.5 w-3.5" />
@@ -478,9 +477,9 @@ const logout = async () => {
               </div>
             </header>
 
-            <!-- Scrollozható tartalom -->
+            
             <div ref="scrollRef" class="flex-1 min-h-0 overflow-y-auto scroll-smooth-mobile pb-20 md:pb-0 relative z-[1]">
-              <!-- Pull-to-refresh indicator -->
+              
               <div
                 v-if="isPulling"
                 class="flex items-center justify-center pt-3 pb-1 transition-all duration-150"
@@ -501,7 +500,7 @@ const logout = async () => {
       </div>
     </div>
 
-    <!-- ─── Mobile bottom nav ──────────────────────────── -->
+    
     <nav
       class="md:hidden relative z-20 flex items-stretch border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
       style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 4px);"
@@ -513,14 +512,14 @@ const logout = async () => {
         class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 min-h-[52px] transition-colors relative"
         :class="isActive(item.to) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'"
       >
-        <!-- Aktív indikátor -->
+        
         <span
           v-if="isActive(item.to)"
           class="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-6 rounded-full bg-primary"
         />
         <span class="relative">
           <component :is="item.icon" class="h-5 w-5" />
-          <!-- Offline queue badge – ha van szinkronizálatlan adat -->
+          
           <span
             v-if="item.to === '/app/diary' && pendingQueueCount > 0"
             class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-yellow-500"

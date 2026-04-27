@@ -37,7 +37,7 @@ const saving = ref(false)
 const error = ref("")
 const successMsg = ref("")
 
-// Data lists
+
 const heartRates = ref([])
 const bloodPressures = ref([])
 const weights = ref([])
@@ -45,17 +45,17 @@ const calorieItems = ref([])
 const waterItems = ref([])
 const sleepItems = ref([])
 
-// Delete state
+
 const deletingId = ref(null)
 
-// Edit modal state
+
 const showEditModal = ref(false)
 const editType = ref("")
 const editItem = ref(null)
 const editForm = ref({})
 const editSaving = ref(false)
 
-// Forms
+
 function nowLocal() {
   const d = new Date()
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
@@ -289,7 +289,7 @@ async function saveSleep() {
   }
 }
 
-// ─── Copy yesterday ──────────────────────────────────────────
+
 const copyingYesterday = ref("")
 
 async function copyYesterday(type) {
@@ -335,7 +335,7 @@ const deleteEndpoints = {
   sleep: (id) => `/sleeps/${id}`,
 }
 
-// ─── Date navigation ──────────────────────────────────────
+
 const datePickerOpen = ref(false)
 const todayDate = computed(() => today(tz))
 const isToday = computed(() => selectedDate.value.compare(todayDate.value) === 0)
@@ -472,7 +472,7 @@ async function saveEdit() {
       </div>
     </div>
 
-    <!-- Feedback messages -->
+    
     <Alert v-if="error" variant="destructive" class="rounded-xl">
       <AlertDescription>{{ error }}</AlertDescription>
     </Alert>
@@ -513,7 +513,7 @@ async function saveEdit() {
         </TabsTrigger>
       </TabsList>
 
-      <!-- HEART RATE TAB -->
+      
       <TabsContent value="heart-rate" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -617,7 +617,7 @@ async function saveEdit() {
         </div>
       </TabsContent>
 
-      <!-- BLOOD PRESSURE TAB -->
+      
       <TabsContent value="blood-pressure" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -725,7 +725,7 @@ async function saveEdit() {
         </div>
       </TabsContent>
 
-      <!-- WEIGHT TAB -->
+      
       <TabsContent value="weight" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -808,7 +808,7 @@ async function saveEdit() {
         </div>
       </TabsContent>
 
-      <!-- CALORIE TAB -->
+      
       <TabsContent value="calorie" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -886,7 +886,7 @@ async function saveEdit() {
         </div>
       </TabsContent>
 
-      <!-- WATER TAB -->
+      
       <TabsContent value="water" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -894,7 +894,7 @@ async function saveEdit() {
             <CardDescription>{{ $t("diary.waterDesc") }}</CardDescription>
           </CardHeader>
           <CardContent>
-            <!-- Quick add buttons -->
+            
             <div class="flex flex-wrap gap-2 mb-3">
               <Button type="button" variant="outline" size="sm" class="rounded-xl gap-1.5" :disabled="saving" @click="addWaterQuick(250)">
                 <Droplet class="h-3.5 w-3.5" /> 250 ml
@@ -976,7 +976,7 @@ async function saveEdit() {
         </div>
       </TabsContent>
 
-      <!-- SLEEP TAB -->
+      
       <TabsContent value="sleep" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -1071,7 +1071,7 @@ async function saveEdit() {
       </TabsContent>
     </Tabs>
 
-    <!-- Edit modal -->
+    
     <Teleport to="body">
       <div v-if="showEditModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" @click.self="showEditModal = false">
         <div class="bg-background rounded-2xl shadow-xl w-full max-w-sm p-6 space-y-4">

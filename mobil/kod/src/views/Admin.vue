@@ -28,11 +28,11 @@ const router = useRouter()
 const { t, locale } = useI18n()
 const dateLocale = computed(() => ({ hu: "hu-HU", en: "en-US", de: "de-DE" })[locale.value] || "en-US")
 
-// Stats
+
 const stats = ref(null)
 const statsLoading = ref(true)
 
-// Users
+
 const users = ref([])
 const usersLoading = ref(true)
 const search = ref("")
@@ -41,17 +41,17 @@ const currentPage = ref(1)
 const lastPage = ref(1)
 const total = ref(0)
 
-// Actions
-const actionLoading = ref(null) // user id being acted on
+
+const actionLoading = ref(null)
 const success = ref("")
 const error = ref("")
 
-// Expanded user detail
+
 const expandedUserId = ref(null)
 const expandedUser = ref(null)
 const expandedLoading = ref(false)
 
-// Delete confirmation
+
 const deleteConfirmId = ref(null)
 
 function clearMsg() { success.value = ""; error.value = "" }
@@ -101,7 +101,7 @@ async function changeLevel(userId, newLevel) {
   actionLoading.value = userId
   try {
     const { data } = await api.put(`/admin/users/${userId}/level`, { level_of_access: newLevel })
-    // Frissítsük a listában
+
     const idx = users.value.findIndex(u => u.id === userId)
     if (idx !== -1) users.value[idx].level_of_access = data.user.level_of_access
     if (expandedUser.value?.id === userId) expandedUser.value.level_of_access = data.user.level_of_access
@@ -188,7 +188,7 @@ onMounted(() => {
   refreshDevTools()
 })
 
-// ── Dev Tools ─────────────────────────────────────────────
+
 const { syncAll, isSyncing, syncedCounts, lastSyncTime, syncError: syncErr } = useHealthSync()
 const { connected: wsConnected } = useEcho()
 const { isOnline, processQueue } = useOfflineSync()
@@ -204,9 +204,9 @@ const platform  = ref(window.Capacitor?.getPlatform?.() || "web")
 const isNative  = ref(window.Capacitor?.isNativePlatform?.() || false)
 const apiBaseUrl = ref(import.meta.env.VITE_API_BASE_URL ?? "https://api.welfarebuddy.hu")
 
-// API ping
+
 const pingMs      = ref(null)
-const pingStatus  = ref(null) // 'ok' | 'error' | 'loading'
+const pingStatus  = ref(null)
 async function pingApi() {
   pingStatus.value = "loading"
   const t0 = Date.now()
@@ -220,7 +220,7 @@ async function pingApi() {
   }
 }
 
-// Auth info
+
 const authToken = computed(() => {
   const t = storageGet("auth_token")
   return t ? t.slice(0, 12) + "…" : "—"
@@ -229,7 +229,7 @@ const authUser = computed(() => {
   try { return JSON.parse(storageGet("auth_user") || "null") } catch { return null }
 })
 
-// localStorage összesítő
+
 const lsEntries = computed(() => {
   const entries = []
   for (let i = 0; i < localStorage.length; i++) {
@@ -319,7 +319,7 @@ function formatTs(iso) {
       <p class="text-sm text-muted-foreground">{{ $t("admin.subtitle") }}</p>
     </div>
 
-    <!-- Visszajelzések -->
+    
     <Alert v-if="success" class="rounded-xl border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300">
       <AlertDescription>{{ success }}</AlertDescription>
     </Alert>
@@ -327,7 +327,7 @@ function formatTs(iso) {
       <AlertDescription>{{ error }}</AlertDescription>
     </Alert>
 
-    <!-- Stat kártyák -->
+    
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       <Card class="rounded-2xl">
         <CardContent class="p-4 text-center">
@@ -385,7 +385,7 @@ function formatTs(iso) {
       </Card>
     </div>
 
-    <!-- Felhasználók kezelése -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -395,7 +395,7 @@ function formatTs(iso) {
         </CardTitle>
       </CardHeader>
       <CardContent class="space-y-3">
-        <!-- Keresés + szűrés -->
+        
         <div class="flex flex-col sm:flex-row gap-2">
           <div class="relative flex-1">
             <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -420,7 +420,7 @@ function formatTs(iso) {
           </div>
         </div>
 
-        <!-- User lista -->
+        
         <div v-if="usersLoading" class="space-y-2">
           <Skeleton v-for="i in 5" :key="i" class="h-14 w-full rounded-xl" />
         </div>
@@ -435,7 +435,7 @@ function formatTs(iso) {
             :key="u.id"
             class="rounded-xl border transition"
           >
-            <!-- User sor -->
+            
             <button
               type="button"
               class="w-full flex items-center gap-3 p-3 text-left hover:bg-accent/50 transition rounded-xl"
@@ -460,14 +460,14 @@ function formatTs(iso) {
               </div>
             </button>
 
-            <!-- Expanded details -->
+            
             <div v-if="expandedUserId === u.id" class="border-t px-4 py-3 space-y-3 bg-muted/30">
               <template v-if="expandedLoading">
                 <Skeleton class="h-5 w-48" />
                 <Skeleton class="h-5 w-32" />
               </template>
               <template v-else-if="expandedUser">
-                <!-- Adatok -->
+                
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
                   <div>
                     <div class="text-xs text-muted-foreground">{{ $t("admin.entries.heartRate") }}</div>
@@ -495,7 +495,7 @@ function formatTs(iso) {
 
                 <Separator />
 
-                <!-- Export gombok -->
+                
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="text-xs text-muted-foreground">{{ $t("admin.exportUser") }}:</span>
                   <Button
@@ -524,7 +524,7 @@ function formatTs(iso) {
 
                 <Separator />
 
-                <!-- Szint váltás gombok -->
+                
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="text-xs text-muted-foreground">{{ $t("admin.level") }}:</span>
                   <Button
@@ -543,7 +543,7 @@ function formatTs(iso) {
 
                   <div class="flex-1" />
 
-                  <!-- Törlés -->
+                  
                   <template v-if="deleteConfirmId !== u.id">
                     <Button
                       variant="ghost"
@@ -581,7 +581,7 @@ function formatTs(iso) {
           </div>
         </div>
 
-        <!-- Lapozás -->
+        
         <div v-if="lastPage > 1" class="flex items-center justify-between pt-2">
           <Button variant="outline" size="sm" class="rounded-xl gap-1" :disabled="currentPage <= 1" @click="prevPage">
             <ChevronLeft class="h-4 w-4" />
@@ -595,7 +595,7 @@ function formatTs(iso) {
         </div>
       </CardContent>
     </Card>
-    <!-- ── Dev Tools ────────────────────────────────────── -->
+    
     <Card class="rounded-2xl border-dashed border-yellow-500/40">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -606,7 +606,7 @@ function formatTs(iso) {
       </CardHeader>
       <CardContent class="space-y-5">
 
-        <!-- Eszköz + Hálózat info -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Smartphone class="h-3.5 w-3.5" /> Eszköz & Hálózat
@@ -643,7 +643,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- API ping -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Activity class="h-3.5 w-3.5" /> Backend API
@@ -668,7 +668,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- Auth info -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Shield class="h-3.5 w-3.5" /> Auth
@@ -697,7 +697,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- Push notification teszt -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Bell class="h-3.5 w-3.5" /> Push Notification
@@ -722,7 +722,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- Health Sync teszt -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <HeartPulse class="h-3.5 w-3.5" /> Health Sync
@@ -765,7 +765,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- Offline queue -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Database class="h-3.5 w-3.5" /> Offline Queue
@@ -790,7 +790,7 @@ function formatTs(iso) {
 
         <Separator />
 
-        <!-- LocalStorage nézet -->
+        
         <div>
           <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Database class="h-3.5 w-3.5" /> LocalStorage

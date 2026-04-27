@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Activity;
 use App\Models\Activity_User;
 use App\Models\BloodPressure;
+use App\Models\CalorieIntake;
 use App\Models\HeartRate;
 use App\Models\SleepRecord;
 use App\Models\Step;
@@ -15,10 +16,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/ExportController.php
- * @see CLAUDE.md session 19, 16. rész — steps.data → steps.steps + activity:id,name → name_hu/en/de bug fix
- */
+
 class ExportTest extends TestCase
 {
     use RefreshDatabase;
@@ -49,6 +47,9 @@ class ExportTest extends TestCase
         WaterIntake::create([
             'user_id' => $user->id, 'amount_ml' => 500, 'recorded_at' => now()->subHours(3),
         ]);
+        CalorieIntake::create([
+            'user_id' => $user->id, 'data' => 1800, 'recorded_at' => now()->subHours(4),
+        ]);
         SleepRecord::create([
             'user_id' => $user->id, 'hours' => 7.5, 'quality' => 4, 'recorded_at' => now()->subHours(8),
         ]);
@@ -78,15 +79,13 @@ class ExportTest extends TestCase
         $this->assertSame(8500, (int) $body['steps'][0]['steps'], 'steps oszlop neve `steps`, nem `data`');
         $this->assertCount(1, $body['exercises']);
         $this->assertNotNull($body['exercises'][0]['activity'] ?? null, 'activity reláció betöltődik');
-        // JSON-ban a teljes activity objektum kijön mind a 3 nyelvvel — frontend választ
+        
         $this->assertSame('Running', $body['exercises'][0]['activity']['name_en']);
         $this->assertSame('Futás',   $body['exercises'][0]['activity']['name_hu']);
         $this->assertSame('Laufen',  $body['exercises'][0]['activity']['name_de']);
     }
 
-    /**
-     * @see CLAUDE.md session 19, 17. rész — CSV exercise locale-aware
-     */
+    
     public function test_export_csv_exercise_uses_user_locale_for_activity_name(): void
     {
         $hu = User::factory()->create(['locale' => 'hu']);
@@ -139,7 +138,7 @@ class ExportTest extends TestCase
             $this->assertNotFalse($zip->locateName($name), "ZIP-ben legyen: $name");
         }
 
-        // steps.csv tartalom: header + 1 sor a 8500-as értékkel
+        
         $stepsCsv = $zip->getFromName('steps.csv');
         $this->assertStringContainsString('8500', $stepsCsv, 'steps érték a CSV-ben');
 
@@ -173,12 +172,9 @@ class ExportTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-     * @see CLAUDE.md session 19, 7. rész — safeGet try-catch try minden lekérdezésen
-     */
+    
     public function test_export_continues_when_user_has_no_data(): void
     {
-        // Új user, semmi adat
         $user = User::factory()->create();
         Sanctum::actingAs($user, ['*']);
 
@@ -190,5 +186,126 @@ class ExportTest extends TestCase
         $this->assertSame([], $body['steps']);
         $this->assertSame([], $body['sleep_records']);
         $this->assertSame($user->email, $body['user']['email']);
+    }
+
+    public function test_csv_export_skips_empty_tables(): void
+    {
+        $user = User::factory()->create();
+        HeartRate::create([
+            'user_id' => $user->id, 'heart_rate' => 75, 'recorded_at' => now()->subHour(),
+        ]);
+        Weight::create([
+            'user_id' => $user->id, 'weight' => 70.0, 'recorded_at' => now()->subHour(),
+        ]);
+        Sanctum::actingAs($user, ['*']);
+
+        $response = $this->get('/export/csv');
+        $response->assertStatus(200);
+
+        $tmp = tempnam(sys_get_temp_dir(), 'wb-skip-');
+        file_put_contents($tmp, $response->getContent());
+        $zip = new \ZipArchive();
+        $zip->open($tmp);
+
+        $this->assertNotFalse($zip->locateName('heart_rates.csv'));
+        $this->assertNotFalse($zip->locateName('weights.csv'));
+
+        $this->assertFalse($zip->locateName('blood_pressures.csv'));
+        $this->assertFalse($zip->locateName('steps.csv'));
+        $this->assertFalse($zip->locateName('exercises.csv'));
+        $this->assertFalse($zip->locateName('calorie_intakes.csv'));
+        $this->assertFalse($zip->locateName('water_intakes.csv'));
+        $this->assertFalse($zip->locateName('sleep_records.csv'));
+
+        $zip->close();
+        @unlink($tmp);
+    }
+
+    public function test_csv_export_headers_localized_per_user_locale(): void
+    {
+        $hu = User::factory()->create(['locale' => 'hu']);
+        $en = User::factory()->create(['locale' => 'en']);
+        $de = User::factory()->create(['locale' => 'de']);
+        $this->seedHealthData($hu);
+        $this->seedHealthData($en);
+        $this->seedHealthData($de);
+
+        $extract = function (User $u, string $name): string {
+            Sanctum::actingAs($u, ['*']);
+            $resp = $this->get('/export/csv');
+            $tmp = tempnam(sys_get_temp_dir(), 'wb-loc-');
+            file_put_contents($tmp, $resp->getContent());
+            $zip = new \ZipArchive();
+            $zip->open($tmp);
+            $csv = $zip->getFromName($name);
+            $zip->close();
+            @unlink($tmp);
+            return $csv;
+        };
+
+        $this->assertStringContainsString('pulzus_bpm',     $extract($hu, 'heart_rates.csv'));
+        $this->assertStringContainsString('heart_rate_bpm', $extract($en, 'heart_rates.csv'));
+        $this->assertStringContainsString('puls_bpm',       $extract($de, 'heart_rates.csv'));
+
+        $this->assertStringContainsString('suly_kg',     $extract($hu, 'weights.csv'));
+        $this->assertStringContainsString('weight_kg',   $extract($en, 'weights.csv'));
+        $this->assertStringContainsString('gewicht_kg',  $extract($de, 'weights.csv'));
+
+        $this->assertStringContainsString('rogzitve',    $extract($hu, 'heart_rates.csv'));
+        $this->assertStringContainsString('erfasst_am',  $extract($de, 'heart_rates.csv'));
+    }
+
+    public function test_csv_export_uses_unit_suffixed_column_keys(): void
+    {
+        $user = User::factory()->create(['locale' => 'en']);
+        $this->seedHealthData($user);
+        Sanctum::actingAs($user, ['*']);
+
+        $resp = $this->get('/export/csv');
+        $tmp = tempnam(sys_get_temp_dir(), 'wb-unit-');
+        file_put_contents($tmp, $resp->getContent());
+        $zip = new \ZipArchive();
+        $zip->open($tmp);
+
+        $bp    = $zip->getFromName('blood_pressures.csv');
+        $steps = $zip->getFromName('steps.csv');
+        $water = $zip->getFromName('water_intakes.csv');
+        $sleep = $zip->getFromName('sleep_records.csv');
+
+        $zip->close();
+        @unlink($tmp);
+
+        $this->assertStringContainsString('systolic_mmhg',  $bp);
+        $this->assertStringContainsString('diastolic_mmhg', $bp);
+        $this->assertStringContainsString('steps_count',    $steps);
+        $this->assertStringContainsString('water_ml',       $water);
+        $this->assertStringContainsString('sleep_hours',    $sleep);
+        $this->assertStringContainsString('quality_1to5',   $sleep);
+    }
+
+    public function test_csv_export_dates_are_iso8601(): void
+    {
+        $user = User::factory()->create();
+        HeartRate::create([
+            'user_id' => $user->id, 'heart_rate' => 75,
+            'recorded_at' => '2026-04-15 09:36:00',
+        ]);
+        Sanctum::actingAs($user, ['*']);
+
+        $resp = $this->get('/export/csv');
+        $tmp = tempnam(sys_get_temp_dir(), 'wb-iso-');
+        file_put_contents($tmp, $resp->getContent());
+        $zip = new \ZipArchive();
+        $zip->open($tmp);
+        $hr = $zip->getFromName('heart_rates.csv');
+        $zip->close();
+        @unlink($tmp);
+
+        $this->assertMatchesRegularExpression(
+            '/2026-04-15T09:36:00[+-]\d{2}:\d{2}/',
+            $hr,
+            'recorded_at ISO 8601 (T elválasztó + timezone offset)'
+        );
+        $this->assertStringNotContainsString('2026-04-15 09:36:00', $hr);
     }
 }

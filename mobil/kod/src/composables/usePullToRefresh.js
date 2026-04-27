@@ -1,23 +1,13 @@
 import { ref, onMounted, onBeforeUnmount } from "vue"
 
-/**
- * usePullToRefresh – natív pull-to-refresh gesture Capacitor apphoz
- *
- * Használat:
- *   const { isPulling, pullProgress } = usePullToRefresh(scrollEl, onRefresh)
- *   - scrollEl: ref<HTMLElement> – a görgethető konténer elem
- *   - onRefresh: async function – a frissítő callback
- *
- * A parent komponensben egy refresh indicator-t kell renderelni:
- *   <div v-if="isPulling" :style="{ opacity: pullProgress }" class="...">↓</div>
- */
+
 export function usePullToRefresh(scrollEl, onRefresh) {
   const isPulling     = ref(false)
-  const pullProgress  = ref(0)  // 0–1
+  const pullProgress  = ref(0)  
   const isRefreshing  = ref(false)
 
-  const THRESHOLD  = 70   // px – ennyit kell húzni a frissítéshez
-  const MAX_PULL   = 100  // px – max vizuális húzás
+  const THRESHOLD  = 70   
+  const MAX_PULL   = 100  
 
   let startY  = 0
   let currentY = 0
@@ -26,7 +16,7 @@ export function usePullToRefresh(scrollEl, onRefresh) {
   function onTouchStart(e) {
     const el = scrollEl.value
     if (!el) return
-    if (el.scrollTop > 0) return   // csak ha a tetején van
+    if (el.scrollTop > 0) return   
     if (isRefreshing.value) return
     startY   = e.touches[0].clientY
     active   = true
@@ -42,7 +32,7 @@ export function usePullToRefresh(scrollEl, onRefresh) {
     const delta = currentY - startY
     if (delta <= 0) { isPulling.value = false; pullProgress.value = 0; return }
 
-    // Prevent default scroll when pulling down
+    
     e.preventDefault()
     isPulling.value  = true
     pullProgress.value = Math.min(delta / MAX_PULL, 1)

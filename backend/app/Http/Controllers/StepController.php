@@ -27,7 +27,7 @@ class StepController extends Controller
         $validated = $request->validate([
             'steps' => ['required', 'integer', 'min:0'],
             'recorded_at' => ['nullable', 'date'],
-            'mode' => ['nullable', 'in:overwrite,add'], // overwrite = felülírás, add = hozzáadás
+            'mode' => ['nullable', 'in:overwrite,add'], 
         ]);
 
         $date = $validated['recorded_at'] ?? now()->toDateString();

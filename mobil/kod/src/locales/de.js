@@ -18,8 +18,6 @@ export default {
     success: "Erfolgreich",
     noData: "Keine Daten",
     retry: "Erneut versuchen",
-    version: "v0.1",
-    beta: "en-beta",
   },
   auth: {
     login: "Anmelden",
@@ -455,6 +453,8 @@ export default {
     exportDesc: "Lade alle deine Gesundheitsdaten im JSON- oder CSV-Format herunter",
     exportSuccess: "Export erfolgreich",
     exportError: "Export fehlgeschlagen",
+    exportWebOnlyDesc: "Der Datenexport (JSON / CSV ZIP) ist in der Web-App verfügbar — der Browser übernimmt den Download nativ.",
+    exportWebBtn: "Im Browser öffnen",
     streakFreezeTitle: "Serie einfrieren",
     streakFreezeDesc: "Pro-Funktion: Gleicht einen verpassten Tag aus, damit deine Serie nicht abreißt. Alle 30 Tage nutzbar.",
     streakFreezeBtn: "Einfrieren nutzen",
@@ -478,7 +478,7 @@ export default {
     waterGoalDesc: "Wie viel ml Wasser möchtest du täglich trinken? (500 – 10.000)",
     waterGoalSaved: "Wasserziel gespeichert",
     notificationsTitle: "Benachrichtigungen",
-    notificationsDesc: "Lokale Benachrichtigungen konfigurieren (kein Server nötig)",
+    notificationsDesc: "Benachrichtigungen konfigurieren",
     notificationsMaster: "Benachrichtigungen aktivieren",
     notificationsMasterDesc: "Wenn aus, bekommst du keine Benachrichtigungen",
     dailyReminderLabel: "Tägliche Erinnerung",
@@ -686,7 +686,7 @@ export default {
     founder: "Gründer",
   },
 
-  // ==================== HEALTH SYNC ====================
+
   healthSync: {
     title: "Gesundheitsdaten importieren",
     checking: "Wird geprüft...",
@@ -700,6 +700,8 @@ export default {
     lastSync: "Letzter Import",
     syncNow: "Jetzt importieren",
     syncing: "Wird importiert...",
+    forceFullSync: "Vollständige Neusynchronisation",
+    forceFullSyncDesc: "Wenn der Import keine neuen Daten bringt: löscht den letzten Sync-Zeitstempel und alle hochgeladenen Datensatz-IDs und importiert die letzten 30 Tage erneut.",
     syncDone: "Fertig! {count} neue Einträge importiert.",
     heartRate: "Herzfrequenz",
     bloodPressure: "Blutdruck",
@@ -709,13 +711,13 @@ export default {
     infoText: "Hierbei werden die auf Ihrem Telefon gespeicherten Gesundheitsdaten (Herzfrequenz, Blutdruck, Gewicht, Schritte, Workouts) in WelfareBuddy importiert. Jeder Eintrag wird nur einmal importiert — keine Duplikate.",
   },
 
-  // ==================== NOTIFICATIONS ====================
+
   notifications: {
-    // Sync
+
     syncComplete: "Synchronisierung abgeschlossen",
     syncCompleteBody: "{count} neue Gesundheitsdaten synchronisiert.",
 
-    // Tägliche Erinnerung
+
     dailyReminder: "Tägliche Erinnerung",
     dailyReminderBody: "Vergiss nicht, deine Gesundheitsdaten heute einzutragen!",
     dailyReminderMessages: [
@@ -728,7 +730,7 @@ export default {
       "Wochenend-Gesundheits-Check – wie geht es dir?",
     ],
 
-    // Streak halten (21:00)
+
     streakReminderTitle: "Lass die Kette nicht reißen! 🔥",
     streakReminderMessages: [
       "Dein Streak ist noch zu retten – trag heute Abend noch einen Wert ein!",
@@ -740,7 +742,7 @@ export default {
       "Wirf deinen Wochen-Streak nicht wegen eines vergessenen Tages weg.",
     ],
 
-    // „Heute nicht gemessen" (20:00)
+
     notMeasuredTitle: "Heute schon gemessen?",
     notMeasuredMessages: [
       "Ich sehe heute noch keinen Eintrag – mach schnell eine Messung!",
@@ -752,7 +754,7 @@ export default {
       "Abend-Check: Wie geht's deiner Gesundheit heute?",
     ],
 
-    // Training Erinnerung (18:00)
+
     exerciseReminderTitle: "Schon Bewegung heute? 💪",
     exerciseReminderMessages: [
       "Zeit dich zu bewegen – auch ein Spaziergang zählt.",
@@ -764,7 +766,7 @@ export default {
       "Erinnerung: Bewegung steigert Puls und Stimmung.",
     ],
 
-    // Morgen-Motivation (07:30, optional)
+
     morningTitle: "Guten Morgen! ☀️",
     morningMessages: [
       "Ein neuer Tag, eine neue Chance für deine Gesundheit.",
@@ -776,29 +778,29 @@ export default {
       "Auf geht's! Ein kleiner Eintrag am Morgen ist ein schöner Start.",
     ],
 
-    // Wochenzusammenfassung (Sonntag 20:00)
+
     weeklyTitle: "Wochenzusammenfassung 📊",
     weeklyBody: "Deine Woche: {steps} Schritte, {exercises} Trainings, {streak}-Tage-Streak. Gute Arbeit!",
 
-    // Streak-Rekord (Event)
+    
     streakRecordTitle: "Neuer Streak-Rekord! 🏆",
     streakRecordBody: "Neuer Rekord: {days} aufeinanderfolgende Tage!",
 
-    // Streak-Meilenstein (Event, einmal pro Meilenstein)
+    
     streakMilestone: "Streak-Meilenstein! 🔥",
     streakMilestoneBody: "Du hast einen {days}-Tage-Streak – weiter so!",
 
-    // Schrittziel (Event)
+    
     stepGoalReachedTitle: "Tagesziel erreicht! 🎯",
     stepGoalReachedBody: "Du hast heute {goal} Schritte geschafft. Super!",
     stepGoalAlmostTitle: "Fast am Ziel!",
     stepGoalAlmostBody: "Nur noch {remaining} Schritte bis zum Tagesziel. Los!",
 
-    // Erster Eintrag (Event, einmal pro User)
+    
     firstEntryTitle: "Toller Start! 🌟",
     firstEntryBody: "Du hast deinen ersten Eintrag gespeichert. Halte den Schwung – gesunde Gewohnheiten fangen hier an!",
 
-    // Inaktivität (48h+ → 24h später Erinnerung)
+    
     inactivityTitle: "Wir haben dich vermisst…",
     inactivityMessages: [
       "Wir vermissen dich! Komm zurück und setze deine Gesundheitsverfolgung fort.",
@@ -808,13 +810,12 @@ export default {
     ],
   },
 
-  // ==================== ONBOARDING ====================
+  
   onboarding: {
     welcomeTitle: "Willkommen bei WelfareBuddy!",
     welcomeDesc: "Lass uns 30 Sekunden für die Einrichtung nehmen.",
     start: "Los geht's!",
     heightTitle: "Deine Körpergröße",
-    heightDesc: "Wird für die BMI-Berechnung verwendet. Du kannst überspringen.",
     displayNameTitle: "Wie sollen wir dich nennen?",
     displayNameDesc: "Dein Spitzname erscheint auf dem Dashboard und in Benachrichtigungen.",
     displayNameLabel: "Spitzname",
@@ -829,18 +830,18 @@ export default {
     doneBtn: "Zum Dashboard",
   },
 
-  // ==================== OFFLINE ====================
+  
   offline: {
     banner: "Keine Internetverbindung — zuvor geladene Daten werden angezeigt",
     wsDisconnected: "Echtzeit-Updates nicht aktiv",
   },
 
-  // ==================== STATUS ====================
+  
   status: {
     live: "Echtzeit-Updates aktiv",
   },
 
-  // ==================== LEGAL ====================
+  
   progress: {
     cardTitle: "Deine Reise bisher",
     weightLabel: "Gewicht",
@@ -928,5 +929,16 @@ export default {
         "<strong>7. Anwendbares Recht</strong><br>Es gilt ungarisches Recht. Gerichtsstand sind die ungarischen Gerichte.",
       ],
     },
+  },
+  errors: {
+    network:      "Keine Netzwerkverbindung. Bitte überprüfe deine Internetverbindung.",
+    timeout:      "Zeitüberschreitung — der Server hat nicht rechtzeitig geantwortet. Bitte versuche es erneut.",
+    unauthorized: "Du bist für diese Aktion nicht berechtigt. Bitte melde dich erneut an.",
+    forbidden:    "Du hast keine Berechtigung für diese Aktion.",
+    notFound:     "Die angeforderten Daten wurden nicht gefunden.",
+    rateLimit:    "Zu viele Anfragen hintereinander. Bitte warte einen Moment und versuche es erneut.",
+    server:       "Serverfehler. Bitte versuche es später erneut.",
+    serverDown:   "Der Server ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+    unknown:      "Ein unbekannter Fehler ist aufgetreten.",
   },
 }

@@ -10,10 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * GDPR / Account törlés flow.
- * @see app/Http/Controllers/AuthController.php @ deleteAccount
- */
+
 class AccountTest extends TestCase
 {
     use RefreshDatabase;
@@ -29,12 +26,7 @@ class AccountTest extends TestCase
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 
-    /**
-     * @see CLAUDE.md session 19, 13. rész — sleepRecords cascade fix
-     * deleteAccount korábban kihagyta a `sleepRecords()->delete()`-t. A `sleep_records.user_id`
-     * FK RESTRICT (nem cascade), így egy alvás-rekorddal rendelkező user törlése FK
-     * constraint hibával szakadna fel a `$user->delete()` során.
-     */
+    
     public function test_delete_account_with_sleep_records_does_not_throw_fk_error(): void
     {
         $user = User::factory()->create();
@@ -74,9 +66,7 @@ class AccountTest extends TestCase
         $this->assertDatabaseMissing('streaks', ['user_id' => $user->id]);
     }
 
-    /**
-     * Másik user adatait NEM szabad törölnie az account törlésnek.
-     */
+    
     public function test_delete_account_does_not_affect_other_users_data(): void
     {
         $alice = User::factory()->create();

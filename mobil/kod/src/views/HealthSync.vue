@@ -78,6 +78,20 @@ async function handleSyncAll() {
   }
 }
 
+async function handleForceFullSync() {
+  hapticLight()
+  clearLastSync()
+  clearUploaded()
+  refreshIdsCount()
+  try {
+    await syncAll()
+    if (!syncError.value) hapticSuccess()
+    else hapticHeavy()
+  } catch {
+    hapticHeavy()
+  }
+}
+
 async function handleRequestPermissions() {
   hapticLight()
   try {
@@ -95,7 +109,7 @@ onMounted(() => {
 
 <template>
   <div class="space-y-4">
-    <!-- Header -->
+    
     <div>
       <Button variant="ghost" size="sm" class="rounded-xl gap-1.5 text-muted-foreground mb-2" @click="router.push('/app/settings')">
         <ArrowLeft class="h-3.5 w-3.5" />
@@ -108,7 +122,7 @@ onMounted(() => {
       <p class="text-sm text-muted-foreground">{{ t("healthSync.statusDesc") }}</p>
     </div>
 
-    <!-- 1. Ellenőrzés állapot -->
+    
     <Card v-if="pluginState === 'checking'">
       <CardContent class="flex items-center gap-3 py-6">
         <Loader2 class="w-5 h-5 animate-spin text-muted-foreground" />
@@ -116,7 +130,7 @@ onMounted(() => {
       </CardContent>
     </Card>
 
-    <!-- 2. Nem elérhető -->
+    
     <Card v-else-if="pluginState === 'unavailable'">
       <CardContent class="flex flex-col items-center gap-3 py-8 text-center">
         <XCircle class="w-10 h-10 text-muted-foreground" />
@@ -127,7 +141,7 @@ onMounted(() => {
       </CardContent>
     </Card>
 
-    <!-- 3. Engedély szükséges -->
+    
     <template v-else-if="pluginState === 'needsPermission'">
       <Card>
         <CardHeader>
@@ -155,23 +169,23 @@ onMounted(() => {
       </Card>
     </template>
 
-    <!-- 4. Kész, szinkronizálás elérhető -->
+    
     <template v-else>
-      <!-- Státusz kártya -->
+      
       <Card>
         <CardHeader>
           <CardTitle class="text-base">{{ t("healthSync.statusTitle") }}</CardTitle>
           <CardDescription>{{ t("healthSync.statusDesc") }}</CardDescription>
         </CardHeader>
         <CardContent class="space-y-3">
-          <!-- Utolsó szinkronizálás -->
+          
           <div class="flex items-center gap-2 text-sm">
             <Clock class="w-4 h-4 text-muted-foreground shrink-0" />
             <span class="text-muted-foreground">{{ t("healthSync.lastSync") }}:</span>
             <span class="font-medium">{{ formatDateTime(lastSyncTime) }}</span>
           </div>
 
-          <!-- Szinkronizált elemek száma -->
+          
           <div v-if="syncedCounts && !isSyncing" class="space-y-1 text-sm">
             <div class="flex items-center gap-2 text-green-600">
               <CheckCircle class="w-4 h-4 shrink-0" />
@@ -186,7 +200,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Hiba -->
+          
           <div v-if="syncError" class="flex items-start gap-2 text-sm text-destructive">
             <AlertCircle class="w-4 h-4 shrink-0 mt-0.5" />
             <span>{{ syncError }}</span>
@@ -194,23 +208,30 @@ onMounted(() => {
         </CardContent>
       </Card>
 
-      <!-- Offline figyelmezetés -->
+      
       <div v-if="!isOnline" class="flex items-center gap-2 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-700 dark:text-yellow-400">
         <AlertCircle class="w-4 h-4 shrink-0" />
         <span>{{ $t("offline.banner") }}</span>
       </div>
 
-      <!-- Sync gomb + lépés indikátor -->
+      
       <Button class="w-full" :disabled="isSyncing || !isOnline" @click="handleSyncAll">
         <RefreshCw class="w-4 h-4 mr-2" :class="{ 'animate-spin': isSyncing }" />
         {{ isSyncing ? t("healthSync.syncing") : t("healthSync.syncNow") }}
       </Button>
+      <Button variant="outline" class="w-full" :disabled="isSyncing || !isOnline" @click="handleForceFullSync">
+        <RefreshCw class="w-4 h-4 mr-2" />
+        {{ t("healthSync.forceFullSync") }}
+      </Button>
+      <div v-if="!isSyncing" class="text-xs text-muted-foreground text-center px-4">
+        {{ t("healthSync.forceFullSyncDesc") }}
+      </div>
       <div v-if="isSyncing && currentStep" class="flex items-center gap-2 text-xs text-muted-foreground justify-center">
         <Loader2 class="w-3.5 h-3.5 animate-spin" />
         <span>{{ t(stepLabels[currentStep] || currentStep) }}...</span>
       </div>
 
-      <!-- Info kártya -->
+      
       <Card>
         <CardContent class="py-4">
           <p class="text-xs text-muted-foreground">{{ t("healthSync.infoText") }}</p>

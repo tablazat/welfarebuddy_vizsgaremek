@@ -34,13 +34,13 @@ const deletingId = ref(null)
 const error = ref("")
 const successMsg = ref("")
 
-// Data
+
 const activities = ref([])
 const exercises = ref([])
 const todaySteps = ref(null)
 const stepsHistory = ref([])
 
-// Category mapping - keys are i18n category key suffixes
+
 const categoryTypeMap = {
   cardio: [
     "running", "running.treadmill", "biking", "biking.stationary", "walking",
@@ -124,7 +124,7 @@ const groupedActivities = computed(() => {
   return groups
 })
 
-// Exercise form — külön dátum + idő, HealthKit-kompatibilis
+
 function todayDate() {
   return new Date().toISOString().slice(0, 10)
 }
@@ -138,17 +138,17 @@ const form = ref({
   date: todayDate(),
   beginTime: nowTime(),
   endTime: nowTime(),
-  source: "manual", // "manual" | "healthkit" | "google_fit" | stb.
+  source: "manual", 
 })
 const stepsForm = ref({ steps: "", date: todayDate(), mode: "add" })
 
-// Összerakja a dátum + idő-t "YYYY-MM-DD HH:mm:ss" formátumba
+
 function combineDatetime(date, time) {
   if (!date || !time) return null
   return `${date} ${time}:00`
 }
 
-// Computed begin/end a form-ból (duration preview-hoz)
+
 const formBeginDt = computed(() => form.value.date && form.value.beginTime ? new Date(`${form.value.date}T${form.value.beginTime}`) : null)
 const formEndDt = computed(() => {
   if (!form.value.date || !form.value.endTime) return null
@@ -157,7 +157,7 @@ const formEndDt = computed(() => {
   return end
 })
 
-// Steps goal (user configurable, localStorage-backed)
+
 const STEP_GOAL = parseInt(storageGet("step_goal") || "10000")
 
 const stepsPercent = computed(() => {
@@ -166,7 +166,7 @@ const stepsPercent = computed(() => {
 })
 
 const todayCalEstimate = computed(() => {
-  // Durva becslés: ~0.04 kcal/lépés
+  
   if (!todaySteps.value?.steps) return 0
   return Math.round(todaySteps.value.steps * 0.04)
 })
@@ -223,13 +223,13 @@ const filteredExercises = computed(() => {
   })
 })
 
-// Expanded category tracking
+
 const expandedCat = ref(null)
 function toggleCat(cat) {
   expandedCat.value = expandedCat.value === cat ? null : cat
 }
 
-// Duration slider (perc) – beginTime-ból számolja az endTime-ot
+
 const DURATION_PRESETS = [15, 30, 45, 60, 90]
 const durationSlider = ref(30)
 function applyDurationPreset(mins) {
@@ -305,7 +305,7 @@ async function saveExercise() {
       activity_id: Number(form.value.activity_id),
       begin,
       end,
-      // source: form.value.source, // HealthKit-hez a jövőben
+      
     })
     form.value = { activity_id: "", date: todayDate(), beginTime: nowTime(), endTime: nowTime(), source: "manual" }
     successMsg.value = t("exercise.saved.exercise")
@@ -343,7 +343,7 @@ async function saveSteps() {
   }
 }
 
-// Helpers for overview
+
 const todayExercises = computed(() => {
   const today = new Date().toISOString().slice(0, 10)
   return exercises.value.filter((ex) => (ex.begin || "").slice(0, 10) === today)
@@ -356,7 +356,7 @@ function getCategoryIcon(activityId) {
   return categoryIconMap[catKey] || Shapes
 }
 
-// Steps bar chart helpers
+
 const stepsBarMax = computed(() => {
   const vals = []
   for (let i = 0; i < 7; i++) {
@@ -394,7 +394,7 @@ async function deleteExercise(id) {
   }
 }
 
-// WebSocket
+
 watch(wsEvent, (e) => {
   if (!e) return
   if (["activity", "steps"].includes(e.type)) loadAll()
@@ -437,12 +437,12 @@ watch(wsEvent, (e) => {
         </TabsTrigger>
       </TabsList>
 
-      <!-- ==================== OVERVIEW TAB ==================== -->
+      
       <TabsContent value="overview" class="mt-4 space-y-4">
 
-        <!-- Summary cards -->
+        
         <div class="grid grid-cols-3 gap-3">
-          <!-- Steps -->
+          
           <Card class="rounded-2xl">
             <CardContent class="p-4 text-center">
               <div class="text-2xl mb-1">👟</div>
@@ -453,7 +453,7 @@ watch(wsEvent, (e) => {
                 <div class="text-2xl font-bold">{{ todaySteps?.steps?.toLocaleString(dateLocale.value) || "0" }}</div>
               </template>
               <div class="text-xs text-muted-foreground">{{ $t("exercise.steps") }}</div>
-              <!-- Mini progress bar -->
+              
               <div class="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
                 <div class="h-full bg-green-500 rounded-full transition-all" :style="{ width: stepsPercent + '%' }" />
               </div>
@@ -461,7 +461,7 @@ watch(wsEvent, (e) => {
             </CardContent>
           </Card>
 
-          <!-- Exercise minutes -->
+          
           <Card class="rounded-2xl">
             <CardContent class="p-4 text-center">
               <div class="text-2xl mb-1">⏱️</div>
@@ -475,7 +475,7 @@ watch(wsEvent, (e) => {
             </CardContent>
           </Card>
 
-          <!-- Calorie estimate -->
+          
           <Card class="rounded-2xl">
             <CardContent class="p-4 text-center">
               <div class="text-2xl mb-1">🔥</div>
@@ -490,7 +490,7 @@ watch(wsEvent, (e) => {
           </Card>
         </div>
 
-        <!-- Steps quick entry -->
+        
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
             <CardTitle class="text-base flex items-center gap-2">
@@ -538,7 +538,7 @@ watch(wsEvent, (e) => {
           </CardContent>
         </Card>
 
-        <!-- Steps 7-day bar chart -->
+        
         <Card class="rounded-2xl">
           <CardHeader class="pb-2">
             <CardTitle class="text-base flex items-center gap-2">
@@ -570,7 +570,7 @@ watch(wsEvent, (e) => {
           </CardContent>
         </Card>
 
-        <!-- Today's exercises -->
+        
         <Card v-if="todayExercises.length" class="rounded-2xl">
           <CardHeader class="pb-2">
             <CardTitle class="text-base flex items-center gap-2">
@@ -609,7 +609,7 @@ watch(wsEvent, (e) => {
         </Card>
       </TabsContent>
 
-      <!-- ==================== NEW ENTRY TAB ==================== -->
+      
       <TabsContent value="new" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -622,7 +622,7 @@ watch(wsEvent, (e) => {
               <Skeleton class="h-10 w-full rounded-xl" />
             </div>
             <form v-else class="space-y-3" @submit.prevent="saveExercise">
-              <!-- Grouped activity selector -->
+              
               <div class="space-y-1.5">
                 <Label>{{ $t("exercise.activity") }}</Label>
                 <div class="space-y-1">
@@ -662,13 +662,13 @@ watch(wsEvent, (e) => {
 
               <Separator />
 
-              <!-- Dátum -->
+              
               <div class="space-y-1.5">
                 <Label>{{ $t("exercise.date") }}</Label>
                 <Input v-model="form.date" type="date" :max="todayDate()" />
               </div>
 
-              <!-- Kezdés / Befejezés idő -->
+              
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1.5">
                   <Label>{{ $t("exercise.beginTime") }}</Label>
@@ -680,7 +680,7 @@ watch(wsEvent, (e) => {
                 </div>
               </div>
 
-              <!-- Duration slider + gyors preset chipek -->
+              
               <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <Label class="text-xs text-muted-foreground">{{ $t("exercise.durationSlider") }}</Label>
@@ -728,7 +728,7 @@ watch(wsEvent, (e) => {
           </CardContent>
         </Card>
 
-        <!-- Steps entry -->
+        
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
             <CardTitle class="text-base flex items-center gap-2">
@@ -779,7 +779,7 @@ watch(wsEvent, (e) => {
         </Card>
       </TabsContent>
 
-      <!-- ==================== HISTORY TAB ==================== -->
+      
       <TabsContent value="history" class="mt-4 space-y-4">
         <div v-if="loading" class="space-y-2">
           <Skeleton v-for="i in 5" :key="i" class="h-16 rounded-xl" />
@@ -825,7 +825,7 @@ watch(wsEvent, (e) => {
           </button>
         </div>
 
-        <!-- Steps history -->
+        
         <Card v-if="stepsHistory.length" class="rounded-2xl">
           <CardHeader class="pb-2">
             <CardTitle class="text-base flex items-center gap-2">

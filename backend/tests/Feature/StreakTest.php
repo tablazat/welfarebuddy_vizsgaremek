@@ -8,10 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/StreakController.php
- * @see TODO.md Phase 7 — Streak Pro feature
- */
+
 class StreakTest extends TestCase
 {
     use RefreshDatabase;
@@ -39,7 +36,7 @@ class StreakTest extends TestCase
         $user = User::factory()->create(['level_of_access' => 'pro']);
         Streak::create([
             'user_id'  => $user->id,
-            'last_day' => now()->subDays(2)->toDateString(), // tegnapelőtt = 1 nap kihagyva
+            'last_day' => now()->subDays(2)->toDateString(),
             'days'     => 5,
         ]);
         Sanctum::actingAs($user, ['*']);
@@ -48,7 +45,7 @@ class StreakTest extends TestCase
 
         $response->assertStatus(200)->assertJsonPath('code', 'frozen');
 
-        // last_day most tegnap → ma logolva folytathatja
+        
         $streak = $user->fresh()->streak;
         $this->assertSame(now()->subDay()->toDateString(), substr((string) $streak->last_day, 0, 10));
         $this->assertNotNull($streak->last_freeze_at);
@@ -69,9 +66,7 @@ class StreakTest extends TestCase
         $response->assertStatus(403)->assertJsonPath('code', 'not_pro');
     }
 
-    /**
-     * @see TODO.md Phase 7 — 30 napos cooldown a freeze használat után
-     */
+
     public function test_freeze_within_cooldown_returns_422_cooldown(): void
     {
         $user = User::factory()->create(['level_of_access' => 'pro']);

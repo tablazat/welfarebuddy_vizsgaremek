@@ -1,5 +1,5 @@
 export default {
-  // ==================== COMMON ====================
+  
   common: {
     save: "Mentés",
     cancel: "Mégse",
@@ -19,11 +19,9 @@ export default {
     success: "Sikeres",
     noData: "Nincs adat",
     retry: "Újrapróbálás",
-    version: "v0.1",
-    beta: "en-beta",
   },
 
-  // ==================== AUTH ====================
+  
   auth: {
     login: "Bejelentkezés",
     register: "Regisztráció",
@@ -72,7 +70,7 @@ export default {
     termsSuffix: ".",
   },
 
-  // ==================== NAV / SHELL ====================
+  
   nav: {
     dashboard: "Dashboard",
     diary: "Napló",
@@ -91,7 +89,7 @@ export default {
     appName: "WelfareBuddy",
   },
 
-  // ==================== DASHBOARD ====================
+  
   dashboard: {
     goodMorning: "Jó reggelt",
     goodDay: "Jó napot",
@@ -132,7 +130,7 @@ export default {
     loadFailedDesc: "Ellenőrizd az internetkapcsolatot és próbáld újra.",
   },
 
-  // ==================== DIARY ====================
+  
   diary: {
     title: "Napló",
     today: "Ma",
@@ -226,7 +224,7 @@ export default {
     copyYesterdayNone: "Nincs tegnapi adat",
   },
 
-  // ==================== EXERCISE ====================
+  
   exercise: {
     title: "Aktivitás",
     subtitle: "Edzések, lépésszám és aktivitáskövetés",
@@ -295,7 +293,7 @@ export default {
     },
   },
 
-  // ==================== STATS ====================
+  
   stats: {
     title: "Statisztika",
     subtitle: "Egészségügyi trendek és átlagok",
@@ -353,7 +351,7 @@ export default {
     },
   },
 
-  // ==================== SUMMARY ====================
+  
   summary: {
     title: "Összesítés",
     subtitle: "Elégetett kalóriák és aktivitás összegzése",
@@ -393,7 +391,7 @@ export default {
     },
   },
 
-  // ==================== PROFILE ====================
+  
   profile: {
     title: "Profil",
     subtitle: "A fiókod adatai",
@@ -436,7 +434,7 @@ export default {
     bmiObese: "Elhízott",
   },
 
-  // ==================== SETTINGS ====================
+  
   settings: {
     title: "Beállítások",
     subtitle: "Fiókod kezelése",
@@ -474,6 +472,8 @@ export default {
     exportDesc: "Töltsd le az összes egészségügyi adatodat JSON vagy CSV formátumban",
     exportSuccess: "Exportálás sikeres",
     exportError: "Exportálás sikertelen",
+    exportWebOnlyDesc: "Az adatexport (JSON / CSV ZIP) a webes felületen érhető el — a böngésző natívan kezeli a letöltést.",
+    exportWebBtn: "Megnyitás a böngészőben",
     streakFreezeTitle: "Sorozat fagyasztás",
     streakFreezeDesc: "Pro funkció: egyetlen kihagyott napot kompenzál, így a sorozatod nem szakad meg. 30 naponta egyszer használható.",
     streakFreezeBtn: "Fagyasztás használata",
@@ -497,7 +497,7 @@ export default {
     waterGoalDesc: "Hány ml vizet szeretnél naponta elfogyasztani? (500 – 10 000)",
     waterGoalSaved: "Víz cél mentve",
     notificationsTitle: "Értesítések",
-    notificationsDesc: "Lokális értesítések beállítása (szerver nélkül)",
+    notificationsDesc: "Értesítések beállítása",
     notificationsMaster: "Értesítések engedélyezése",
     notificationsMasterDesc: "Ha kikapcsolod, egyetlen értesítést sem kapsz",
     dailyReminderLabel: "Napi emlékeztető",
@@ -543,7 +543,7 @@ export default {
     ],
   },
 
-  // ==================== UPGRADE ====================
+  
   upgrade: {
     title: "Csomagok",
     subtitle: "Válaszd ki a számodra megfelelő csomagot",
@@ -566,7 +566,7 @@ export default {
     demoNote: "A Pro csomag jelenleg ingyenesen aktiválható demó célokra.",
   },
 
-  // ==================== ADMIN ====================
+  
   admin: {
     title: "Admin felület",
     subtitle: "Felhasználók és rendszer kezelése",
@@ -596,7 +596,7 @@ export default {
     },
   },
 
-  // ==================== LANDING ====================
+  
   landing: {
     home: "Főoldal",
     heroTagline: "Ingyenes, egyszerű, hatékony",
@@ -640,7 +640,7 @@ export default {
     footerRights: "Minden jog fenntartva.",
   },
 
-  // ==================== COOKIE CONSENT ====================
+  
   cookie: {
     title: "Cookie-k és adatkezelés",
     message: "Az oldal sütik segítségével biztosítja a legjobb felhasználói élményt. A bejelentkezési adataidat és a beállításaidat tároljuk a böngésződben. Az \"Elfogadom\" gombra kattintva hozzájárulsz a sütik használatához.",
@@ -648,7 +648,7 @@ export default {
     decline: "Elutasítom",
   },
 
-  // ==================== VERIFY EMAIL ====================
+  
   verify: {
     title: "Email megerősítése",
     description: "Kérjük, erősítsd meg az email címedet a folytatáshoz.",
@@ -715,7 +715,7 @@ export default {
     founder: "Alapító",
   },
 
-  // ==================== HEALTH SYNC ====================
+  
   healthSync: {
     title: "Egészségadatok átvétele",
     checking: "Ellenőrzés folyamatban...",
@@ -729,6 +729,8 @@ export default {
     lastSync: "Utolsó átvétel",
     syncNow: "Átvétel indítása",
     syncing: "Átvétel folyamatban...",
+    forceFullSync: "Teljes újraszinkronizálás",
+    forceFullSyncDesc: "Ha az átvétel nem hoz be új adatot: ez törli az utolsó-szinkron időpontot és minden már-feltöltött rekord-azonosítót, majd újból végigveszi az elmúlt 30 napot.",
     syncDone: "Kész! {count} új adat került be.",
     heartRate: "Pulzus",
     bloodPressure: "Vérnyomás",
@@ -738,13 +740,13 @@ export default {
     infoText: "Az átvétel során a telefonodon tárolt egészségadatokat (pulzus, vérnyomás, testsúly, lépésszám, edzések) áttöltjük a WelfareBuddy-ba. Minden adatot csak egyszer töltünk fel, duplikáció nem keletkezik.",
   },
 
-  // ==================== NOTIFICATIONS ====================
+  
   notifications: {
-    // Szinkronizálás
+    
     syncComplete: "Szinkronizálás kész",
     syncCompleteBody: "{count} új egészségügyi adat szinkronizálva.",
 
-    // Napi emlékeztető
+    
     dailyReminder: "Napi emlékeztető",
     dailyReminderBody: "Ne felejtsd el rögzíteni a mai egészségügyi adataid!",
     dailyReminderMessages: [
@@ -757,7 +759,7 @@ export default {
       "Hétvégi egészség-ellenőrzés – hogy érzed magad?",
     ],
 
-    // Streak fenntartás (21:00)
+    
     streakReminderTitle: "Ne hagyd megszakadni! 🔥",
     streakReminderMessages: [
       "A sorozatod ma is fenntartható – mérj még egy értéket!",
@@ -769,7 +771,7 @@ export default {
       "A heti streakedet ne dobd el egy elfelejtett napért.",
     ],
 
-    // „Ma nem mértél" (20:00)
+    
     notMeasuredTitle: "Volt már mérés ma?",
     notMeasuredMessages: [
       "Még nem látok mai bejegyzést – kapj fel egy mérést!",
@@ -781,7 +783,7 @@ export default {
       "Esti csekk: mi a helyzet az egészségeddel ma?",
     ],
 
-    // Edzés emlékeztető (18:00)
+    
     exerciseReminderTitle: "Volt már mozgás ma? 💪",
     exerciseReminderMessages: [
       "Ideje megmozgatni magad – akár csak egy séta is számít.",
@@ -793,7 +795,7 @@ export default {
       "Emlékeztető: a mozgás javítja a pulzusod és hangulatod.",
     ],
 
-    // Reggeli motiváció (07:30, opcionális)
+    
     morningTitle: "Jó reggelt! ☀️",
     morningMessages: [
       "Egy új nap, új lehetőség az egészségedért.",
@@ -805,29 +807,29 @@ export default {
       "Hajrá! Egy apró bejegyzés reggelre kellemes indítás.",
     ],
 
-    // Heti összefoglaló (vasárnap 20:00)
+    
     weeklyTitle: "Heti összefoglaló 📊",
     weeklyBody: "Ez volt a heted: {steps} lépés, {exercises} edzés, {streak} napos sorozat. Szép munka!",
 
-    // Streak rekord (esemény)
+    
     streakRecordTitle: "Új sorozat rekord! 🏆",
     streakRecordBody: "Rekordot döntöttél: {days} napos folyamatos sorozat!",
 
-    // Streak mérföldkő (esemény, egyszer usernként fokonként)
+    
     streakMilestone: "Sorozat mérföldkő! 🔥",
     streakMilestoneBody: "{days} napos sorozatod van – csak így tovább!",
 
-    // Lépés cél (esemény)
+    
     stepGoalReachedTitle: "Napi cél teljesítve! 🎯",
     stepGoalReachedBody: "Elérted a napi {goal} lépést. Remek munka!",
     stepGoalAlmostTitle: "Már csak kevés van hátra!",
     stepGoalAlmostBody: "Még {remaining} lépés és eléred a napi célodat. Hajrá!",
 
-    // Első bejegyzés (esemény, egyszer usernként)
+    
     firstEntryTitle: "Remek kezdés! 🌟",
     firstEntryBody: "Rögzítetted az első bejegyzésed. Tartsd fenn a lendületet – az egészséges szokások itt kezdődnek!",
 
-    // Inaktivitás (48h+ → 24h múlva emlékeztető)
+    
     inactivityTitle: "Rég nem jártál itt…",
     inactivityMessages: [
       "Hiányzol! Gyere vissza és folytasd az egészséged követését.",
@@ -837,13 +839,12 @@ export default {
     ],
   },
 
-  // ==================== ONBOARDING ====================
+  
   onboarding: {
     welcomeTitle: "Üdvözlünk a WelfareBuddyban!",
     welcomeDesc: "Szánjunk 30 másodpercet a beállításokra.",
     start: "Gyerünk!",
     heightTitle: "A magasságod",
-    heightDesc: "A BMI számításhoz szükséges. Kihagyhatod.",
     displayNameTitle: "Hogy szólítsunk?",
     displayNameDesc: "A becenév jelenik meg a Dashboardon és az értesítésekben.",
     displayNameLabel: "Becenév",
@@ -858,19 +859,19 @@ export default {
     doneBtn: "Menj az irányítópultra",
   },
 
-  // ==================== OFFLINE ====================
+  
   offline: {
     banner: "Nincs internetkapcsolat – a korábban letöltött adatok láthatóak",
     wsDisconnected: "Valós idejű frissítés nem aktív",
   },
 
-  // ==================== STATUS ====================
+  
   status: {
     live: "Valós idejű kapcsolat aktív",
   },
 
-  // ==================== LEGAL ====================
-  // ==================== PROGRESS TRACKER ====================
+  
+  
   progress: {
     cardTitle: "Az utad eddig",
     weightLabel: "Súly",
@@ -958,5 +959,16 @@ export default {
         "<strong>7. Irányadó jog</strong><br>A jelen licencre a magyar jog az irányadó. Vitás kérdésekben a magyar bíróságok rendelkeznek joghatósággal.",
       ],
     },
+  },
+  errors: {
+    network:      "Nincs hálózati kapcsolat. Ellenőrizd az internetkapcsolatod.",
+    timeout:      "Időtúllépés — a szerver nem válaszolt időben. Próbáld újra.",
+    unauthorized: "Nincs jogosultságod ehhez a művelethez. Jelentkezz be újra.",
+    forbidden:    "Nincs jogosultságod ehhez a művelethez.",
+    notFound:     "A kért adat nem található.",
+    rateLimit:    "Túl sok kérés egymás után. Várj egy keveset és próbáld újra.",
+    server:       "Szerver hiba. Próbáld újra később.",
+    serverDown:   "A szerver jelenleg nem elérhető. Próbáld újra később.",
+    unknown:      "Ismeretlen hiba történt.",
   },
 }

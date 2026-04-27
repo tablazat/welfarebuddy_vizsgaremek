@@ -16,12 +16,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * Owner-scoping security regression: az `$user->relation()->findOrFail($id)` minta
- * minden adatmódosító endpointon — Alice nem férhet hozzá Bob rekordjaihoz, 404 kell.
- *
- * @see TODO.md Phase 3
- */
+
 class OwnerScopingTest extends TestCase
 {
     use RefreshDatabase;

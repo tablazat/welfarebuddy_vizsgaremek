@@ -21,7 +21,7 @@ import {
   LogOut, AlertTriangle, Sun, Moon, Monitor, Crown, Check, ArrowRight,
   Lock, Loader2, Globe, UserRound, Flame, HeartPulse, Paintbrush,
   BarChart3, ChevronRight, Camera, Trash2, Shield, Bell, BellOff, Download, RefreshCw,
-  Snowflake, Droplet, FileText,
+  Snowflake, Droplet, FileText, ExternalLink,
 } from "lucide-vue-next"
 import { storageGet as _storageGet, storageSet as _storageSet } from "@/lib/storage"
 import {
@@ -160,13 +160,13 @@ function switchLocale(code) {
   setLocale(code)
 }
 
-// Notification preferences – lokális értesítések
+
 const isNative = ref(typeof window !== "undefined" && !!window.Capacitor?.isNativePlatform?.())
 const notifSaving = ref(false)
 
-// Egyszerű master toggle — minden notif egyben be/ki. A részletes tudás
-// (rotált emlékeztetők, esemény-alapúak, napi 4 random limit) a
-// `useLocalNotifications.js`-ben él, sub-key-ek default `true`-t kapnak ha master on.
+
+
+
 const notifPrefs = ref({
   enabled: getNotifPref("enabled"),
 })
@@ -181,8 +181,8 @@ async function saveNotifPrefs() {
   notifSaving.value = true
   try {
     setNotifPref("enabled", notifPrefs.value.enabled)
-    // Master on → minden sub-prefs alapból `true` (a 4 random limit a
-    // `useLocalNotifications.js`-ben tovább szűri prioritás szerint).
+    
+    
     if (notifPrefs.value.enabled) {
       SUB_NOTIF_KEYS.forEach(k => setNotifPref(k, true))
     }
@@ -203,7 +203,7 @@ async function saveNotifPrefs() {
   }
 }
 
-// Password change
+
 const pwForm = ref({ current_password: "", password: "", password_confirmation: "" })
 const pwSaving = ref(false)
 
@@ -223,7 +223,7 @@ async function changePassword() {
       current_password: pwForm.value.current_password,
       password: pwForm.value.password,
     })
-    // Sikeres jelszóváltoztatás → kijelentkeztetés
+    
     hapticSuccess()
     storageRemove("auth_token")
     storageRemove("auth_user")
@@ -262,53 +262,15 @@ async function nuke() {
   }
 }
 
-const exportLoading = ref("")
+const WEB_APP_URL = import.meta.env.VITE_WEB_APP_URL ?? "https://welfarebuddy.hu"
 
-async function exportData(format) {
+function openWebExport() {
   clearMsg()
-  exportLoading.value = format
-  try {
-    const response = await api.get(`/export/${format}`, { responseType: "blob" })
-    const mime = format === "csv" ? "application/zip" : "application/json"
-    const ext  = format === "csv" ? "zip" : "json"
-    const blob = new Blob([response.data], { type: mime })
-    const filename = `welfarebuddy-export-${new Date().toISOString().slice(0, 10)}.${ext}`
-    const url = URL.createObjectURL(blob)
-
-    // Capacitor natív WebView-ban az <a download> nem mindig működik → új ablak
-    if (typeof window !== "undefined" && window.Capacitor?.isNativePlatform?.()) {
-      window.open(url, "_blank")
-    } else {
-      const a = document.createElement("a")
-      a.href = url
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-    }
-    setTimeout(() => URL.revokeObjectURL(url), 5000)
-    success.value = t("settings.exportSuccess")
-    hapticMedium()
-  } catch (e) {
-    // Ha a hiba response blob-ban van, konvertáljuk szöveggé
-    if (e?.response?.data instanceof Blob) {
-      try {
-        const txt = await e.response.data.text()
-        const parsed = JSON.parse(txt)
-        error.value = parsed?.message || t("settings.exportError")
-      } catch {
-        error.value = t("settings.exportError")
-      }
-    } else {
-      error.value = getAxiosErrorMessage(e)
-    }
-    hapticHeavy()
-  } finally {
-    exportLoading.value = ""
-  }
+  window.open(`${WEB_APP_URL}/app/settings`, "_system")
+  hapticMedium()
 }
 
-// Display name (becenév)
+
 const initialUser = (() => { try { return JSON.parse(storageGet("auth_user") || "null") } catch { return null } })()
 const displayNameInput = ref(initialUser?.display_name || "")
 const displayNameSaving = ref(false)
@@ -336,7 +298,7 @@ async function saveDisplayName() {
   }
 }
 
-// Daily step goal (localStorage-backed)
+
 const stepGoalInput = ref(parseInt(storageGet("step_goal") || "10000"))
 const stepGoalSaving = ref(false)
 
@@ -361,7 +323,7 @@ async function saveStepGoal() {
   }
 }
 
-// Daily water goal (localStorage-backed)
+
 const waterGoalInput = ref(parseInt(storageGet("water_goal_ml") || "2500"))
 const waterGoalSaving = ref(false)
 
@@ -386,7 +348,7 @@ async function saveWaterGoal() {
   }
 }
 
-// Streak freeze (Pro)
+
 const freezeStatus = ref(null)
 const freezeLoading = ref(false)
 const freezeSaving = ref(false)
@@ -456,7 +418,7 @@ async function deleteAccount() {
       <AlertDescription>{{ success }}</AlertDescription>
     </Alert>
 
-    <!-- ── Profil kártya ───────────────────────────────── -->
+    
     <Card class="rounded-2xl">
       <CardContent class="p-5">
         <template v-if="profileLoading">
@@ -484,7 +446,7 @@ async function deleteAccount() {
         </template>
         <template v-else>
           <div class="flex items-center gap-4">
-            <!-- Avatar + upload -->
+            
             <div class="relative group shrink-0">
               <Avatar class="h-16 w-16 text-xl">
                 <AvatarImage v-if="profilePicUrl" :src="profilePicUrl" />
@@ -520,7 +482,7 @@ async function deleteAccount() {
             </div>
           </div>
 
-          <!-- Streak sor -->
+          
           <div class="mt-4 flex items-center gap-3 p-3 rounded-xl bg-muted/50">
             <Flame class="h-4 w-4 text-orange-500 shrink-0" />
             <span class="text-sm text-muted-foreground">{{ $t("profile.currentStreak") }}</span>
@@ -530,7 +492,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- ── Egészségügyi szinkron kártya (csak natív platformon) ── -->
+    
     <Card v-if="isNative" class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -553,7 +515,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- ── Gyors linkek (Skins, Admin, Legal) ── -->
+    
     <Card class="rounded-2xl divide-y divide-border">
       <button
         class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-accent/50 active:bg-accent transition text-left first:rounded-t-2xl"
@@ -589,7 +551,7 @@ async function deleteAccount() {
       </button>
     </Card>
 
-    <!-- Theme -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -615,7 +577,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Language -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -641,7 +603,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Display name (becenév) -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("settings.displayNameTitle") }}</CardTitle>
@@ -664,7 +626,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Daily step goal -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -691,7 +653,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Daily water goal -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -718,7 +680,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Notifications -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -736,7 +698,7 @@ async function deleteAccount() {
             <AlertDescription>{{ $t("settings.notificationPermissionDenied") }}</AlertDescription>
           </Alert>
 
-          <!-- Master toggle (egyetlen kapcsoló — minden notif egyben be/ki) -->
+          
           <div class="flex items-center justify-between gap-4">
             <div class="min-w-0">
               <div class="text-sm font-semibold">{{ $t("settings.notificationsMaster") }}</div>
@@ -766,7 +728,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Password change -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -800,7 +762,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Tier / Subscription -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -814,7 +776,7 @@ async function deleteAccount() {
       </CardHeader>
       <CardContent class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- Free tier -->
+          
           <div class="rounded-xl border p-4 space-y-3" :class="isFree ? 'border-primary ring-2 ring-primary/20' : ''">
             <div class="flex items-center justify-between">
               <span class="font-semibold">{{ $t("upgrade.free") }}</span>
@@ -827,7 +789,7 @@ async function deleteAccount() {
               </li>
             </ul>
           </div>
-          <!-- Pro tier -->
+          
           <div class="rounded-xl border p-4 space-y-3" :class="isAdmin ? 'border-purple-300 ring-2 ring-purple-300/20 dark:border-purple-700' : isPro ? 'border-primary ring-2 ring-primary/20' : 'border-blue-200 dark:border-blue-800'">
             <div class="flex items-center justify-between">
               <span class="font-semibold flex items-center gap-1.5">
@@ -861,42 +823,28 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Data Export -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
           <Download class="h-4 w-4" />
           {{ $t("settings.exportTitle") }}
         </CardTitle>
-        <CardDescription>{{ $t("settings.exportDesc") }}</CardDescription>
+        <CardDescription>{{ $t("settings.exportWebOnlyDesc") }}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div class="flex gap-2 flex-wrap">
-          <Button
-            variant="outline"
-            class="gap-2 rounded-xl"
-            :disabled="!!exportLoading"
-            @click="exportData('json')"
-          >
-            <Loader2 v-if="exportLoading === 'json'" class="h-4 w-4 animate-spin" />
-            <Download v-else class="h-4 w-4" />
-            JSON
-          </Button>
-          <Button
-            variant="outline"
-            class="gap-2 rounded-xl"
-            :disabled="!!exportLoading"
-            @click="exportData('csv')"
-          >
-            <Loader2 v-if="exportLoading === 'csv'" class="h-4 w-4 animate-spin" />
-            <Download v-else class="h-4 w-4" />
-            CSV (ZIP)
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          class="gap-2 rounded-xl"
+          @click="openWebExport"
+        >
+          <ExternalLink class="h-4 w-4" />
+          {{ $t("settings.exportWebBtn") }}
+        </Button>
       </CardContent>
     </Card>
 
-    <!-- Session -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("settings.session") }}</CardTitle>
@@ -918,7 +866,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Danger zone -->
+    
     <Card class="rounded-2xl border-destructive/30">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2 text-destructive">

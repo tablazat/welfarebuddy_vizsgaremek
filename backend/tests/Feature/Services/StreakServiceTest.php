@@ -8,10 +8,7 @@ use App\Services\StreakService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * @see app/Services/StreakService.php
- * @see TODO.md Bug #2-4 (null pointer), Bug #19 (backdated), Bug #47/#17 (extracted to service)
- */
+
 class StreakServiceTest extends TestCase
 {
     use RefreshDatabase;
@@ -32,15 +29,13 @@ class StreakServiceTest extends TestCase
         $user = User::factory()->create();
         $this->assertNull($user->streak);
 
-        // Nem dob hibát, nem hoz létre streak rekordot
+        
         StreakService::update($user, now());
 
         $this->assertNull($user->fresh('streak')->streak);
     }
 
-    /**
-     * @see TODO.md Bug #19 — backdated entry nem rontja el a streaket
-     */
+    
     public function test_backdated_entry_does_not_modify_streak(): void
     {
         $user = $this->makeUserWithStreak('2026-04-20', 5);

@@ -46,7 +46,7 @@ class AuthController extends Controller
         $user = User::where('email', $data['email'])->first();
 
         if(!$user || !Hash::check($data['password'], $user->password)){
-            return response()->json("Bad creds", 401);
+            return response()->json(['message' => __('auth.failed')], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -70,7 +70,7 @@ class AuthController extends Controller
         $user->tokens()->delete(); 
         $user->save();
 
-        return response()->json(['message' => 'Password changed successfully.']);
+        return response()->json(['message' => __('messages.auth.password_changed')]);
     }
 
     public function updateLvl(Request $request){
@@ -86,7 +86,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logged out successfully.'
+            'message' => __('messages.auth.logged_out')
         ],200);
     }
 
@@ -94,19 +94,19 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json([
-            'message' => 'Logged out from all devices.'
+            'message' => __('messages.auth.logged_out_all')
         ],200);
     }
 
     public function deleteAccount(Request $request){
         $user = $request->user();
 
-        // Delete profile picture from storage
+        
         if ($user->profile_picture) {
             Storage::disk('public')->delete($user->profile_picture);
         }
 
-        // Delete all related data explicitly (FK constraints are RESTRICT by default)
+        
         $user->tokens()->delete();
         $user->heartRates()->delete();
         $user->bloodPressures()->delete();
@@ -123,6 +123,6 @@ class AuthController extends Controller
 
         $user->delete();
 
-        return response()->json(['message' => 'Account deleted successfully.'], 200);
+        return response()->json(['message' => __('messages.auth.account_deleted')], 200);
     }
 }

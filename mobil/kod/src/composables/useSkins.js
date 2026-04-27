@@ -1,10 +1,7 @@
 import { ref, computed, watch } from "vue"
 import { storageGet, storageSet } from "@/lib/storage"
 
-/**
- * Skin/téma rendszer – 20 egyedi skin oklch CSS változó felülírásokkal.
- * Minden skin light és dark módot is támogat.
- */
+
 
 const SKIN_CSS_KEYS = [
   "primary",
@@ -24,9 +21,9 @@ const SKIN_CSS_KEYS = [
 ]
 
 const skins = [
-  // ═══════════════════════════════════════════
-  //  FREE SKINS (4)
-  // ═══════════════════════════════════════════
+  
+  
+  
   {
     id: "default",
     name: "Default",
@@ -148,9 +145,9 @@ const skins = [
     },
   },
 
-  // ═══════════════════════════════════════════
-  //  STREAK-BASED SKINS (5)
-  // ═══════════════════════════════════════════
+  
+  
+  
   {
     id: "ember",
     name: "Ember",
@@ -337,9 +334,9 @@ const skins = [
     },
   },
 
-  // ═══════════════════════════════════════════
-  //  PRO SKINS (8)
-  // ═══════════════════════════════════════════
+  
+  
+  
   {
     id: "neon",
     name: "Neon Nights",
@@ -638,9 +635,9 @@ const skins = [
     },
   },
 
-  // ═══════════════════════════════════════════
-  //  MILESTONE SKINS (3)
-  // ═══════════════════════════════════════════
+  
+  
+  
   {
     id: "og",
     name: "OG",
@@ -756,10 +753,7 @@ const skins = [
   },
 ]
 
-/**
- * Skin rendszer composable.
- * @param {import('vue').Ref|import('vue').ComputedRef} authUser - reaktív user objektum
- */
+
 export function useSkins(authUser) {
   const activeSkinId = ref(storageGet("app_skin") || "default")
 
@@ -767,15 +761,13 @@ export function useSkins(authUser) {
     return skins.find((s) => s.id === activeSkinId.value) || skins[0]
   })
 
-  /**
-   * Ellenőrzi, hogy a felhasználó feloldotta-e a skint.
-   */
+  
   function isUnlocked(skin, user) {
     if (!skin?.unlock) return false
 
     const u = user || authUser?.value
 
-    // Admin-oknak minden skin elérhető
+    
     if (u?.level_of_access === "admin") return true
 
     const unlock = skin.unlock
@@ -788,16 +780,16 @@ export function useSkins(authUser) {
         return u?.level_of_access === "pro" || u?.level_of_access === "admin"
 
       case "streak": {
-        // Egyszer megszerzett rekord megmarad — `max_days` (user.max_days) ÉS a
-        // jelenlegi `streak.days` közül a nagyobb. Régen csak `streak.current_streak`-et
-        // nézte, ami nem létezik a streak modellen (a mező neve `days`).
+        
+        
+        
         const cur = Number(u?.streak?.days ?? 0)
         const max = Number(u?.max_days ?? 0)
         return Math.max(cur, max) >= (unlock.days || 0)
       }
 
       case "entries": {
-        // Placeholder – ha nincs entries szám a user-en, false
+        
         const total = u?.total_entries ?? 0
         return total >= (unlock.count || 0)
       }
@@ -823,22 +815,18 @@ export function useSkins(authUser) {
     }
   }
 
-  /**
-   * Eltávolítja az összes skin CSS változót a <html> elemről.
-   */
+  
   function removeSkinStyles() {
     const el = document.documentElement
     for (const key of SKIN_CSS_KEYS) {
       el.style.removeProperty(`--${key}`)
     }
-    // Remove any skin-* CSS class from <html>
+    
     const toRemove = [...el.classList].filter(c => c.startsWith("skin-"))
     toRemove.forEach(c => el.classList.remove(c))
   }
 
-  /**
-   * Alkalmazza a kiválasztott skint – CSS változókat ír a <html>-re.
-   */
+  
   function applySkin(skinId) {
     applyingSkin = true
     activeSkinId.value = skinId
@@ -847,16 +835,16 @@ export function useSkins(authUser) {
     const skin = skins.find((s) => s.id === skinId)
     const el = document.documentElement
 
-    // Előző skin törlése
+    
     removeSkinStyles()
 
-    // Default skin = nincs felülírás
+    
     if (!skin || skin.id === "default") {
       applyingSkin = false
       return
     }
 
-    // Aktuális mód (dark/light)
+    
     const isDark = el.classList.contains("dark")
     const vars = isDark ? skin.dark : skin.light
 
@@ -865,29 +853,26 @@ export function useSkins(authUser) {
       return
     }
 
-    // CSS változók alkalmazása
+    
     for (const [key, value] of Object.entries(vars)) {
       el.style.setProperty(`--${key}`, value)
     }
 
-    // Skin CSS class hozzáadása az effektekhez
+    
     el.classList.add(`skin-${skinId}`)
     applyingSkin = false
   }
 
-  /**
-   * Dark/light mód váltáskor újra kell alkalmazni a skint,
-   * mert a szín paletta módtól függ.
-   */
+  
   let applyingSkin = false
   function reapplySkin() {
     applySkin(activeSkinId.value)
   }
 
-  // Induláskor alkalmazzuk a mentett skint
+  
   applySkin(activeSkinId.value)
 
-  // Dark mód változás figyelése (csak dark class változásra reagáljon, ne a skin class-ra)
+  
   let lastDarkState = document.documentElement.classList.contains("dark")
   const observer = new MutationObserver((mutations) => {
     if (applyingSkin) return

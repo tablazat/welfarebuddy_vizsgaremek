@@ -93,7 +93,7 @@ async function downgradeToFree() {
       <p class="text-sm text-muted-foreground">{{ $t("upgrade.subtitle") }}</p>
     </div>
 
-    <!-- Visszajelzések -->
+    
     <Alert v-if="success" variant="default" class="rounded-xl border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300">
       <AlertDescription>{{ success }}</AlertDescription>
     </Alert>
@@ -101,20 +101,20 @@ async function downgradeToFree() {
       <AlertDescription>{{ error }}</AlertDescription>
     </Alert>
 
-    <!-- Már Pro -->
+    
     <div v-if="isPro && !isAdmin" class="rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/40 p-4 text-sm text-blue-700 dark:text-blue-300 flex items-center gap-2">
       <Crown class="h-4 w-4 shrink-0" />
       {{ $t("upgrade.alreadyPro") }}
     </div>
 
-    <!-- Admin -->
+    
     <div v-if="isAdmin" class="rounded-xl border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/40 p-4 text-sm text-purple-700 dark:text-purple-300 flex items-center gap-2">
       <Crown class="h-4 w-4 shrink-0" />
       {{ $t("upgrade.alreadyAdmin") }}
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <!-- Free -->
+      
       <Card class="rounded-2xl relative overflow-hidden" :class="!isPro ? 'border-green-200 dark:border-green-800' : ''">
         <div v-if="!isPro" class="absolute top-0 right-0 bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-bl-xl">
           {{ $t("upgrade.current") }}
@@ -149,7 +149,7 @@ async function downgradeToFree() {
         </CardContent>
       </Card>
 
-      <!-- Pro -->
+      
       <Card class="rounded-2xl relative overflow-hidden" :class="isPro ? 'border-blue-200 dark:border-blue-800' : ''">
         <div v-if="isPro" class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-medium px-3 py-1 rounded-bl-xl">
           {{ $t("upgrade.current") }}

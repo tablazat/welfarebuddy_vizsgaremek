@@ -187,7 +187,7 @@ onMounted(async () => {
       <AlertDescription>{{ success }}</AlertDescription>
     </Alert>
 
-    <!-- Profile card -->
+    
     <Card class="rounded-2xl">
       <CardContent class="p-6">
         <template v-if="loading">
@@ -249,7 +249,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Stats -->
+    
     <div class="grid grid-cols-2 gap-3">
       <Card class="rounded-2xl">
         <CardContent class="p-4 flex items-center gap-3">
@@ -285,7 +285,7 @@ onMounted(async () => {
       </Card>
     </div>
 
-    <!-- Account details -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("profile.accountDetails") }}</CardTitle>
@@ -324,7 +324,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Height & BMI -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -367,7 +367,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Progress tracker — Az utad eddig -->
+    
     <Card v-if="!loading && progress" class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -417,7 +417,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Előfizetés -->
+    
     <Card v-if="!loading" class="rounded-2xl" :class="isAdmin ? 'border-purple-200 dark:border-purple-800' : isPro ? 'border-blue-200 dark:border-blue-800' : ''">
       <CardContent class="p-5">
         <div class="flex items-center justify-between gap-4">

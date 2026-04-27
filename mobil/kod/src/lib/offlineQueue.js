@@ -15,7 +15,7 @@ export function clearQueue() {
 
 export function enqueueRequest(url, method, payload) {
   const queue = getQueue()
-  if (queue.length >= MAX_QUEUE) return // ne telítse a storage-t
+  if (queue.length >= MAX_QUEUE) return //
   queue.push({ url, method, payload, timestamp: Date.now() })
   setQueue(queue)
 }

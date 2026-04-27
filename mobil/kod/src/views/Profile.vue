@@ -131,9 +131,7 @@ async function saveHeight() {
   savingHeight.value = true
   try {
     const { data } = await api.post("/height", { height_cm: h })
-    // Ha a /height response user objektumában nincs height_cm (régi backend, hiányzó
-    // migration vagy cast-probléma), esünk vissza a /token-check-re, hogy biztosan
-    // friss adatot kapjunk. BMI enélkül null marad és a user nem érti miért.
+
     if (data?.user?.height_cm) {
       user.value = data.user
       storageSet("auth_user", JSON.stringify(data.user))
@@ -197,7 +195,7 @@ onMounted(async () => {
       <AlertDescription>{{ success }}</AlertDescription>
     </Alert>
 
-    <!-- Profile card -->
+    
     <Card class="rounded-2xl">
       <CardContent class="p-6">
         <template v-if="loading">
@@ -259,7 +257,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Stats -->
+    
     <div class="grid grid-cols-2 gap-3">
       <Card class="rounded-2xl">
         <CardContent class="p-4 flex items-center gap-3">
@@ -295,7 +293,7 @@ onMounted(async () => {
       </Card>
     </div>
 
-    <!-- Account details -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("profile.accountDetails") }}</CardTitle>
@@ -334,7 +332,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Height & BMI -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -377,7 +375,7 @@ onMounted(async () => {
       </CardContent>
     </Card>
 
-    <!-- Progress tracker — Az utad eddig -->
+    
     <Card v-if="!loading && progress" class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -386,7 +384,7 @@ onMounted(async () => {
         </CardTitle>
       </CardHeader>
       <CardContent class="space-y-3">
-        <!-- Súly -->
+        
         <div v-if="progress.weight_start !== null" class="flex items-center justify-between text-sm">
           <span class="text-muted-foreground">{{ $t("progress.weightLabel") }}</span>
           <div class="flex items-center gap-2 font-medium">
@@ -405,7 +403,7 @@ onMounted(async () => {
             <Minus v-else-if="progress.weight_delta === 0" class="h-3 w-3 text-muted-foreground" />
           </div>
         </div>
-        <!-- BMI -->
+        
         <div v-if="progress.bmi_start !== null && progress.bmi_current !== null" class="flex items-center justify-between text-sm">
           <span class="text-muted-foreground">{{ $t("progress.bmiLabel") }}</span>
           <div class="flex items-center gap-2 font-medium">
@@ -414,7 +412,7 @@ onMounted(async () => {
             <span>{{ progress.bmi_current }}</span>
           </div>
         </div>
-        <!-- Streak -->
+        
         <div class="flex items-center justify-between text-sm">
           <span class="text-muted-foreground">{{ $t("progress.streakLabel") }}</span>
           <div class="flex items-center gap-2 font-medium">
@@ -424,14 +422,14 @@ onMounted(async () => {
             </span>
           </div>
         </div>
-        <!-- Motivációs üzenet -->
+        
         <div v-if="motivationalMsg" class="mt-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-sm text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-900">
           {{ motivationalMsg }}
         </div>
       </CardContent>
     </Card>
 
-    <!-- Előfizetés -->
+    
     <Card v-if="!loading" class="rounded-2xl" :class="isAdmin ? 'border-purple-200 dark:border-purple-800' : isPro ? 'border-blue-200 dark:border-blue-800' : ''">
       <CardContent class="p-5">
         <div class="flex items-center justify-between gap-4">

@@ -1,11 +1,3 @@
-/**
- * Storage wrapper – cookie consent alapján dönt:
- *  - "accepted" → localStorage (megmarad)
- *  - bármi más  → sessionStorage (böngésző bezáráskor törlődik)
- *
- * A cookie_consent értéket MINDIG localStorage-ban tároljuk,
- * hogy ne kérdezze újra minden alkalommal.
- */
 
 function accepted() {
   return localStorage.getItem("cookie_consent") === "accepted"
@@ -20,8 +12,7 @@ export function storageSet(key, value) {
 }
 
 export function storageGet(key) {
-  // Először a localStorage-ban nézünk (ha régebben accepted-del mentette),
-  // utána sessionStorage-ban
+  
   return localStorage.getItem(key) ?? sessionStorage.getItem(key) ?? null
 }
 
@@ -30,10 +21,7 @@ export function storageRemove(key) {
   sessionStorage.removeItem(key)
 }
 
-/**
- * Hívandó, ha a user elfogadja a cookie-kat:
- * átemeli a sessionStorage-ból localStorage-ba.
- */
+
 export function migrateToLocalStorage() {
   const token = sessionStorage.getItem("auth_token")
   const user = sessionStorage.getItem("auth_user")
@@ -47,10 +35,7 @@ export function migrateToLocalStorage() {
   }
 }
 
-/**
- * Hívandó, ha a user elutasítja:
- * localStorage-ból átemeli sessionStorage-ba.
- */
+
 export function migrateToSessionStorage() {
   const token = localStorage.getItem("auth_token")
   const user = localStorage.getItem("auth_user")

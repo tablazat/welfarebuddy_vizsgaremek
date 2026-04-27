@@ -190,7 +190,7 @@ async function register() {
         <p class="text-muted-foreground text-sm mt-1">{{ $t("landing.heroSubtitle") }}</p>
       </div>
 
-      <!-- Email verification notice -->
+      
       <Card v-if="showVerifyNotice" class="rounded-2xl border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/40 mb-4">
         <CardContent class="p-5">
           <div class="flex items-start gap-3">
@@ -214,7 +214,7 @@ async function register() {
         </CardContent>
       </Card>
 
-      <!-- Forgot password -->
+      
       <Card v-else-if="showForgot" class="rounded-2xl">
         <CardHeader class="pb-2">
           <CardTitle class="text-lg">{{ $t("auth.forgotPasswordTitle") }}</CardTitle>
@@ -245,7 +245,7 @@ async function register() {
         </CardContent>
       </Card>
 
-      <!-- Reset password -->
+      
       <Card v-else-if="showReset" class="rounded-2xl">
         <CardHeader class="pb-2">
           <CardTitle class="text-lg">{{ $t("auth.resetPasswordTitle") }}</CardTitle>
@@ -284,7 +284,7 @@ async function register() {
         </CardContent>
       </Card>
 
-      <!-- Login / Register -->
+      
       <Card v-else class="rounded-2xl">
         <CardHeader class="pb-2">
           <CardTitle class="text-lg">{{ $t("auth.welcome") }}</CardTitle>

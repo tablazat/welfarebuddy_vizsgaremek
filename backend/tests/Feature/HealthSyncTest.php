@@ -9,10 +9,7 @@ use Illuminate\Support\Carbon;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/HealthSyncController.php
- * @see TODO.md Bug #59 (steps race-summing), Bug #60 (streak race), session 19 (batchHasToday)
- */
+
 class HealthSyncTest extends TestCase
 {
     use RefreshDatabase;
@@ -76,9 +73,7 @@ class HealthSyncTest extends TestCase
         $this->assertSame(0, $this->user->heartRates()->count());
     }
 
-    /**
-     * @see CLAUDE.md session 19, 4. rész — batchHasToday() guard
-     */
+    
     public function test_streak_does_not_increment_for_only_past_entries(): void
     {
         $payload = [
@@ -113,9 +108,7 @@ class HealthSyncTest extends TestCase
         $this->assertSame(now()->toDateString(), substr((string) $streak->last_day, 0, 10));
     }
 
-    /**
-     * @see TODO.md Bug #59 — DB::transaction + lockForUpdate + sum same-day steps
-     */
+    
     public function test_duplicate_steps_for_same_day_get_summed_not_duplicated(): void
     {
         $today = now()->format('Y-m-d 12:00:00');

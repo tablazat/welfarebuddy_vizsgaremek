@@ -39,7 +39,7 @@ const saving = ref(false)
 const error = ref("")
 const successMsg = ref("")
 
-// Data lists
+
 const heartRates = ref([])
 const bloodPressures = ref([])
 const weights = ref([])
@@ -47,7 +47,7 @@ const calories = ref([])
 const waters = ref([])
 const sleeps = ref([])
 
-// Forms
+
 function nowLocal() {
   const d = new Date()
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
@@ -133,8 +133,8 @@ onMounted(loadAll)
 watch(selectedDate, loadAll)
 watch(refreshTrigger, (v, old) => { if (v !== old) loadAll() })
 
-// WebSocket: ha jön új adat, hozzáadjuk a megfelelő listához
-// wsEvent = { type: "heart_rate", data: {...entry...}, _ts }
+
+
 watch(wsEvent, (e) => {
   if (!e) return
   const entry = e.data
@@ -301,7 +301,7 @@ async function saveSleep() {
   }
 }
 
-// ─── Copy yesterday ──────────────────────────────────────────
+
 const copyingYesterday = ref("")
 
 async function copyYesterday(type) {
@@ -338,7 +338,7 @@ async function copyYesterday(type) {
   }
 }
 
-// ─── Edit ───────────────────────────────────────────────────
+
 const editItem = ref(null)
 const editType = ref("")
 const editForm = ref({})
@@ -402,7 +402,7 @@ async function saveEdit() {
   }
 }
 
-// ─── Date navigation ──────────────────────────────────────
+
 const datePickerOpen = ref(false)
 const todayDate = computed(() => today(tz))
 const isToday = computed(() => selectedDate.value.compare(todayDate.value) === 0)
@@ -477,7 +477,7 @@ async function deleteEntry(type, id) {
       </div>
     </div>
 
-    <!-- Feedback messages -->
+    
     <Alert v-if="error" variant="destructive" class="rounded-xl">
       <AlertDescription>{{ error }}</AlertDescription>
     </Alert>
@@ -515,7 +515,7 @@ async function deleteEntry(type, id) {
         </TabsTrigger>
       </TabsList>
 
-      <!-- HEART RATE TAB -->
+      
       <TabsContent value="heart-rate" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -570,7 +570,7 @@ async function deleteEntry(type, id) {
           </CardContent>
         </Card>
 
-        <!-- HR list -->
+        
         <div v-if="loading" class="space-y-2">
           <Skeleton v-for="i in 3" :key="i" class="h-14 rounded-xl" />
         </div>
@@ -619,7 +619,7 @@ async function deleteEntry(type, id) {
         </div>
       </TabsContent>
 
-      <!-- BLOOD PRESSURE TAB -->
+      
       <TabsContent value="blood-pressure" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -726,7 +726,7 @@ async function deleteEntry(type, id) {
         </div>
       </TabsContent>
 
-      <!-- WEIGHT TAB -->
+      
       <TabsContent value="weight" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -808,7 +808,7 @@ async function deleteEntry(type, id) {
         </div>
       </TabsContent>
 
-      <!-- CALORIE TAB -->
+      
       <TabsContent value="calorie" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -885,7 +885,7 @@ async function deleteEntry(type, id) {
         </div>
       </TabsContent>
 
-      <!-- WATER TAB -->
+      
       <TabsContent value="water" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -893,7 +893,7 @@ async function deleteEntry(type, id) {
             <CardDescription>{{ $t("diary.waterDesc") }}</CardDescription>
           </CardHeader>
           <CardContent>
-            <!-- Quick add buttons -->
+            
             <div class="flex flex-wrap gap-2 mb-3">
               <Button type="button" variant="outline" size="sm" class="rounded-xl gap-1.5" :disabled="saving" @click="addWaterQuick(250)">
                 <Droplet class="h-3.5 w-3.5" /> 250 ml
@@ -974,7 +974,7 @@ async function deleteEntry(type, id) {
         </div>
       </TabsContent>
 
-      <!-- SLEEP TAB -->
+      
       <TabsContent value="sleep" class="mt-4 space-y-4">
         <Card class="rounded-2xl">
           <CardHeader class="pb-3">
@@ -1068,7 +1068,7 @@ async function deleteEntry(type, id) {
       </TabsContent>
     </Tabs>
 
-    <!-- Edit modal -->
+    
     <Teleport to="body">
       <div v-if="editItem" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-4" @click.self="editItem = null">
         <div class="w-full max-w-sm bg-card rounded-2xl shadow-2xl border p-5 space-y-4">
@@ -1079,7 +1079,7 @@ async function deleteEntry(type, id) {
             </button>
           </div>
 
-          <!-- HR fields -->
+          
           <template v-if="editType === 'heartRate'">
             <div class="space-y-1.5">
               <Label>{{ $t("diary.heartRate") }}</Label>
@@ -1097,7 +1097,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- BP fields -->
+          
           <template v-else-if="editType === 'bloodPressure'">
             <div class="flex gap-3">
               <div class="space-y-1.5 flex-1">
@@ -1120,7 +1120,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- Weight fields -->
+          
           <template v-else-if="editType === 'weight'">
             <div class="space-y-1.5">
               <Label>{{ $t("diary.weight") }}</Label>
@@ -1128,7 +1128,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- Calorie fields -->
+          
           <template v-else-if="editType === 'calorie'">
             <div class="space-y-1.5">
               <Label>{{ $t("diary.calorieLabel") }}</Label>
@@ -1136,7 +1136,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- Water fields -->
+          
           <template v-else-if="editType === 'water'">
             <div class="space-y-1.5">
               <Label>{{ $t("diary.waterLabel") }}</Label>
@@ -1144,7 +1144,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- Sleep fields -->
+          
           <template v-else-if="editType === 'sleep'">
             <div class="space-y-1.5">
               <Label>{{ $t("diary.sleepLabel") }}</Label>
@@ -1163,7 +1163,7 @@ async function deleteEntry(type, id) {
             </div>
           </template>
 
-          <!-- Recorded at (pro only) -->
+          
           <div v-if="isPro" class="space-y-1.5">
             <Label>{{ $t("diary.recordedAt") }}</Label>
             <Input v-model="editForm.recorded_at" type="datetime-local" class="rounded-xl" :max="nowLocal()" />

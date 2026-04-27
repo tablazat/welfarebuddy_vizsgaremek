@@ -8,10 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/CalorieIntakeController.php
- * @see TODO.md PRIORITY — kalória Diary „rossz helyre küld" debug
- */
+
 class CalorieTest extends TestCase
 {
     use RefreshDatabase;
@@ -28,7 +25,7 @@ class CalorieTest extends TestCase
             'user_id' => $user->id,
             'data'    => 500,
         ]);
-        // NEM rögzít másik táblába
+        
         $this->assertSame(0, $user->heartRates()->count());
         $this->assertSame(0, $user->weights()->count());
         $this->assertSame(0, $user->waterIntakes()->count());

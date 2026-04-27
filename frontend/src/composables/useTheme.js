@@ -11,7 +11,7 @@ function applyTheme(value) {
   }
 }
 
-// Listen for OS theme changes when in "system" mode
+
 if (typeof window !== "undefined") {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (theme.value === "system") applyTheme("system")
@@ -27,7 +27,7 @@ export function useTheme() {
   return { theme }
 }
 
-// Call on boot to avoid flash
+
 export function initTheme() {
   applyTheme(theme.value)
 }

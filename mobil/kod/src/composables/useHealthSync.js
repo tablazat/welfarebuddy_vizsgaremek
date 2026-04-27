@@ -6,7 +6,7 @@ const LAST_SYNC_KEY    = "health_last_sync"
 const LOOKBACK_DAYS    = 30
 const QUERY_TIMEOUT_MS = 30000
 
-// Activity type → backend activity ID cache
+
 let _activitiesMap = null
 
 async function getActivitiesMap() {
@@ -19,13 +19,13 @@ async function getActivitiesMap() {
   } catch { return {} }
 }
 
-/** MySQL date format: YYYY-MM-DD */
+
 function toDateStr(d) {
   const dt = d instanceof Date ? d : new Date(d)
   return dt.toISOString().split("T")[0]
 }
 
-/** MySQL datetime format: YYYY-MM-DD HH:MM:SS */
+
 function toDateTimeStr(d) {
   const dt = d instanceof Date ? d : new Date(d)
   return dt.toISOString().replace("T", " ").replace(/\.\d+Z$/, "")
@@ -63,8 +63,8 @@ function promisify(plugin, method, ...args) {
   })
 }
 
-// ── Shared module-level state ──────────────────────────────
-const pluginState  = ref("checking")  // checking | unavailable | needsPermission | ready
+
+const pluginState  = ref("checking")  
 const isSyncing    = ref(false)
 const syncError    = ref(null)
 const lastSyncTime = ref(localStorage.getItem(LAST_SYNC_KEY) || null)
@@ -73,7 +73,7 @@ const currentStep  = ref("")
 const debugLog     = ref([])
 
 let _plugin     = null
-let _initPromise = null  // Megakadályozza a párhuzamos init() hívásokat
+let _initPromise = null  
 
 function dbg(msg) {
   const ts = new Date().toLocaleTimeString()
@@ -86,13 +86,13 @@ export function useHealthSync() {
     read: ["heart_rate", "blood_pressure", "weight", "activity", "steps"],
   }
 
-  // ── init ──────────────────────────────────────────────────
-  // Idempotens: ha már fut vagy kész, nem indítja újra
+  
+  
   async function init(force = false) {
-    // Ha már fut egy init, várjuk be azt
+    
     if (_initPromise) return _initPromise
 
-    // Ha már van plugin és nem forced, ne reinit
+    
     if (!force && _plugin && pluginState.value !== "checking") {
       dbg(`init: skip (state=${pluginState.value})`)
       return
@@ -128,7 +128,7 @@ export function useHealthSync() {
       return
     }
 
-    // Ellenőrizzük van-e MINDEN jogosultság (nem csak steps!)
+    
     try {
       await promisify(_plugin, "requestAuthorization", READ_TYPES)
       dbg("init: all permissions OK → ready")
@@ -139,7 +139,7 @@ export function useHealthSync() {
     }
   }
 
-  // ── requestPermissions ────────────────────────────────────
+  
   async function requestPermissions() {
     if (!_plugin) return
     pluginState.value = "checking"
@@ -156,11 +156,11 @@ export function useHealthSync() {
     }
   }
 
-  // ── helpers ───────────────────────────────────────────────
+  
   function getSinceDate() {
-    if (lastSyncTime.value) return new Date(lastSyncTime.value)
     const d = new Date()
-    d.setDate(d.getDate() - LOOKBACK_DAYS)
+    d.setDate(d.getDate() - 1)
+    d.setHours(0, 0, 0, 0)
     return d
   }
 
@@ -182,15 +182,15 @@ export function useHealthSync() {
     }
   }
 
-  // ── syncAll ───────────────────────────────────────────────
-  // NEM kér engedélyt automatikusan – csak "ready" állapotban fut
+  
+  
   async function syncAll() {
-    // Ha nincs plugin, próbáljuk inicializálni (de NEM kérünk engedélyt)
+    
     if (!_plugin || pluginState.value === "checking") {
       await init()
     }
 
-    // Ha nincs engedély, nem futtatjuk (a UI hívja meg requestPermissions-t)
+    
     if (pluginState.value !== "ready") {
       dbg(`syncAll: skip – state=${pluginState.value}`)
       return
@@ -221,7 +221,7 @@ export function useHealthSync() {
         exercises:      [],
       }
 
-      // PULZUS
+      
       currentStep.value = "heart_rate"
       const hrRecords = await safeQuery("heart_rate", since)
       for (const r of hrRecords) {
@@ -233,13 +233,13 @@ export function useHealthSync() {
       }
       dbg(`HR: ${hrRecords.length} queried, ${payload.heart_rates.length} new`)
 
-      // VÉRNYOMÁS
+      
       currentStep.value = "blood_pressure"
       const bpRecords = await safeQuery("blood_pressure", since)
       for (const r of bpRecords) {
         const id        = r.id || makeRecordId("blood_pressure", r.startDate)
         if (uploadedIds.has(id)) continue
-        // iOS: { systolic, diastolic } vagy { value: { systolic, diastolic } }
+        
         const systolic  = r.systolic  ?? r.value?.systolic
         const diastolic = r.diastolic ?? r.value?.diastolic
         if (!systolic || !diastolic) continue
@@ -252,7 +252,7 @@ export function useHealthSync() {
       }
       dbg(`BP: ${bpRecords.length} queried, ${payload.blood_pressures.length} new`)
 
-      // TESTSÚLY
+      
       currentStep.value = "weight"
       const weightRecords = await safeQuery("weight", since)
       for (const r of weightRecords) {
@@ -264,7 +264,7 @@ export function useHealthSync() {
       }
       dbg(`WT: ${weightRecords.length} queried, ${payload.weights.length} new`)
 
-      // LÉPÉSSZÁM – aggregálás napra
+      
       currentStep.value = "steps"
       const stepRecords = await safeQuery("steps", since)
       const stepsByDay  = {}
@@ -280,7 +280,7 @@ export function useHealthSync() {
       }
       dbg(`STEPS: ${stepRecords.length} records → ${Object.keys(stepsByDay).length} days, ${payload.steps.length} new`)
 
-      // EDZÉSEK
+      
       currentStep.value = "activity"
       const activitiesMap = await getActivitiesMap()
       const actRecords    = await safeQuery("activity", since)
@@ -300,7 +300,7 @@ export function useHealthSync() {
       }
       dbg(`ACT: ${actRecords.length} queried, ${payload.exercises.length} new`)
 
-      // BATCH UPLOAD
+      
       const total = Object.values(payload).reduce((s, a) => s + a.length, 0)
       dbg(`batch: ${total} new record(s)`)
 

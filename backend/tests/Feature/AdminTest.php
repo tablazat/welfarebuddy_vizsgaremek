@@ -9,10 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/**
- * @see app/Http/Controllers/AdminController.php
- * @see app/Http/Middleware/IsAdmin.php
- */
+
 class AdminTest extends TestCase
 {
     use RefreshDatabase;

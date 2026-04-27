@@ -84,7 +84,7 @@ function switchLocale(code) {
   setLocale(code)
 }
 
-// Password change
+
 const pwForm = ref({ current_password: "", password: "", password_confirmation: "" })
 const pwSaving = ref(false)
 
@@ -106,7 +106,7 @@ async function changePassword() {
       current_password: pwForm.value.current_password,
       password: pwForm.value.password,
     })
-    // Sikeres jelszóváltoztatás → kijelentkeztetés
+    
     storageRemove("auth_token")
     storageRemove("auth_user")
     router.replace({ name: "auth", query: { tab: "login", pw_changed: "1" } })
@@ -175,7 +175,7 @@ async function exportData(format) {
   }
 }
 
-// Display name (becenév)
+
 const initialUser = (() => { try { return JSON.parse(storageGet("auth_user") || "null") } catch { return null } })()
 const displayNameInput = ref(initialUser?.display_name || "")
 const displayNameSaving = ref(false)
@@ -201,7 +201,7 @@ async function saveDisplayName() {
   }
 }
 
-// Daily step goal (localStorage-backed)
+
 const stepGoalInput = ref(parseInt(storageGet("step_goal") || "10000"))
 const stepGoalSaving = ref(false)
 
@@ -225,7 +225,7 @@ async function saveStepGoal() {
   }
 }
 
-// Daily water goal (localStorage-backed)
+
 const waterGoalInput = ref(parseInt(storageGet("water_goal_ml") || "2500"))
 const waterGoalSaving = ref(false)
 
@@ -249,7 +249,7 @@ async function saveWaterGoal() {
   }
 }
 
-// Streak freeze (Pro)
+
 const freezeStatus = ref(null)
 const freezeLoading = ref(false)
 const freezeSaving = ref(false)
@@ -335,7 +335,7 @@ async function deleteAccount() {
       </Button>
     </div>
 
-    <!-- Theme -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -361,7 +361,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Language -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -387,7 +387,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Password change -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -421,7 +421,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Tier / Subscription -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -435,7 +435,7 @@ async function deleteAccount() {
       </CardHeader>
       <CardContent class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- Free tier -->
+          
           <div class="rounded-xl border p-4 space-y-3" :class="isFree ? 'border-primary ring-2 ring-primary/20' : ''">
             <div class="flex items-center justify-between">
               <span class="font-semibold">{{ $t("upgrade.free") }}</span>
@@ -448,7 +448,7 @@ async function deleteAccount() {
               </li>
             </ul>
           </div>
-          <!-- Pro tier -->
+          
           <div class="rounded-xl border p-4 space-y-3" :class="isAdmin ? 'border-purple-300 ring-2 ring-purple-300/20 dark:border-purple-700' : isPro ? 'border-primary ring-2 ring-primary/20' : 'border-blue-200 dark:border-blue-800'">
             <div class="flex items-center justify-between">
               <span class="font-semibold flex items-center gap-1.5">
@@ -482,7 +482,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Display name (becenév) -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("settings.displayNameTitle") }}</CardTitle>
@@ -505,7 +505,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Daily step goal -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -532,7 +532,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Daily water goal -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -559,7 +559,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Data Export -->
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -594,7 +594,19 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- Session -->
+        <Card class="rounded-2xl">
+      <button
+        class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-accent/50 active:bg-accent transition text-left rounded-2xl"
+        @click="router.push('/legal')"
+      >
+        <div class="h-8 w-8 rounded-lg bg-slate-500/10 flex items-center justify-center shrink-0">
+          <FileText class="h-4 w-4 text-slate-500" />
+        </div>
+        <span class="text-sm font-medium flex-1">{{ $t("legal.link") }}</span>
+        <ChevronRight class="h-4 w-4 text-muted-foreground" />
+      </button>
+    </Card>
+    
     <Card class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base">{{ $t("settings.session") }}</CardTitle>
@@ -616,7 +628,7 @@ async function deleteAccount() {
       </CardContent>
     </Card>
 
-    <!-- HealthKit / Health Sync -->
+    
     <Card v-if="pluginState === 'ready' || pluginState === 'needsPermission'" class="rounded-2xl">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2">
@@ -681,20 +693,9 @@ async function deleteAccount() {
         </div>
       </CardContent>
     </Card>
-    <!-- Legal link -->
-    <Card class="rounded-2xl">
-      <button
-        class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-accent/50 active:bg-accent transition text-left rounded-2xl"
-        @click="router.push('/legal')"
-      >
-        <div class="h-8 w-8 rounded-lg bg-slate-500/10 flex items-center justify-center shrink-0">
-          <FileText class="h-4 w-4 text-slate-500" />
-        </div>
-        <span class="text-sm font-medium flex-1">{{ $t("legal.link") }}</span>
-        <ChevronRight class="h-4 w-4 text-muted-foreground" />
-      </button>
-    </Card>
-    <!-- Danger zone -->
+    
+
+    
     <Card class="rounded-2xl border-destructive/30">
       <CardHeader class="pb-3">
         <CardTitle class="text-base flex items-center gap-2 text-destructive">

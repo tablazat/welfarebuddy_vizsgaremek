@@ -17,8 +17,8 @@ const authUser = ref(JSON.parse(storageGet("auth_user") || "null"))
 const { isPro, isAdmin } = useAccess(authUser)
 const { skins, activeSkinId, isUnlocked, applySkin } = inject("skinSystem") ?? { skins: ref([]), activeSkinId: ref(null), isUnlocked: () => false, applySkin: () => {} }
 
-// A streak nincs az `auth_user` localStorage-ban (csak `user`), de kell az
-// unlock check-hez. Friss /token-check ad mind user-t (max_days), mind streak-et.
+
+
 const userWithStreak = computed(() => ({
   ...authUser.value,
   streak: streakData.value,
@@ -35,7 +35,7 @@ onMounted(async () => {
   } catch {}
 })
 
-// Csoportositas kategoria szerint
+
 const groupedSkins = computed(() => {
   const groups = [
     { key: "free", label: t("skins.categoryFree"), icon: Palette },
@@ -51,7 +51,7 @@ const groupedSkins = computed(() => {
     .filter((g) => g.skins.length > 0)
 })
 
-// Kategoria badge szin
+
 function categoryClass(cat) {
   const map = {
     free: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
@@ -85,7 +85,7 @@ function selectSkin(skin) {
   }
 }
 
-// Szinek a previewhoz (light mode szinek)
+
 function getPreviewColors(skin) {
   const l = skin.light
   return [l.primary, l.accent, l.ring, l.secondary].filter(Boolean)
@@ -94,7 +94,7 @@ function getPreviewColors(skin) {
 
 <template>
   <div class="space-y-6">
-    <!-- Fejlec -->
+    
     <div>
       <Button
         variant="ghost"
@@ -112,7 +112,7 @@ function getPreviewColors(skin) {
       <p class="text-sm text-muted-foreground">{{ $t("skins.subtitle") }}</p>
     </div>
 
-    <!-- Aktiv skin jelzes -->
+    
     <Alert
       v-if="activeSkinId"
       variant="default"
@@ -127,9 +127,9 @@ function getPreviewColors(skin) {
       </AlertDescription>
     </Alert>
 
-    <!-- Csoportok -->
+    
     <div v-for="group in groupedSkins" :key="group.key" class="space-y-3">
-      <!-- Csoport fejlec -->
+      
       <div class="flex items-center gap-2">
         <component :is="group.icon" class="h-4 w-4 text-muted-foreground" />
         <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
@@ -138,7 +138,7 @@ function getPreviewColors(skin) {
         <div class="flex-1 h-px bg-border" />
       </div>
 
-      <!-- Skin kartyak grid -->
+      
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         <Card
           v-for="skin in group.skins"
@@ -150,7 +150,7 @@ function getPreviewColors(skin) {
           }"
           @click="selectSkin(skin)"
         >
-          <!-- Szin preview sav a tetején -->
+          
           <div class="h-1.5 flex">
             <div
               v-for="(color, ci) in getPreviewColors(skin)"
@@ -161,17 +161,17 @@ function getPreviewColors(skin) {
           </div>
 
           <CardContent class="p-4 text-center space-y-2">
-            <!-- Emoji -->
+            
             <div class="text-3xl select-none transition-transform duration-200 group-hover:scale-110">
               {{ skin.icon }}
             </div>
 
-            <!-- Nev -->
+            
             <div class="font-semibold text-sm leading-tight">
               {{ $t("skins." + skin.id) }}
             </div>
 
-            <!-- Kategoria badge -->
+            
             <div class="flex justify-center">
               <span
                 class="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full"
@@ -182,7 +182,7 @@ function getPreviewColors(skin) {
               </span>
             </div>
 
-            <!-- Aktiv badge VAGY lock info -->
+            
             <div
               v-if="activeSkinId === skin.id"
               class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full"
@@ -199,7 +199,7 @@ function getPreviewColors(skin) {
             </div>
             <div v-else class="h-6" />
 
-            <!-- Szin korok -->
+            
             <div class="flex justify-center gap-1.5 pt-1">
               <div
                 v-for="(color, ci) in getPreviewColors(skin).slice(0, 4)"
@@ -210,7 +210,7 @@ function getPreviewColors(skin) {
             </div>
           </CardContent>
 
-          <!-- Locked overlay -->
+          
           <div
             v-if="!isUnlocked(skin, userWithStreak)"
             class="absolute inset-0 bg-background/10 pointer-events-none"
@@ -219,7 +219,7 @@ function getPreviewColors(skin) {
       </div>
     </div>
 
-    <!-- Ures allapot -->
+    
     <div
       v-if="groupedSkins.length === 0"
       class="text-center py-12 text-muted-foreground text-sm"
