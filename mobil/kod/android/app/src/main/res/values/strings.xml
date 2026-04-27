@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">WelfareBuddy</string>
+    <string name="title_activity_main">WelfareBuddy</string>
+    <string name="package_name">hu.welfarebuddy.app</string>
+    <string name="custom_url_scheme">hu.welfarebuddy.app</string>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250679661939",
+    "project_id": "welfarebuddy",
+    "storage_bucket": "welfarebuddy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250679661939:android:6a0abc166a3bfa279ba106",
+        "android_client_info": {
+          "package_name": "hu.welfarebuddy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDGgckG9IZEc2tTU2FqPhcOfUlS5WIbOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

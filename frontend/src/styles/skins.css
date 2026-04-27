@@ -1,0 +1,1300 @@
+/* ============================================
+   SKIN EFFECTS — vizuális effektek skinekhez
+   ============================================ */
+
+/* --- Közös segéd animációk --- */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes aurora-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.7; }
+  94% { opacity: 1; }
+  96% { opacity: 0.8; }
+  97% { opacity: 1; }
+}
+
+@keyframes sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes fire-dance {
+  0%, 100% { box-shadow: 0 0 8px 2px oklch(0.65 0.25 30 / 0.3); }
+  25% { box-shadow: 0 0 12px 3px oklch(0.7 0.28 40 / 0.4); }
+  50% { box-shadow: 0 0 16px 4px oklch(0.65 0.25 30 / 0.5); }
+  75% { box-shadow: 0 0 10px 3px oklch(0.6 0.22 25 / 0.35); }
+}
+
+@keyframes frost-pulse {
+  0%, 100% { box-shadow: inset 0 0 20px oklch(0.85 0.08 230 / 0.1); }
+  50% { box-shadow: inset 0 0 30px oklch(0.85 0.08 230 / 0.2); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@keyframes petal-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes wave {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+/* ============================================
+   OCEAN — hullám effekt + víz csillogás
+   ============================================ */
+.skin-ocean [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-ocean [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg,
+    oklch(0.6 0.15 240 / 0.3),
+    oklch(0.7 0.12 220 / 0.5),
+    oklch(0.6 0.15 240 / 0.3)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+.skin-ocean .rounded-2xl.border {
+  box-shadow: 0 0 15px oklch(0.6 0.12 230 / 0.08);
+}
+
+/* ============================================
+   FOREST — természetes zöld fény
+   ============================================ */
+.skin-forest [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-forest [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    oklch(0.55 0.18 145 / 0.4),
+    oklch(0.65 0.15 155 / 0.6),
+    oklch(0.55 0.18 145 / 0.4)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 4s ease-in-out infinite;
+}
+.skin-forest .rounded-2xl.border {
+  box-shadow: 0 0 12px oklch(0.55 0.12 145 / 0.06);
+}
+
+/* ============================================
+   SUNSET — meleg arany fény + gradient
+   ============================================ */
+.skin-sunset [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    oklch(0.75 0.15 50 / 0.05) 0%,
+    oklch(0.65 0.2 30 / 0.08) 100%
+  );
+  pointer-events: none;
+}
+.skin-sunset .rounded-2xl.border {
+  box-shadow: 0 0 15px oklch(0.7 0.15 50 / 0.08);
+}
+
+/* ============================================
+   EMBER — tűz effekt, lángoló szegélyek
+   ============================================ */
+.skin-ember [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-ember [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    oklch(0.65 0.28 30 / 0.6),
+    oklch(0.75 0.22 50 / 0.8),
+    oklch(0.6 0.3 25 / 0.6)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+.skin-ember .rounded-2xl.border {
+  animation: fire-dance 3s ease-in-out infinite;
+}
+
+/* ============================================
+   AMETHYST — kristály csillogás
+   ============================================ */
+.skin-amethyst .rounded-2xl.border {
+  position: relative;
+  overflow: hidden;
+}
+.skin-amethyst .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.6 0.2 300 / 0.08),
+    transparent
+  );
+  animation: sweep 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.skin-amethyst [data-sidebar="sidebar"] {
+  box-shadow: inset -1px 0 15px oklch(0.5 0.2 290 / 0.08);
+}
+
+/* ============================================
+   GOLDEN — arany csillogás + fényes sweep
+   ============================================ */
+.skin-golden .rounded-2xl.border {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 12px oklch(0.75 0.15 85 / 0.1);
+}
+.skin-golden .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.82 0.12 85 / 0.15),
+    transparent
+  );
+  animation: sweep 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.skin-golden [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    oklch(0.8 0.1 85 / 0.04) 0%,
+    transparent 50%,
+    oklch(0.8 0.1 85 / 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   PLATINUM — fém csillanás + króm effekt
+   ============================================ */
+.skin-platinum .rounded-2xl.border {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 8px oklch(0.75 0.02 260 / 0.1);
+}
+.skin-platinum .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.9 0.01 260 / 0.12),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: sweep 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   AURORA — sarki fény animáció
+   ============================================ */
+.skin-aurora [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-aurora [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    oklch(0.6 0.12 180 / 0.06),
+    oklch(0.55 0.15 160 / 0.08),
+    oklch(0.6 0.1 200 / 0.04),
+    oklch(0.65 0.12 170 / 0.06)
+  );
+  background-size: 300% 300%;
+  animation: aurora-shift 8s ease-in-out infinite;
+  pointer-events: none;
+}
+.skin-aurora .rounded-2xl.border {
+  box-shadow: 0 0 20px oklch(0.6 0.12 180 / 0.08);
+}
+
+/* ============================================
+   NEON — cyberpunk neon glow + villogás
+   ============================================ */
+.skin-neon .rounded-2xl.border {
+  box-shadow: 0 0 10px oklch(0.6 0.25 310 / 0.15),
+              0 0 20px oklch(0.5 0.2 310 / 0.08);
+  animation: neon-flicker 4s ease-in-out infinite;
+}
+.skin-neon [data-sidebar="sidebar"] {
+  box-shadow: inset -2px 0 15px oklch(0.5 0.25 310 / 0.1);
+}
+.skin-neon [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    oklch(0.6 0.3 320 / 0.8),
+    oklch(0.55 0.25 280 / 0.6),
+    oklch(0.6 0.3 320 / 0.8)
+  );
+  box-shadow: 0 0 10px oklch(0.6 0.3 320 / 0.5);
+}
+
+/* ============================================
+   SAKURA — cseresznyevirág rózsaszín glow
+   ============================================ */
+.skin-sakura .rounded-2xl.border {
+  box-shadow: 0 0 12px oklch(0.78 0.08 350 / 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.skin-sakura .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.82 0.1 350 / 0.06),
+    transparent
+  );
+  animation: sweep 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.skin-sakura [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    oklch(0.85 0.06 350 / 0.04) 0%,
+    transparent 50%,
+    oklch(0.85 0.06 350 / 0.03) 100%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   ARCTIC — jég effekt, fagyos szegélyek
+   ============================================ */
+.skin-arctic .rounded-2xl.border {
+  animation: frost-pulse 4s ease-in-out infinite;
+}
+.skin-arctic [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-arctic [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    oklch(0.9 0.04 220 / 0.3),
+    oklch(0.95 0.02 210 / 0.6),
+    oklch(0.9 0.04 220 / 0.3)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ============================================
+   LAVENDER — lágy lila ambient
+   ============================================ */
+.skin-lavender .rounded-2xl.border {
+  box-shadow: 0 0 15px oklch(0.7 0.1 290 / 0.08);
+}
+.skin-lavender [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    oklch(0.75 0.08 290 / 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   MIDNIGHT — csillag effekt + arany glow
+   ============================================ */
+.skin-midnight .rounded-2xl.border {
+  box-shadow: 0 0 10px oklch(0.75 0.12 85 / 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.skin-midnight .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.8 0.1 85 / 0.1),
+    transparent
+  );
+  animation: sweep 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.skin-midnight [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-midnight [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, oklch(0.9 0.08 85 / 0.4), transparent),
+    radial-gradient(1px 1px at 50% 70%, oklch(0.85 0.06 85 / 0.3), transparent),
+    radial-gradient(1px 1px at 80% 20%, oklch(0.9 0.08 85 / 0.35), transparent),
+    radial-gradient(1px 1px at 30% 80%, oklch(0.85 0.06 85 / 0.25), transparent),
+    radial-gradient(1px 1px at 70% 50%, oklch(0.9 0.08 85 / 0.3), transparent),
+    radial-gradient(1px 1px at 10% 60%, oklch(0.85 0.06 85 / 0.2), transparent),
+    radial-gradient(1px 1px at 90% 90%, oklch(0.9 0.08 85 / 0.35), transparent);
+  animation: pulse-glow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ============================================
+   ROSEGOLD — rózsaarany csillogás
+   ============================================ */
+.skin-rosegold .rounded-2xl.border {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 12px oklch(0.72 0.08 25 / 0.1);
+}
+.skin-rosegold .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.8 0.08 25 / 0.12),
+    transparent
+  );
+  transform: skewX(-15deg);
+  animation: sweep 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   CORAL — buborék effekt + tenger csillogás
+   ============================================ */
+.skin-coral .rounded-2xl.border {
+  box-shadow: 0 0 12px oklch(0.65 0.12 180 / 0.08);
+}
+.skin-coral [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg,
+    oklch(0.7 0.14 15 / 0.4),
+    oklch(0.65 0.12 180 / 0.5),
+    oklch(0.7 0.14 15 / 0.4)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3.5s ease-in-out infinite;
+}
+
+/* ============================================
+   MOCHA — meleg kávé gőz effekt
+   ============================================ */
+.skin-mocha .rounded-2xl.border {
+  box-shadow: 0 0 12px oklch(0.5 0.06 60 / 0.08);
+}
+.skin-mocha [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    oklch(0.45 0.05 60 / 0.04) 0%,
+    transparent 40%,
+    oklch(0.45 0.05 60 / 0.03) 100%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   OG — retro scanline effekt
+   ============================================ */
+.skin-og .rounded-2xl.border {
+  box-shadow: 0 0 10px oklch(0.7 0.1 70 / 0.08);
+}
+.skin-og [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    oklch(0.5 0.05 70 / 0.03) 3px,
+    oklch(0.5 0.05 70 / 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   VETERAN — military badge glow
+   ============================================ */
+.skin-veteran .rounded-2xl.border {
+  box-shadow: 0 0 10px oklch(0.55 0.08 120 / 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.skin-veteran .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.7 0.08 85 / 0.08),
+    transparent
+  );
+  animation: sweep 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   FOUNDER — királyi arany csillogás + deep glow
+   ============================================ */
+.skin-founder .rounded-2xl.border {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px oklch(0.7 0.12 85 / 0.12),
+              0 0 30px oklch(0.45 0.15 280 / 0.06);
+}
+.skin-founder .skin-preview-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 35%;
+  height: 200%;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.8 0.1 85 / 0.15),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: sweep 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.skin-founder [data-sidebar="sidebar"] {
+  overflow: hidden;
+}
+.skin-founder [data-sidebar="sidebar"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1.5px 1.5px at 15% 25%, oklch(0.85 0.1 85 / 0.5), transparent),
+    radial-gradient(1px 1px at 45% 65%, oklch(0.8 0.08 85 / 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 75% 15%, oklch(0.85 0.1 85 / 0.45), transparent),
+    radial-gradient(1px 1px at 25% 85%, oklch(0.8 0.08 85 / 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 85% 75%, oklch(0.85 0.1 85 / 0.4), transparent),
+    radial-gradient(1px 1px at 55% 35%, oklch(0.8 0.08 85 / 0.3), transparent),
+    radial-gradient(1px 1px at 5% 55%, oklch(0.85 0.1 85 / 0.25), transparent),
+    radial-gradient(1.5px 1.5px at 95% 45%, oklch(0.85 0.1 85 / 0.4), transparent);
+  animation: pulse-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   SKIN-BG — animated background container with particle spans
+   Uses 20 <span> elements in .skin-bg for layered animations
+   ════════════════════════════════════════════════════════════════ */
+
+/* --- Base: hidden by default --- */
+.skin-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.skin-bg span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  animation-fill-mode: backwards; /* prevents particles sitting at top during delay */
+}
+
+
+/* --- Foreground layer: particles floating OVER content (pro/streak/milestone only) --- */
+.skin-fg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+.skin-fg span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   FOREGROUND PARTICLES — ember sparks over content
+   ═══════════════════════════════════════ */
+.skin-ember .skin-fg span:nth-child(1),
+.skin-ember .skin-fg span:nth-child(2),
+.skin-ember .skin-fg span:nth-child(3),
+.skin-ember .skin-fg span:nth-child(4) {
+  border-radius: 50%;
+  bottom: 0;
+}
+.skin-ember .skin-fg span:nth-child(1) { width:10px; height:10px; left:20%; background:oklch(0.80 0.25 40/0.5); box-shadow: 0 0 14px 5px oklch(0.75 0.28 35/0.4); animation: ember-rise 6s ease-out infinite 1s; }
+.skin-ember .skin-fg span:nth-child(2) { width:8px;  height:8px;  left:50%; background:oklch(0.75 0.28 30/0.4); box-shadow: 0 0 12px 4px oklch(0.70 0.30 28/0.3); animation: ember-sway 7s ease-out infinite 3s; }
+.skin-ember .skin-fg span:nth-child(3) { width:12px; height:12px; left:75%; background:oklch(0.85 0.22 50/0.5); box-shadow: 0 0 16px 6px oklch(0.80 0.25 45/0.4); animation: ember-rise 5s ease-out infinite 0s; }
+.skin-ember .skin-fg span:nth-child(4) { width:7px;  height:7px;  left:35%; background:oklch(0.78 0.26 38/0.4); box-shadow: 0 0 10px 4px oklch(0.75 0.28 35/0.3); animation: ember-sway 8s ease-out infinite 2s; }
+
+/* Arctic snowflakes floating over content */
+.skin-arctic .skin-fg span:nth-child(1),
+.skin-arctic .skin-fg span:nth-child(2),
+.skin-arctic .skin-fg span:nth-child(3) {
+  border-radius: 50%;
+  top: -10px;
+  background: oklch(0.98 0.02 220 / 0.6);
+  box-shadow: 0 0 10px 4px oklch(0.92 0.06 220 / 0.4);
+}
+.skin-arctic .skin-fg span:nth-child(1) { width:14px; height:14px; left:30%; animation: snowfall 9s linear infinite 1s; }
+.skin-arctic .skin-fg span:nth-child(2) { width:10px; height:10px; left:60%; animation: snowfall 11s linear infinite 3s; }
+.skin-arctic .skin-fg span:nth-child(3) { width:16px; height:16px; left:80%; animation: snowfall 7s linear infinite 5s; }
+
+/* Sakura petals floating over content */
+.skin-sakura .skin-fg span:nth-child(1),
+.skin-sakura .skin-fg span:nth-child(2),
+.skin-sakura .skin-fg span:nth-child(3) {
+  top: -15px;
+  border-radius: 50% 0 50% 50%;
+  box-shadow: 0 0 8px 3px oklch(0.85 0.12 350 / 0.3);
+}
+.skin-sakura .skin-fg span:nth-child(1) { width:18px; height:20px; left:25%; background:oklch(0.85 0.14 350/0.5); animation: petal-drift 11s ease-in-out infinite 2s; }
+.skin-sakura .skin-fg span:nth-child(2) { width:14px; height:16px; left:55%; background:oklch(0.82 0.12 345/0.4); animation: petal-drift 9s ease-in-out infinite 4s; }
+.skin-sakura .skin-fg span:nth-child(3) { width:20px; height:22px; left:80%; background:oklch(0.88 0.15 355/0.5); animation: petal-drift 13s ease-in-out infinite 0s; }
+
+/* Coral bubbles floating over content */
+.skin-coral .skin-fg span:nth-child(1),
+.skin-coral .skin-fg span:nth-child(2),
+.skin-coral .skin-fg span:nth-child(3) {
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid oklch(0.75 0.10 180 / 0.3);
+  background: oklch(0.80 0.08 185 / 0.08);
+  box-shadow: 0 0 6px oklch(0.70 0.12 180 / 0.2);
+}
+.skin-coral .skin-fg span:nth-child(1) { width:16px; height:16px; left:22%; animation: bubble-rise 9s ease-out infinite 1s; }
+.skin-coral .skin-fg span:nth-child(2) { width:12px; height:12px; left:55%; animation: bubble-rise 11s ease-out infinite 3s; }
+.skin-coral .skin-fg span:nth-child(3) { width:18px; height:18px; left:78%; animation: bubble-rise 8s ease-out infinite 5s; }
+
+/* Coral fish swimming over content */
+.skin-coral .skin-fg span:nth-child(4) {
+  width:28px; height:14px; top:30%; left:0;
+  border-radius: 50% 0 50% 50%;
+  background: oklch(0.72 0.18 30 / 0.80);
+  box-shadow: 12px 0 0 -4px oklch(0.72 0.18 30 / 0.5), inset 0 0 6px oklch(0.85 0.10 55 / 0.4);
+  animation: fish-swim 14s linear infinite 0s;
+}
+.skin-coral .skin-fg span:nth-child(5) {
+  width:22px; height:11px; top:58%; left:0;
+  border-radius: 50% 0 50% 50%;
+  background: oklch(0.68 0.16 200 / 0.75);
+  box-shadow: 10px 0 0 -3px oklch(0.68 0.16 200 / 0.4), inset 0 0 5px oklch(0.85 0.06 195 / 0.35);
+  animation: fish-swim 18s linear infinite 5s;
+}
+.skin-coral .skin-fg span:nth-child(6) {
+  width:32px; height:16px; top:72%; right:0; left:auto;
+  border-radius: 0 50% 50% 50%;
+  background: oklch(0.75 0.14 55 / 0.80);
+  box-shadow: -12px 0 0 -4px oklch(0.75 0.14 55 / 0.5), inset 0 0 6px oklch(0.92 0.08 70 / 0.4);
+  animation: fish-swim-back 16s linear infinite 9s;
+}
+.skin-coral .skin-fg span:nth-child(7) {
+  width:20px; height:10px; top:20%; right:0; left:auto;
+  border-radius: 0 50% 50% 50%;
+  background: oklch(0.70 0.20 15 / 0.75);
+  box-shadow: -9px 0 0 -3px oklch(0.70 0.20 15 / 0.4), inset 0 0 5px oklch(0.90 0.10 30 / 0.35);
+  animation: fish-swim-back 20s linear infinite 2s;
+}
+
+/* Golden dust floating over content */
+.skin-golden .skin-fg span:nth-child(1),
+.skin-golden .skin-fg span:nth-child(2),
+.skin-golden .skin-fg span:nth-child(3) {
+  border-radius: 50%;
+  background: oklch(0.88 0.12 85 / 0.5);
+  box-shadow: 0 0 8px 3px oklch(0.85 0.10 85 / 0.4);
+}
+.skin-golden .skin-fg span:nth-child(1) { width:7px; height:7px; top:30%; left:25%; animation: gold-float 6s ease-in-out infinite 0s; }
+.skin-golden .skin-fg span:nth-child(2) { width:9px; height:9px; top:50%; left:60%; animation: gold-float 5s ease-in-out infinite 2s; }
+.skin-golden .skin-fg span:nth-child(3) { width:6px; height:6px; top:70%; left:80%; animation: gold-float 7s ease-in-out infinite 1s; }
+
+/* Founder sparkles floating over content */
+.skin-founder .skin-fg span:nth-child(1),
+.skin-founder .skin-fg span:nth-child(2),
+.skin-founder .skin-fg span:nth-child(3),
+.skin-founder .skin-fg span:nth-child(4) {
+  width: 12px; height: 12px;
+  background: oklch(0.90 0.12 85 / 0.6);
+  box-shadow: 0 0 6px 2px oklch(0.85 0.10 85 / 0.3);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.skin-founder .skin-fg span:nth-child(1) { top:20%; left:30%; animation: royal-sparkle 3.5s ease-in-out infinite 0s; }
+.skin-founder .skin-fg span:nth-child(2) { top:45%; left:65%; animation: royal-sparkle 4s ease-in-out infinite 1s; }
+.skin-founder .skin-fg span:nth-child(3) { top:60%; left:20%; animation: royal-sparkle 3s ease-in-out infinite 2s; }
+.skin-founder .skin-fg span:nth-child(4) { top:30%; left:80%; animation: royal-sparkle 4.5s ease-in-out infinite 0.5s; }
+
+/* Midnight shooting stars over content */
+.skin-midnight .skin-fg span:nth-child(1) {
+  top: 15%; left: 10%;
+  height: 2px; width: 0;
+  background: linear-gradient(90deg, oklch(0.95 0.08 85 / 0.6), transparent);
+  box-shadow: 0 0 8px 3px oklch(0.90 0.10 85 / 0.3);
+  border-radius: 2px;
+  animation: shooting-star 7s ease-in infinite 3s;
+}
+
+/* Neon scan line over content */
+.skin-neon .skin-fg span:nth-child(1) {
+  left: 0; right: 0; height: 2px; top: -5%;
+  background: linear-gradient(90deg, transparent 20%, oklch(0.65 0.30 310 / 0.4) 50%, transparent 80%);
+  box-shadow: 0 0 20px 6px oklch(0.55 0.25 310 / 0.25);
+  animation: neon-scan 6s linear infinite 2s;
+}
+
+/* ═══════════════════════════════════════
+   OCEAN — realistic animated waves
+   ═══════════════════════════════════════ */
+@keyframes ocean-wave-1 {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(-8%) translateY(-8px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+@keyframes ocean-wave-2 {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(6%) translateY(-12px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+@keyframes ocean-wave-3 {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(-5%) translateY(-5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+@keyframes ocean-sparkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Ocean — FREE: subtle waves only, no sparkles */
+.skin-ocean .skin-bg span:nth-child(1) {
+  bottom: -2%;
+  left: -10%;
+  width: 120%;
+  height: 60px;
+  background: linear-gradient(180deg,
+    oklch(0.55 0.18 230 / 0.10) 0%,
+    oklch(0.45 0.20 240 / 0.06) 60%,
+    transparent 100%
+  );
+  border-radius: 45% 55% 0 0;
+  animation: ocean-wave-1 8s ease-in-out infinite;
+}
+.skin-ocean .skin-bg span:nth-child(2) {
+  bottom: -4%;
+  left: -15%;
+  width: 130%;
+  height: 70px;
+  background: linear-gradient(180deg,
+    oklch(0.50 0.16 235 / 0.12) 0%,
+    oklch(0.42 0.18 242 / 0.06) 100%
+  );
+  border-radius: 40% 60% 0 0;
+  animation: ocean-wave-2 10s ease-in-out infinite;
+}
+.skin-ocean .skin-bg span:nth-child(3) {
+  bottom: -6%;
+  left: -5%;
+  width: 115%;
+  height: 50px;
+  background: linear-gradient(180deg,
+    oklch(0.48 0.14 238 / 0.10) 0%,
+    oklch(0.40 0.12 245 / 0.05) 100%
+  );
+  border-radius: 50% 50% 0 0;
+  animation: ocean-wave-3 7s ease-in-out infinite;
+}
+.skin-ocean .skin-bg span:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(180deg,
+    oklch(0.42 0.20 240 / 0.15) 0%,
+    oklch(0.35 0.18 245 / 0.08) 100%
+  );
+}
+
+/* ═══════════════════════════════════════
+   MIDNIGHT GOLD — starry sky + shooting stars
+   ═══════════════════════════════════════ */
+@keyframes star-pulse-a { 0%, 100% { opacity: 0; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+@keyframes star-pulse-b { 0%, 100% { opacity: 0; transform: scale(1); } 50% { opacity: 0.9; transform: scale(0.6); } }
+@keyframes shooting-star {
+  0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; width: 0; }
+  5% { opacity: 1; }
+  30% { opacity: 1; width: 80px; }
+  100% { transform: translateX(300px) translateY(200px) rotate(-35deg); opacity: 0; width: 0; }
+}
+
+.skin-midnight .skin-bg span:nth-child(1),
+.skin-midnight .skin-bg span:nth-child(2),
+.skin-midnight .skin-bg span:nth-child(3),
+.skin-midnight .skin-bg span:nth-child(4),
+.skin-midnight .skin-bg span:nth-child(5),
+.skin-midnight .skin-bg span:nth-child(6),
+.skin-midnight .skin-bg span:nth-child(7),
+.skin-midnight .skin-bg span:nth-child(8),
+.skin-midnight .skin-bg span:nth-child(9),
+.skin-midnight .skin-bg span:nth-child(10),
+.skin-midnight .skin-bg span:nth-child(11),
+.skin-midnight .skin-bg span:nth-child(12),
+.skin-midnight .skin-bg span:nth-child(13),
+.skin-midnight .skin-bg span:nth-child(14),
+.skin-midnight .skin-bg span:nth-child(15),
+.skin-midnight .skin-bg span:nth-child(16) {
+  border-radius: 50%;
+  background: oklch(0.95 0.08 85);
+  box-shadow: 0 0 10px 4px oklch(0.90 0.10 85 / 0.7);
+}
+/* MIDNIGHT — PRO: MEGA starry sky */
+.skin-midnight .skin-bg span:nth-child(1)  { width:8px;  height:8px;  top:8%;  left:12%; animation: star-pulse-a 2.5s ease-in-out infinite 0s; }
+.skin-midnight .skin-bg span:nth-child(2)  { width:10px; height:10px; top:15%; left:35%; animation: star-pulse-b 3s ease-in-out infinite 0.5s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(3)  { width:6px;  height:6px;  top:5%;  left:55%; animation: star-pulse-a 3s ease-in-out infinite 1s; }
+.skin-midnight .skin-bg span:nth-child(4)  { width:10px; height:10px; top:22%; left:78%; animation: star-pulse-b 2.2s ease-in-out infinite 1.5s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(5)  { width:7px;  height:7px;  top:35%; left:8%;  animation: star-pulse-a 3.5s ease-in-out infinite 2s; }
+.skin-midnight .skin-bg span:nth-child(6)  { width:10px; height:10px; top:45%; left:92%; animation: star-pulse-b 2.5s ease-in-out infinite 0.3s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(7)  { width:8px;  height:8px;  top:55%; left:25%; animation: star-pulse-a 3s ease-in-out infinite 1.8s; }
+.skin-midnight .skin-bg span:nth-child(8)  { width:10px; height:10px; top:68%; left:65%; animation: star-pulse-b 2s ease-in-out infinite 0.8s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(9)  { width:6px;  height:6px;  top:75%; left:42%; animation: star-pulse-a 3.8s ease-in-out infinite 2.2s; }
+.skin-midnight .skin-bg span:nth-child(10) { width:10px; height:10px; top:82%; left:88%; animation: star-pulse-b 2.8s ease-in-out infinite 1.2s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(11) { width:7px;  height:7px;  top:12%; left:90%; animation: star-pulse-a 2.2s ease-in-out infinite 0.7s; }
+.skin-midnight .skin-bg span:nth-child(12) { width:10px; height:10px; top:42%; left:52%; animation: star-pulse-b 3s ease-in-out infinite 1.6s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(13) { width:8px;  height:8px;  top:28%; left:18%; animation: star-pulse-a 3.2s ease-in-out infinite 2.5s; }
+.skin-midnight .skin-bg span:nth-child(14) { width:10px; height:10px; top:60%; left:75%; animation: star-pulse-b 2s ease-in-out infinite 0.4s; box-shadow: 0 0 14px 5px oklch(0.90 0.10 85 / 0.8); }
+.skin-midnight .skin-bg span:nth-child(15) { width:6px;  height:6px;  top:90%; left:30%; animation: star-pulse-a 2.8s ease-in-out infinite 1.3s; }
+.skin-midnight .skin-bg span:nth-child(16) { width:8px;  height:8px;  top:50%; left:5%;  animation: star-pulse-b 2.8s ease-in-out infinite 0.9s; }
+/* Shooting stars — MEGA */
+.skin-midnight .skin-bg span:nth-child(17) {
+  top: 10%; left: 20%;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, oklch(0.95 0.08 85), transparent);
+  box-shadow: 0 0 12px 4px oklch(0.90 0.10 85 / 0.6);
+  border-radius: 2px;
+  animation: shooting-star 5s ease-in infinite 2s;
+}
+.skin-midnight .skin-bg span:nth-child(18) {
+  top: 30%; left: 60%;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, oklch(0.90 0.06 85), transparent);
+  box-shadow: 0 0 12px 4px oklch(0.85 0.08 85 / 0.6);
+  border-radius: 2px;
+  animation: shooting-star 7s ease-in infinite 4s;
+}
+
+/* ═══════════════════════════════════════
+   EMBER — rising fire particles + glow
+   ═══════════════════════════════════════ */
+@keyframes ember-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+}
+@keyframes ember-sway {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 0.8; }
+  50% { transform: translateY(-50vh) translateX(20px) scale(0.6); }
+  100% { transform: translateY(-100vh) translateX(-10px) scale(0.2); opacity: 0; }
+}
+
+.skin-ember .skin-bg span:nth-child(1),
+.skin-ember .skin-bg span:nth-child(2),
+.skin-ember .skin-bg span:nth-child(3),
+.skin-ember .skin-bg span:nth-child(4),
+.skin-ember .skin-bg span:nth-child(5),
+.skin-ember .skin-bg span:nth-child(6),
+.skin-ember .skin-bg span:nth-child(7),
+.skin-ember .skin-bg span:nth-child(8),
+.skin-ember .skin-bg span:nth-child(9),
+.skin-ember .skin-bg span:nth-child(10),
+.skin-ember .skin-bg span:nth-child(11),
+.skin-ember .skin-bg span:nth-child(12) {
+  border-radius: 50%;
+  bottom: 0;
+}
+/* EMBER — STREAK: MEGA fire particles */
+.skin-ember .skin-bg span:nth-child(1)  { width:16px; height:16px; left:10%; background:oklch(0.80 0.25 40); box-shadow: 0 0 20px 8px oklch(0.75 0.28 35/0.8); animation: ember-rise 3.5s ease-out infinite 0s; }
+.skin-ember .skin-bg span:nth-child(2)  { width:12px; height:12px; left:25%; background:oklch(0.75 0.28 30); box-shadow: 0 0 18px 6px oklch(0.70 0.30 28/0.7); animation: ember-sway 4s ease-out infinite 0.3s; }
+.skin-ember .skin-bg span:nth-child(3)  { width:20px; height:20px; left:40%; background:oklch(0.85 0.22 50); box-shadow: 0 0 25px 10px oklch(0.80 0.25 45/0.8); animation: ember-rise 5s ease-out infinite 0.8s; }
+.skin-ember .skin-bg span:nth-child(4)  { width:14px; height:14px; left:55%; background:oklch(0.70 0.30 25); box-shadow: 0 0 20px 7px oklch(0.65 0.30 22/0.7); animation: ember-sway 3.5s ease-out infinite 1.2s; }
+.skin-ember .skin-bg span:nth-child(5)  { width:18px; height:18px; left:70%; background:oklch(0.80 0.25 40); box-shadow: 0 0 22px 8px oklch(0.75 0.28 38/0.7); animation: ember-rise 4.5s ease-out infinite 1.5s; }
+.skin-ember .skin-bg span:nth-child(6)  { width:12px; height:12px; left:85%; background:oklch(0.75 0.28 35); box-shadow: 0 0 18px 6px oklch(0.72 0.26 32/0.7); animation: ember-sway 4s ease-out infinite 2s; }
+.skin-ember .skin-bg span:nth-child(7)  { width:20px; height:20px; left:15%; background:oklch(0.85 0.22 45); box-shadow: 0 0 25px 10px oklch(0.80 0.24 42/0.7); animation: ember-rise 5.5s ease-out infinite 2.5s; }
+.skin-ember .skin-bg span:nth-child(8)  { width:14px; height:14px; left:48%; background:oklch(0.78 0.26 38); box-shadow: 0 0 20px 7px oklch(0.75 0.28 35/0.7); animation: ember-sway 5s ease-out infinite 0.5s; }
+.skin-ember .skin-bg span:nth-child(9)  { width:16px; height:16px; left:62%; background:oklch(0.82 0.24 42); box-shadow: 0 0 22px 8px oklch(0.78 0.26 40/0.7); animation: ember-rise 3.8s ease-out infinite 1s; }
+.skin-ember .skin-bg span:nth-child(10) { width:12px; height:12px; left:78%; background:oklch(0.72 0.28 32); box-shadow: 0 0 18px 6px oklch(0.68 0.30 28/0.7); animation: ember-sway 4.5s ease-out infinite 3s; }
+.skin-ember .skin-bg span:nth-child(11) { width:18px; height:18px; left:35%; background:oklch(0.80 0.25 48); box-shadow: 0 0 22px 8px oklch(0.78 0.24 45/0.7); animation: ember-rise 5s ease-out infinite 2s; }
+.skin-ember .skin-bg span:nth-child(12) { width:14px; height:14px; left:92%; background:oklch(0.76 0.26 36); box-shadow: 0 0 20px 7px oklch(0.72 0.28 33/0.7); animation: ember-sway 3.5s ease-out infinite 0.8s; }
+/* Bottom fire glow — MEGA */
+.skin-ember .skin-bg span:nth-child(13) {
+  bottom: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(0deg,
+    oklch(0.55 0.30 25 / 0.50) 0%,
+    oklch(0.60 0.25 35 / 0.25) 40%,
+    transparent 100%
+  );
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   ARCTIC — falling snowflakes
+   ═══════════════════════════════════════ */
+@keyframes snowfall {
+  0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  50% { transform: translateY(50vh) translateX(15px) rotate(180deg); opacity: 0.6; }
+  100% { transform: translateY(calc(100vh + 20px)) translateX(-10px) rotate(360deg); opacity: 0; }
+}
+
+.skin-arctic .skin-bg span:nth-child(1),
+.skin-arctic .skin-bg span:nth-child(2),
+.skin-arctic .skin-bg span:nth-child(3),
+.skin-arctic .skin-bg span:nth-child(4),
+.skin-arctic .skin-bg span:nth-child(5),
+.skin-arctic .skin-bg span:nth-child(6),
+.skin-arctic .skin-bg span:nth-child(7),
+.skin-arctic .skin-bg span:nth-child(8),
+.skin-arctic .skin-bg span:nth-child(9),
+.skin-arctic .skin-bg span:nth-child(10),
+.skin-arctic .skin-bg span:nth-child(11),
+.skin-arctic .skin-bg span:nth-child(12),
+.skin-arctic .skin-bg span:nth-child(13),
+.skin-arctic .skin-bg span:nth-child(14),
+.skin-arctic .skin-bg span:nth-child(15) {
+  border-radius: 50%;
+  top: -10px;
+  background: oklch(0.98 0.02 220);
+  box-shadow: 0 0 14px 5px oklch(0.92 0.06 220 / 0.7);
+}
+/* ARCTIC — PRO: MEGA blizzard */
+.skin-arctic .skin-bg span:nth-child(1)  { width:16px; height:16px; left:5%;  animation: snowfall 6s linear infinite 0s; }
+.skin-arctic .skin-bg span:nth-child(2)  { width:12px; height:12px; left:15%; animation: snowfall 8s linear infinite 0.8s; }
+.skin-arctic .skin-bg span:nth-child(3)  { width:20px; height:20px; left:25%; animation: snowfall 5.5s linear infinite 1.5s; }
+.skin-arctic .skin-bg span:nth-child(4)  { width:14px; height:14px; left:35%; animation: snowfall 7s linear infinite 0.3s; }
+.skin-arctic .skin-bg span:nth-child(5)  { width:18px; height:18px; left:45%; animation: snowfall 9s linear infinite 2s; }
+.skin-arctic .skin-bg span:nth-child(6)  { width:15px; height:15px; left:55%; animation: snowfall 6.5s linear infinite 1s; }
+.skin-arctic .skin-bg span:nth-child(7)  { width:22px; height:22px; left:65%; animation: snowfall 5s linear infinite 3s; }
+.skin-arctic .skin-bg span:nth-child(8)  { width:13px; height:13px; left:75%; animation: snowfall 8.5s linear infinite 2s; }
+.skin-arctic .skin-bg span:nth-child(9)  { width:17px; height:17px; left:85%; animation: snowfall 7s linear infinite 0.5s; }
+.skin-arctic .skin-bg span:nth-child(10) { width:14px; height:14px; left:95%; animation: snowfall 6s linear infinite 2.5s; }
+.skin-arctic .skin-bg span:nth-child(11) { width:19px; height:19px; left:10%; animation: snowfall 10s linear infinite 4s; }
+.skin-arctic .skin-bg span:nth-child(12) { width:12px; height:12px; left:30%; animation: snowfall 7.5s linear infinite 3.5s; }
+.skin-arctic .skin-bg span:nth-child(13) { width:22px; height:22px; left:50%; animation: snowfall 5.5s linear infinite 1.2s; }
+.skin-arctic .skin-bg span:nth-child(14) { width:15px; height:15px; left:70%; animation: snowfall 8s linear infinite 2.5s; }
+.skin-arctic .skin-bg span:nth-child(15) { width:18px; height:18px; left:90%; animation: snowfall 6.5s linear infinite 1.8s; }
+/* Frosty top gradient — MEGA */
+.skin-arctic .skin-bg span:nth-child(16) {
+  top: 0; left: 0; right: 0; height: 45%;
+  background: linear-gradient(180deg, oklch(0.90 0.06 220 / 0.20), transparent);
+}
+
+/* ═══════════════════════════════════════
+   SAKURA — falling cherry blossom petals
+   ═══════════════════════════════════════ */
+@keyframes petal-drift {
+  0% { transform: translateY(-20px) translateX(0) rotate(0deg) scale(1); opacity: 0; }
+  10% { opacity: 0.9; }
+  40% { transform: translateY(35vh) translateX(30px) rotate(120deg) scale(0.9); }
+  70% { transform: translateY(65vh) translateX(-15px) rotate(240deg) scale(0.7); }
+  100% { transform: translateY(calc(100vh + 20px)) translateX(20px) rotate(360deg) scale(0.5); opacity: 0; }
+}
+
+.skin-sakura .skin-bg span:nth-child(1),
+.skin-sakura .skin-bg span:nth-child(2),
+.skin-sakura .skin-bg span:nth-child(3),
+.skin-sakura .skin-bg span:nth-child(4),
+.skin-sakura .skin-bg span:nth-child(5),
+.skin-sakura .skin-bg span:nth-child(6),
+.skin-sakura .skin-bg span:nth-child(7),
+.skin-sakura .skin-bg span:nth-child(8),
+.skin-sakura .skin-bg span:nth-child(9),
+.skin-sakura .skin-bg span:nth-child(10) {
+  top: -15px;
+  border-radius: 50% 0 50% 50%;
+  box-shadow: 0 0 12px 4px oklch(0.85 0.12 350 / 0.6);
+}
+/* SAKURA — PRO: MEGA cherry blossom storm */
+.skin-sakura .skin-bg span:nth-child(1)  { width:22px; height:26px; left:8%;  background:oklch(0.85 0.14 350/0.9); animation: petal-drift 8s ease-in-out infinite 0s; }
+.skin-sakura .skin-bg span:nth-child(2)  { width:18px; height:22px; left:18%; background:oklch(0.82 0.12 345/0.8); animation: petal-drift 10s ease-in-out infinite 1s; }
+.skin-sakura .skin-bg span:nth-child(3)  { width:24px; height:28px; left:30%; background:oklch(0.88 0.15 355/0.9); animation: petal-drift 7s ease-in-out infinite 2s; }
+.skin-sakura .skin-bg span:nth-child(4)  { width:16px; height:20px; left:42%; background:oklch(0.84 0.11 348/0.8); animation: petal-drift 9s ease-in-out infinite 0.5s; }
+.skin-sakura .skin-bg span:nth-child(5)  { width:20px; height:24px; left:55%; background:oklch(0.86 0.13 352/0.9); animation: petal-drift 11s ease-in-out infinite 2s; }
+.skin-sakura .skin-bg span:nth-child(6)  { width:18px; height:22px; left:68%; background:oklch(0.83 0.10 345/0.8); animation: petal-drift 8.5s ease-in-out infinite 3s; }
+.skin-sakura .skin-bg span:nth-child(7)  { width:22px; height:26px; left:78%; background:oklch(0.87 0.14 350/0.9); animation: petal-drift 7s ease-in-out infinite 0.8s; }
+.skin-sakura .skin-bg span:nth-child(8)  { width:20px; height:24px; left:88%; background:oklch(0.85 0.12 348/0.8); animation: petal-drift 9.5s ease-in-out infinite 2.5s; }
+.skin-sakura .skin-bg span:nth-child(9)  { width:24px; height:28px; left:25%; background:oklch(0.86 0.13 352/0.7); animation: petal-drift 12s ease-in-out infinite 4s; }
+.skin-sakura .skin-bg span:nth-child(10) { width:18px; height:22px; left:60%; background:oklch(0.84 0.11 345/0.8); animation: petal-drift 8s ease-in-out infinite 1.5s; }
+/* Pink ambient glow — MEGA */
+.skin-sakura .skin-bg span:nth-child(11) {
+  top: 0; left: 0; right: 0; height: 50%;
+  background: radial-gradient(ellipse at 50% 0%, oklch(0.85 0.10 350 / 0.22), transparent 70%);
+}
+
+/* ═══════════════════════════════════════
+   AURORA — flowing northern lights bands
+   ═══════════════════════════════════════ */
+@keyframes aurora-band-1 {
+  0%   { transform: translateX(-5%) skewX(-3deg) scaleY(1); opacity: 0.4; }
+  33%  { transform: translateX(3%) skewX(2deg) scaleY(1.3); opacity: 0.7; }
+  66%  { transform: translateX(-2%) skewX(-1deg) scaleY(0.8); opacity: 0.5; }
+  100% { transform: translateX(-5%) skewX(-3deg) scaleY(1); opacity: 0.4; }
+}
+@keyframes aurora-band-2 {
+  0%   { transform: translateX(3%) skewX(2deg) scaleY(0.8); opacity: 0.3; }
+  50%  { transform: translateX(-4%) skewX(-3deg) scaleY(1.2); opacity: 0.6; }
+  100% { transform: translateX(3%) skewX(2deg) scaleY(0.8); opacity: 0.3; }
+}
+
+.skin-aurora .skin-bg span:nth-child(1) {
+  top: 5%; left: -10%; width: 120%; height: 30%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    oklch(0.55 0.22 160 / 0.25) 30%,
+    oklch(0.50 0.25 180 / 0.35) 50%,
+    oklch(0.55 0.18 200 / 0.18) 70%,
+    transparent 100%
+  );
+  filter: blur(20px);
+  animation: aurora-band-1 12s ease-in-out infinite;
+}
+.skin-aurora .skin-bg span:nth-child(2) {
+  top: 15%; left: -5%; width: 110%; height: 25%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    oklch(0.60 0.18 280 / 0.18) 30%,
+    oklch(0.55 0.22 200 / 0.25) 50%,
+    oklch(0.50 0.20 160 / 0.15) 70%,
+    transparent 100%
+  );
+  filter: blur(25px);
+  animation: aurora-band-2 15s ease-in-out infinite;
+}
+.skin-aurora .skin-bg span:nth-child(3) {
+  top: 0; left: -15%; width: 130%; height: 35%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    oklch(0.50 0.20 170 / 0.15) 40%,
+    oklch(0.55 0.25 190 / 0.22) 60%,
+    transparent 100%
+  );
+  filter: blur(30px);
+  animation: aurora-band-1 18s ease-in-out infinite reverse;
+}
+
+/* ═══════════════════════════════════════
+   NEON — scan line + grid + glow
+   ═══════════════════════════════════════ */
+@keyframes neon-scan {
+  0% { top: -5%; }
+  100% { top: 105%; }
+}
+
+.skin-neon .skin-bg span:nth-child(1) {
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    oklch(0.55 0.25 310 / 0.02) 3px, oklch(0.55 0.25 310 / 0.02) 4px
+  );
+}
+.skin-neon .skin-bg span:nth-child(2) {
+  left: 0; right: 0; height: 3px; top: -5%;
+  background: linear-gradient(90deg, transparent 15%, oklch(0.65 0.30 310 / 0.9) 50%, transparent 85%);
+  box-shadow: 0 0 40px 12px oklch(0.55 0.25 310 / 0.5);
+  animation: neon-scan 4s linear infinite;
+}
+.skin-neon .skin-bg span:nth-child(3) {
+  bottom: 0; left: 0; right: 0; height: 1px;
+  background: oklch(0.60 0.28 310 / 0.5);
+  box-shadow: 0 0 15px oklch(0.55 0.25 310 / 0.4);
+}
+
+/* ═══════════════════════════════════════
+   FOREST — light rays through canopy
+   ═══════════════════════════════════════ */
+@keyframes forest-ray {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.4; }
+}
+
+.skin-forest .skin-bg span:nth-child(1),
+.skin-forest .skin-bg span:nth-child(2),
+.skin-forest .skin-bg span:nth-child(3) {
+  top: -20%;
+  height: 140%;
+  background: linear-gradient(180deg, oklch(0.70 0.12 145 / 0.08), transparent 80%);
+  transform-origin: top center;
+}
+/* Forest — FREE: subtle light rays */
+.skin-forest .skin-bg span:nth-child(1) { left: 20%; width: 25px; transform: rotate(15deg); animation: forest-ray 8s ease-in-out infinite 0s; }
+.skin-forest .skin-bg span:nth-child(2) { left: 50%; width: 20px; transform: rotate(-8deg); animation: forest-ray 10s ease-in-out infinite 2s; }
+.skin-forest .skin-bg span:nth-child(3) { left: 75%; width: 22px; transform: rotate(5deg); animation: forest-ray 9s ease-in-out infinite 4s; }
+/* Ground mist */
+.skin-forest .skin-bg span:nth-child(4) {
+  bottom: 0; left: 0; right: 0; height: 15%;
+  background: linear-gradient(0deg, oklch(0.50 0.10 145 / 0.06), transparent);
+}
+
+/* ═══════════════════════════════════════
+   SUNSET — animated sun + gradient sky
+   ═══════════════════════════════════════ */
+@keyframes sunset-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Sunset — FREE: gentle gradient + small sun */
+.skin-sunset .skin-bg span:nth-child(1) {
+  inset: 0;
+  background: linear-gradient(180deg,
+    oklch(0.70 0.18 40 / 0.04) 0%,
+    oklch(0.65 0.22 25 / 0.06) 30%,
+    oklch(0.55 0.20 350 / 0.04) 60%,
+    transparent 100%
+  );
+}
+.skin-sunset .skin-bg span:nth-child(2) {
+  top: 8%; left: 50%; width: 50px; height: 50px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.85 0.15 50 / 0.20), oklch(0.75 0.20 40 / 0.08) 50%, transparent 70%);
+  box-shadow: 0 0 30px 10px oklch(0.80 0.15 45 / 0.10);
+  animation: sunset-pulse 6s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   CORAL — rising bubbles
+   ═══════════════════════════════════════ */
+@keyframes bubble-rise {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  15% { opacity: 0.5; }
+  100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+}
+
+.skin-coral .skin-bg span:nth-child(1),
+.skin-coral .skin-bg span:nth-child(2),
+.skin-coral .skin-bg span:nth-child(3),
+.skin-coral .skin-bg span:nth-child(4),
+.skin-coral .skin-bg span:nth-child(5),
+.skin-coral .skin-bg span:nth-child(6),
+.skin-coral .skin-bg span:nth-child(7),
+.skin-coral .skin-bg span:nth-child(8) {
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid oklch(0.75 0.10 180 / 0.5);
+  background: oklch(0.80 0.08 185 / 0.15);
+  box-shadow: 0 0 8px oklch(0.70 0.12 180 / 0.3);
+}
+.skin-coral .skin-bg span:nth-child(1) { width:20px; height:20px; left:12%; animation: bubble-rise 8s ease-out infinite 0s; }
+.skin-coral .skin-bg span:nth-child(2) { width:14px; height:14px; left:28%; animation: bubble-rise 10s ease-out infinite 1s; }
+.skin-coral .skin-bg span:nth-child(3) { width:18px; height:18px; left:42%; animation: bubble-rise 7s ease-out infinite 2.5s; }
+.skin-coral .skin-bg span:nth-child(4) { width:12px; height:12px; left:58%; animation: bubble-rise 9s ease-out infinite 0.8s; }
+.skin-coral .skin-bg span:nth-child(5) { width:24px; height:24px; left:72%; animation: bubble-rise 11s ease-out infinite 3s; }
+.skin-coral .skin-bg span:nth-child(6) { width:16px; height:16px; left:85%; animation: bubble-rise 8.5s ease-out infinite 1.5s; }
+.skin-coral .skin-bg span:nth-child(7) { width:20px; height:20px; left:35%; animation: bubble-rise 9.5s ease-out infinite 4s; }
+.skin-coral .skin-bg span:nth-child(8) { width:14px; height:14px; left:65%; animation: bubble-rise 7.5s ease-out infinite 2s; }
+/* Underwater gradient */
+.skin-coral .skin-bg span:nth-child(9) {
+  bottom: 0; left: 0; right: 0; height: 40%;
+  background: linear-gradient(0deg, oklch(0.45 0.15 180 / 0.10), transparent);
+}
+
+/* Fish swimming keyframes */
+@keyframes fish-swim {
+  0%   { transform: translateX(-60px); opacity: 0; }
+  5%   { opacity: 0.85; }
+  95%  { opacity: 0.85; }
+  100% { transform: translateX(110vw); opacity: 0; }
+}
+@keyframes fish-swim-back {
+  0%   { transform: translateX(60px) scaleX(-1); opacity: 0; }
+  5%   { opacity: 0.80; }
+  95%  { opacity: 0.80; }
+  100% { transform: translateX(-110vw) scaleX(-1); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════
+   GOLDEN — floating gold dust particles
+   ═══════════════════════════════════════ */
+@keyframes gold-float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+  25% { transform: translateY(-15px) translateX(8px); opacity: 0.8; }
+  50% { transform: translateY(-5px) translateX(-5px); opacity: 0.5; }
+  75% { transform: translateY(-20px) translateX(3px); opacity: 0.9; }
+}
+
+.skin-golden .skin-bg span:nth-child(1),
+.skin-golden .skin-bg span:nth-child(2),
+.skin-golden .skin-bg span:nth-child(3),
+.skin-golden .skin-bg span:nth-child(4),
+.skin-golden .skin-bg span:nth-child(5),
+.skin-golden .skin-bg span:nth-child(6),
+.skin-golden .skin-bg span:nth-child(7),
+.skin-golden .skin-bg span:nth-child(8) {
+  border-radius: 50%;
+  background: oklch(0.88 0.12 85 / 0.8);
+  box-shadow: 0 0 10px 3px oklch(0.85 0.10 85 / 0.6);
+}
+.skin-golden .skin-bg span:nth-child(1) { width:8px; height:8px; top:20%; left:15%; animation: gold-float 5s ease-in-out infinite 0s; }
+.skin-golden .skin-bg span:nth-child(2) { width:6px; height:6px; top:35%; left:40%; animation: gold-float 6s ease-in-out infinite 1s; }
+.skin-golden .skin-bg span:nth-child(3) { width:10px; height:10px; top:15%; left:65%; animation: gold-float 4.5s ease-in-out infinite 2s; }
+.skin-golden .skin-bg span:nth-child(4) { width:6px; height:6px; top:50%; left:80%; animation: gold-float 5.5s ease-in-out infinite 0.5s; }
+.skin-golden .skin-bg span:nth-child(5) { width:8px; height:8px; top:60%; left:25%; animation: gold-float 6.5s ease-in-out infinite 3s; }
+.skin-golden .skin-bg span:nth-child(6) { width:5px; height:5px; top:75%; left:55%; animation: gold-float 5s ease-in-out infinite 1.5s; }
+.skin-golden .skin-bg span:nth-child(7) { width:10px; height:10px; top:40%; left:90%; animation: gold-float 4s ease-in-out infinite 2.5s; }
+.skin-golden .skin-bg span:nth-child(8) { width:7px; height:7px; top:85%; left:10%; animation: gold-float 7s ease-in-out infinite 4s; }
+
+/* ═══════════════════════════════════════
+   FOUNDER — royal sparkle cascade
+   ═══════════════════════════════════════ */
+@keyframes royal-sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+.skin-founder .skin-bg span:nth-child(1),
+.skin-founder .skin-bg span:nth-child(2),
+.skin-founder .skin-bg span:nth-child(3),
+.skin-founder .skin-bg span:nth-child(4),
+.skin-founder .skin-bg span:nth-child(5),
+.skin-founder .skin-bg span:nth-child(6),
+.skin-founder .skin-bg span:nth-child(7),
+.skin-founder .skin-bg span:nth-child(8),
+.skin-founder .skin-bg span:nth-child(9),
+.skin-founder .skin-bg span:nth-child(10) {
+  width: 14px; height: 14px;
+  background: oklch(0.90 0.12 85);
+  box-shadow: 0 0 8px 2px oklch(0.85 0.10 85 / 0.5);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.skin-founder .skin-bg span:nth-child(1)  { top:10%; left:20%; animation: royal-sparkle 3s ease-in-out infinite 0s; }
+.skin-founder .skin-bg span:nth-child(2)  { top:25%; left:50%; animation: royal-sparkle 4s ease-in-out infinite 0.5s; }
+.skin-founder .skin-bg span:nth-child(3)  { top:15%; left:75%; animation: royal-sparkle 3.5s ease-in-out infinite 1s; }
+.skin-founder .skin-bg span:nth-child(4)  { top:40%; left:10%; animation: royal-sparkle 4.5s ease-in-out infinite 1.5s; }
+.skin-founder .skin-bg span:nth-child(5)  { top:55%; left:85%; animation: royal-sparkle 3s ease-in-out infinite 2s; }
+.skin-founder .skin-bg span:nth-child(6)  { top:35%; left:35%; animation: royal-sparkle 5s ease-in-out infinite 0.8s; }
+.skin-founder .skin-bg span:nth-child(7)  { top:65%; left:60%; animation: royal-sparkle 3.8s ease-in-out infinite 2.5s; }
+.skin-founder .skin-bg span:nth-child(8)  { top:80%; left:25%; animation: royal-sparkle 4.2s ease-in-out infinite 1.2s; }
+.skin-founder .skin-bg span:nth-child(9)  { top:50%; left:90%; animation: royal-sparkle 3.2s ease-in-out infinite 3s; }
+.skin-founder .skin-bg span:nth-child(10) { top:70%; left:45%; animation: royal-sparkle 4.8s ease-in-out infinite 0.3s; }

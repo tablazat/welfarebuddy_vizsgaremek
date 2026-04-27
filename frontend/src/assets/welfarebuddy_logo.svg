@@ -1,0 +1,65 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heartGrad" x1="0.1" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#5ED3F5"/>
+      <stop offset="50%" stop-color="#2AAAD4"/>
+      <stop offset="100%" stop-color="#1478A7"/>
+    </linearGradient>
+    <linearGradient id="ecgGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#FFB0A0"/>
+      <stop offset="80%" stop-color="#F06060"/>
+      <stop offset="100%" stop-color="#E02020"/>
+    </linearGradient>
+    <linearGradient id="shineGrad" x1="0.2" y1="0" x2="0.5" y2="0.5">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#0A5A90" flood-opacity="0.3"/>
+    </filter>
+    <filter id="ecgGlow" x="-5%" y="-50%" width="110%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="heartClip">
+      <path d="M256,120 C236,88 184,52 126,52 C68,52 28,94 28,148 C28,200 60,240 116,282 C160,314 224,362 256,394 C288,362 352,314 396,282 C452,240 484,200 484,148 C484,94 444,52 386,52 C328,52 276,88 256,120Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Heart shape with shadow -->
+  <g filter="url(#shadow)">
+    <path d="M256,120 C236,88 184,52 126,52 C68,52 28,94 28,148 C28,200 60,240 116,282 C160,314 224,362 256,394 C288,362 352,314 396,282 C452,240 484,200 484,148 C484,94 444,52 386,52 C328,52 276,88 256,120Z"
+      fill="url(#heartGrad)"/>
+  </g>
+
+  <!-- Shine overlay -->
+  <path d="M256,120 C236,88 184,52 126,52 C68,52 28,94 28,148 C28,200 60,240 116,282 C160,314 224,362 256,394 C288,362 352,314 396,282 C452,240 484,200 484,148 C484,94 444,52 386,52 C328,52 276,88 256,120Z"
+    fill="url(#shineGrad)"/>
+
+  <!-- ECG line clipped to heart -->
+  <g clip-path="url(#heartClip)" filter="url(#ecgGlow)">
+    <polyline
+      points="20,224 80,224 100,224 112,196 124,252 134,224 150,224 200,224 220,156 240,292 256,224 272,292 292,156 312,224 370,224 384,196 396,252 406,224 430,224 500,224"
+      fill="none"
+      stroke="url(#ecgGrad)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <polyline
+      points="20,224 80,224 100,224 112,196 124,252 134,224 150,224 200,224 220,156 240,292 256,224 272,292 292,156 312,224 370,224 384,196 396,252 406,224 430,224 500,224"
+      fill="none"
+      stroke="white"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.25"
+    />
+  </g>
+
+  <!-- Pulse dot -->
+  <circle cx="430" cy="224" r="10" fill="#FF2222" opacity="0.2"/>
+  <circle cx="430" cy="224" r="6" fill="#EE3333"/>
+  <circle cx="430" cy="224" r="3" fill="#FF8888"/>
+</svg>

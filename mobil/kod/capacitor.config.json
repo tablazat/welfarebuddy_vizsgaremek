@@ -1,0 +1,23 @@
+{
+  "appId": "hu.welfarebuddy.app",
+  "appName": "WelfareBuddy",
+  "webDir": "dist",
+  "ios": {
+    "backgroundColor": "#09090b",
+    "contentInset": "never",
+    "scrollEnabled": false
+  },
+  "android": {
+    "backgroundColor": "#09090b"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#3b82f6"
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false"
+    }
+  }
+}

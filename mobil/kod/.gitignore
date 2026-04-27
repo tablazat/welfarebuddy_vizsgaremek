@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# ===== Android =====
+android/app/build/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/assets/public/
+android/app/src/main/res/xml/config.xml
+android/capacitor-cordova-android-plugins/
+android/.gradle/
+android/build/
+android/local.properties
+android/*.iml
+
+# ===== iOS =====
+# Capacitor generated files
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/App/App/public/
+
+# CocoaPods
+ios/App/Pods/
+
+# Xcode build artifacts
+ios/DerivedData/
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+# Old/backup iOS folder
+ios 2/
